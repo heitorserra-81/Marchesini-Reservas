@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Marchesini di Roverbella – Reservas</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
@@ -26,7 +26,6 @@
   }
   .app { position:relative; z-index:1; min-height:100vh; }
 
-  /* HEADER */
   header { text-align:center; padding:36px 20px 24px; }
   .crest-ring { width:110px; height:110px; margin:0 auto 16px; position:relative; }
   .crest-ring::before {
@@ -46,12 +45,10 @@
   .restaurant-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(201,168,76,.65); letter-spacing:.12em; margin-top:4px; }
   .holambra-tag { display:inline-block; margin-top:8px; font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(247,241,232,.35); border-top:1px solid rgba(201,168,76,.2); padding-top:6px; }
 
-  /* DIVIDER */
   .divider { display:flex; align-items:center; gap:10px; padding:0 24px; margin:4px 0 20px; }
   .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
   .divider-diamond { width:6px; height:6px; background:var(--gold); transform:rotate(45deg); }
 
-  /* EVENT BANNER */
   .event-banner {
     margin:0 16px 20px;
     background:linear-gradient(135deg,rgba(107,26,26,.9),rgba(139,32,32,.7));
@@ -71,7 +68,6 @@
   .event-meta { font-size:.75rem; color:rgba(247,241,232,.6); margin-top:2px; }
   .event-price { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); font-weight:700; }
 
-  /* STATS */
   .stats-bar { display:flex; gap:8px; padding:0 16px 20px; flex-wrap:wrap; }
   .stat-card { flex:1; min-width:60px; background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.2); border-radius:10px; padding:10px 8px; text-align:center; }
   .stat-num { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--gold2); line-height:1; }
@@ -80,7 +76,6 @@
   .stat-card.pending .stat-num { color:#e8a84c; }
   .stat-card.debt .stat-num { color:#e85c4c; }
 
-  /* MAIN BUTTONS */
   .main-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:0 16px 20px; }
   .main-btn {
     position:relative; border:none; cursor:pointer; border-radius:16px;
@@ -106,12 +101,10 @@
   .btn-cardapio { --btn-bg:linear-gradient(145deg,#0d1a3a,#152d5c); }
   .btn-mesas    { --btn-bg:linear-gradient(145deg,#2d1a0d,#5c3a15); }
 
-  /* PAGES */
   .page { display:none; padding:0 0 80px; animation:page-in .35s cubic-bezier(.22,1,.36,1); }
   .page.active { display:block; }
   @keyframes page-in { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 
-  /* PAGE HEADER */
   .page-header {
     display:flex; align-items:center; gap:12px;
     padding:16px 16px 12px; border-bottom:1px solid rgba(201,168,76,.15); margin-bottom:16px;
@@ -125,19 +118,16 @@
   .back-btn:hover { background:rgba(201,168,76,.22); }
   .page-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--gold2); flex:1; }
 
-  /* SEARCH */
   .search-wrap { padding:0 16px 12px; position:sticky; top:68px; z-index:9; background:rgba(10,5,5,.9); backdrop-filter:blur(8px); }
   .search-box { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); border-radius:12px; padding:10px 14px; }
-  .search-box input { flex:1; background:none; border:none; outline:none; color:var(--cream); font-family:'Inter',sans-serif; font-size:.9rem; }
+  .search-box input { flex:1; background:none; border:none; outline:none; color:var(--cream); font-family:'Inter',sans-serif; font-size:16px; }
   .search-box input::placeholder { color:rgba(247,241,232,.35); }
 
-  /* FILTER PILLS */
   .filter-pills { display:flex; gap:8px; padding:0 16px 14px; overflow-x:auto; scrollbar-width:none; }
   .filter-pills::-webkit-scrollbar { display:none; }
   .pill { padding:6px 14px; border-radius:20px; border:1px solid rgba(201,168,76,.25); font-size:.75rem; cursor:pointer; white-space:nowrap; transition:all .2s; color:rgba(247,241,232,.6); background:transparent; }
   .pill.active { background:var(--gold); color:var(--dark); border-color:var(--gold); font-weight:600; }
 
-  /* RESERVATION CARDS */
   .reservations-list { padding:0 16px; display:flex; flex-direction:column; gap:10px; }
   .res-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.18); border-radius:14px; overflow:hidden; cursor:pointer; transition:border-color .2s,transform .2s; }
   .res-card:active { transform:scale(.99); }
@@ -157,12 +147,74 @@
   .res-time { font-size:.7rem; color:rgba(201,168,76,.7); font-family:'Playfair Display',serif; }
   .res-mesa { font-size:.7rem; color:rgba(247,241,232,.4); }
 
-  /* DETAIL */
+  .mesa-destaque {
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(0,0,0,.4);
+    position:relative;
+    flex-shrink:0;
+  }
+  .mesa-destaque::before {
+    content:''; position:absolute; inset:-3px; border-radius:50%;
+    background:conic-gradient(var(--gold), var(--wine2), var(--italy-g), var(--gold2), var(--italy-r), var(--gold));
+    animation: mesa-girar 2s linear infinite;
+    z-index:0;
+  }
+  .mesa-destaque::after {
+    content:''; position:absolute; inset:0px; border-radius:50%;
+    background:rgba(20,10,10,.8); z-index:1;
+  }
+  @keyframes mesa-girar { to { transform: rotate(360deg); } }
+  .mesa-destaque .mesa-numero {
+    position:relative; z-index:2;
+    font-family:'Playfair Display',serif;
+    font-size:1.1rem; font-weight:700;
+    color:var(--gold2);
+    text-shadow:0 0 12px var(--gold);
+    line-height:1;
+  }
+  .mesa-destaque-sem {
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(255,255,255,.03); border:1px dashed rgba(201,168,76,.2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.7rem; color:rgba(247,241,232,.3);
+    flex-shrink:0;
+  }
+
+  .mesa-detail-box {
+    margin:12px 0 8px;
+    background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(107,26,26,.2));
+    border:1px solid rgba(201,168,76,.5);
+    border-radius:12px;
+    padding:12px 16px;
+    display:flex; align-items:center; gap:12px;
+    position:relative; overflow:hidden;
+  }
+  .mesa-detail-box::before {
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background:linear-gradient(45deg,transparent 40%,rgba(201,168,76,.08) 50%,transparent 60%);
+    animation:shimmer-banner 4s ease-in-out infinite;
+  }
+  .mesa-detail-icon {
+    width:48px; height:48px; border-radius:50%;
+    background:rgba(0,0,0,.5); border:2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; position:relative; z-index:1;
+  }
+  .mesa-detail-num {
+    font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700;
+    color:var(--gold2); text-shadow:0 0 15px var(--gold);
+    position:relative; z-index:1;
+  }
+  .mesa-detail-label {
+    font-size:.7rem; text-transform:uppercase; letter-spacing:.1em;
+    color:rgba(201,168,76,.7); position:relative; z-index:1;
+  }
+
   .res-detail { display:none; padding:0 14px 14px; border-top:1px solid rgba(201,168,76,.15); animation:detail-in .28s ease; }
   @keyframes detail-in { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
   .res-card.expanded .res-detail { display:block; }
 
-  /* SALDO DEVEDOR BOX */
   .debt-box {
     margin:12px 0 8px;
     background:linear-gradient(135deg,rgba(232,92,76,.15),rgba(139,32,32,.2));
@@ -174,26 +226,22 @@
   .debt-box.cleared { background:rgba(76,175,125,.1); border-color:rgba(76,175,125,.3); }
   .debt-box.cleared .debt-val { color:#4caf7d; }
 
-  /* DETAIL GRID */
   .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
   .detail-item label { font-size:.6rem; text-transform:uppercase; letter-spacing:.12em; color:rgba(201,168,76,.55); display:block; margin-bottom:3px; }
   .detail-item .dval { font-size:.9rem; color:var(--cream); font-family:'Cormorant Garamond',serif; }
 
-  /* INLINE EDIT */
   .edit-row { display:flex; gap:8px; margin-top:10px; }
-  .edit-input { flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(201,168,76,.3); border-radius:8px; padding:8px 12px; color:var(--cream); font-family:'Inter',sans-serif; font-size:.85rem; outline:none; transition:border-color .2s; }
+  .edit-input { flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(201,168,76,.3); border-radius:8px; padding:8px 12px; color:var(--cream); font-family:'Inter',sans-serif; font-size:16px; outline:none; transition:border-color .2s; }
   .edit-input:focus { border-color:var(--gold); }
   .edit-input::placeholder { color:rgba(247,241,232,.3); }
-  .save-mesa-btn { background:linear-gradient(135deg,var(--wine),var(--wine2)); border:1px solid rgba(201,168,76,.4); border-radius:8px; padding:8px 14px; color:var(--gold2); font-size:.8rem; cursor:pointer; font-weight:600; transition:opacity .2s; white-space:nowrap; }
+  .save-mesa-btn { background:linear-gradient(135deg,var(--wine),var(--wine2)); border:1px solid rgba(201,168,76,.4); border-radius:8px; padding:8px 14px; color:var(--gold2); font-size:16px; cursor:pointer; font-weight:600; transition:opacity .2s; white-space:nowrap; }
   .save-mesa-btn:active { opacity:.7; }
 
-  /* QUICK ACTIONS */
-  .quick-actions { display:flex; gap:8px; margin-top:10px; }
-  .qa-btn { flex:1; padding:8px; border-radius:8px; font-size:.78rem; cursor:pointer; border:1px solid rgba(201,168,76,.25); background:rgba(255,255,255,.05); color:var(--cream); transition:all .2s; }
+  .quick-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .qa-btn { flex:1; min-width:80px; padding:8px; border-radius:8px; font-size:.78rem; cursor:pointer; border:1px solid rgba(201,168,76,.25); background:rgba(255,255,255,.05); color:var(--cream); transition:all .2s; }
   .qa-btn:active { opacity:.7; }
   .qa-btn.green { border-color:rgba(76,175,125,.35); background:rgba(76,175,125,.1); color:#4caf7d; }
 
-  /* EDIT MODAL */
   .modal-overlay {
     position:fixed; inset:0; z-index:100;
     background:rgba(0,0,0,.75); backdrop-filter:blur(6px);
@@ -213,11 +261,10 @@
   .modal-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--gold2); margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; }
   .modal-close { width:30px; height:30px; background:rgba(255,255,255,.08); border:none; border-radius:50%; color:var(--cream); font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 
-  /* FORM */
   .form-section { padding:0 16px; }
   .form-group { margin-bottom:18px; }
   .form-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.15em; color:rgba(201,168,76,.65); display:block; margin-bottom:7px; }
-  .form-input { width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); border-radius:10px; padding:12px 14px; color:var(--cream); font-family:'Inter',sans-serif; font-size:.95rem; outline:none; transition:border-color .2s,background .2s; }
+  .form-input { width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); border-radius:10px; padding:12px 14px; color:var(--cream); font-family:'Inter',sans-serif; font-size:16px; outline:none; transition:border-color .2s,background .2s; }
   .form-input:focus { border-color:var(--gold); background:rgba(255,255,255,.09); }
   .form-input::placeholder { color:rgba(247,241,232,.3); }
   .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -229,14 +276,12 @@
   .submit-btn::after { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent); animation:btn-shine 2.5s ease-in-out infinite; }
   @keyframes btn-shine { to { left:200%; } }
 
-  /* VALOR PAGO HELPER */
   .valor-helper { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.18); border-radius:8px; padding:10px 12px; margin-top:8px; font-size:.8rem; display:flex; justify-content:space-between; align-items:center; }
   .valor-helper .vh-label { color:rgba(247,241,232,.5); }
   .valor-helper .vh-val { font-family:'Playfair Display',serif; font-size:.95rem; }
   .vh-val.green { color:#4caf7d; }
   .vh-val.red   { color:#e85c4c; }
 
-  /* MENU PAGE */
   .menu-page { padding:0 16px 30px; }
   .menu-section { margin-bottom:28px; }
   .menu-section-title { display:flex; align-items:center; gap:10px; font-family:'Playfair Display',serif; font-size:.85rem; text-transform:uppercase; letter-spacing:.2em; color:var(--gold); margin-bottom:14px; }
@@ -248,19 +293,126 @@
   .menu-price-tag .price-val { font-family:'Playfair Display',serif; font-size:2rem; color:var(--gold2); font-weight:700; }
   .menu-price-tag .price-label { font-size:.75rem; color:rgba(247,241,232,.5); letter-spacing:.1em; text-transform:uppercase; margin-top:2px; }
 
-  /* MESAS */
-  .mesa-grid-wrap { padding:0 16px; }
-  .mesa-grid-wrap h3 { font-family:'Playfair Display',serif; font-size:.85rem; color:rgba(201,168,76,.6); text-transform:uppercase; letter-spacing:.15em; margin-bottom:14px; }
-  .mesa-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:24px; }
-  .mesa-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.15); border-radius:12px; padding:12px 14px; }
-  .mesa-card.occupied { border-color:rgba(201,168,76,.4); background:rgba(107,26,26,.2); }
-  .mesa-card .m-num { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--gold2); font-weight:700; }
-  .mesa-card .m-name { font-size:.8rem; color:var(--cream); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .mesa-card .m-time { font-size:.7rem; color:rgba(201,168,76,.6); margin-top:2px; }
-  .mesa-card .m-pax { font-size:.7rem; color:rgba(247,241,232,.4); margin-top:1px; }
+  /* ========= NOVO MAPA DE MESAS VISUAL ========= */
+  .mesa-grid-visual {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    padding: 0 16px 24px;
+  }
+  .mesa-card-visual {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 16px;
+    padding: 12px 10px 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+  }
+  .mesa-card-visual.ocupada {
+    border-color: rgba(201,168,76,0.5);
+    background: rgba(107,26,26,0.15);
+    box-shadow: 0 4px 20px rgba(201,168,76,0.08);
+  }
+  .mesa-card-visual.disponivel {
+    border-style: dashed;
+    opacity: 0.6;
+  }
+  .mesa-drawing-wrapper {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mesa-drawing {
+    position: relative;
+    width: 70px;
+    height: 50px;
+    background: linear-gradient(145deg, #5c3a15, #8b5e3c);
+    border-radius: 8px;
+    border: 2px solid #c9a84c;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 3px rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .mesa-drawing .mesa-numero-visual {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #E8C97A;
+    text-shadow: 0 0 10px rgba(201,168,76,0.8);
+    line-height: 1;
+  }
+  .cadeira {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(201,168,76,0.45);
+    border-radius: 3px;
+    z-index: 1;
+    transition: background 0.2s;
+  }
+  .mesa-card-visual.ocupada .cadeira {
+    background: rgba(201,168,76,0.12);
+  }
+  .cadeira.c-top { top: 6px; left: 50%; transform: translateX(-50%); }
+  .cadeira.c-bottom { bottom: 6px; left: 50%; transform: translateX(-50%); }
+  .cadeira.c-left { left: 6px; top: 50%; transform: translateY(-50%); }
+  .cadeira.c-right { right: 6px; top: 50%; transform: translateY(-50%); }
+  .status-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #1a0a0a;
+    z-index: 3;
+  }
+  .status-dot.pago { background: #4caf7d; }
+  .status-dot.parcial { background: #e8904c; }
+  .status-dot.pendente { background: #e8a84c; }
+  .mesa-info-visual { margin-top: 4px; }
+  .mesa-info-visual .mesa-nome {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: var(--cream);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mesa-info-visual .mesa-nome.livre {
+    color: rgba(247,241,232,0.35);
+    font-style: italic;
+  }
+  .mesa-info-visual .mesa-horario {
+    font-size: 0.7rem;
+    color: rgba(201,168,76,0.7);
+    font-family: 'Playfair Display', serif;
+    margin-top: 2px;
+  }
+  .legenda-mesas {
+    display: flex;
+    gap: 16px;
+    padding: 0 16px 16px;
+    flex-wrap: wrap;
+    font-size: 0.7rem;
+    color: rgba(247,241,232,0.5);
+  }
+  .legenda-item { display: flex; align-items: center; gap: 6px; }
+  .legenda-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legenda-dot.pago { background: #4caf7d; }
+  .legenda-dot.parcial { background: #e8904c; }
+  .legenda-dot.pendente { background: #e8a84c; }
 
-  /* RESUMO FINANCEIRO */
-  .financeiro-box { margin:0 16px 20px; }
   .fin-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.2); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
   .fin-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
   .fin-row:last-child { margin-bottom:0; }
@@ -269,7 +421,6 @@
   .fin-total { font-size:1.15rem; color:var(--gold2); border-top:1px solid rgba(201,168,76,.2); padding-top:10px; margin-top:4px; }
   .fin-total .fin-label { color:rgba(201,168,76,.7); }
 
-  /* TOAST */
   .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:linear-gradient(135deg,var(--wine),var(--wine2)); border:1px solid rgba(201,168,76,.5); border-radius:12px; padding:12px 20px; color:var(--gold2); font-size:.85rem; font-family:'Playfair Display',serif; z-index:999; transition:transform .35s cubic-bezier(.22,1,.36,1); white-space:nowrap; }
   .toast.show { transform:translateX(-50%) translateY(0); }
 
@@ -470,21 +621,26 @@
     <div class="back-btn" onclick="showPage('home')">◀</div>
     <div class="page-title">🪑 Mapa de Mesas</div>
   </div>
-  <div class="mesa-grid-wrap">
-    <h3>Mesas Ocupadas</h3>
-    <div class="mesa-grid" id="mesa-occupied"></div>
-    <h3>Sem Mesa Definida</h3>
-    <div class="mesa-grid" id="mesa-free"></div>
+  <div style="padding:0 16px 8px;display:flex;gap:8px;">
+    <button class="qa-btn" onclick="criarMesa()" style="flex:1;background:rgba(76,175,125,0.1);border-color:rgba(76,175,125,0.3);color:#4caf7d;">➕ Criar Mesa</button>
+    <button class="qa-btn" onclick="excluirMesa()" style="flex:1;background:rgba(232,92,76,0.1);border-color:rgba(232,92,76,0.3);color:#e85c4c;">🗑️ Excluir Mesa</button>
   </div>
-  <div class="financeiro-box">
+  <div style="padding:0 16px 12px;font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(201,168,76,.6);text-transform:uppercase;letter-spacing:.15em;">Todas as Mesas</div>
+  <div class="mesa-grid-visual" id="mesa-grid"></div>
+  <div class="legenda-mesas">
+    <span>Legenda:</span>
+    <div class="legenda-item"><div class="legenda-dot pago"></div> Pago</div>
+    <div class="legenda-item"><div class="legenda-dot parcial"></div> Parcial</div>
+    <div class="legenda-item"><div class="legenda-dot pendente"></div> Pendente</div>
+  </div>
+  <div class="financeiro-box" style="padding:0 16px 20px;">
     <div style="font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(201,168,76,.6);text-transform:uppercase;letter-spacing:.15em;margin-bottom:14px;">💰 Resumo Financeiro</div>
     <div class="fin-card" id="fin-resumo"></div>
   </div>
 </div>
 
-</div><!-- /app -->
+</div>
 
-<!-- ══ MODAL EDIÇÃO ══ -->
 <div class="modal-overlay" id="edit-modal" onclick="closeModal(event)">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="modal-title">
@@ -495,373 +651,522 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="confirm-modal" onclick="closeConfirmModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()" style="text-align:center;">
+    <div style="font-size:2rem;margin-bottom:8px;">🗑️</div>
+    <div class="modal-title" style="justify-content:center;">Excluir reserva?</div>
+    <p style="color:rgba(247,241,232,.7);margin-bottom:20px;" id="confirm-msg"></p>
+    <div style="display:flex;gap:10px;">
+      <button class="qa-btn" onclick="closeConfirmModal()" style="flex:1;">Cancelar</button>
+      <button class="qa-btn" id="confirm-delete-btn" style="flex:1;border-color:rgba(232,92,76,.5);background:rgba(232,92,76,.2);color:#e85c4c;">Excluir</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
-<script>
-// ══ PREÇO BASE ══
-const PRECO_CASAL = 329.90;
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getFirestore, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-// ══ DATA ══
-let reservations = [
-  { id:1,  nome:"Lays e Alvaro Finezi",         tel:"19 99348-4480", pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:2,  nome:"Vinicius Boer",                tel:"19 99112-5597", pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:3,  nome:"Renato Goes",                  tel:"24 99241-8044", pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:4,  nome:"Marina e Thomas Kors",         tel:"",              pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:5,  nome:"Gabi e André",                 tel:"",              pax:2, hora:"",      mesa:"", valorPago:0,   valorTotal:329.90, status:"pendente" },
-  { id:6,  nome:"Margareth e Ger",              tel:"",              pax:2, hora:"",      mesa:"", valorPago:0,   valorTotal:329.90, status:"pendente" },
-  { id:7,  nome:"Guilherme e Isabella",         tel:"",              pax:2, hora:"19h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:8,  nome:"Wellington Semensin",          tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:9,  nome:"Thiago Reno Rossi",            tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:10, nome:"Diego e Bia / Thiago e Aline", tel:"",              pax:4, hora:"19h",   mesa:"", valorPago:330, valorTotal:659.80, status:"parcial" },
-  { id:11, nome:"Luiz Guilherme",               tel:"",              pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:12, nome:"Aluísio e Fabiane",            tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:13, nome:"Matheus Panini",               tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:14, nome:"Larissa Carneiro",             tel:"",              pax:2, hora:"20h20", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:15, nome:"Daniel B. Custódio",           tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:16, nome:"Vinicius e Julia Salustiano",  tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:17, nome:"Marcos Leoni Guimarães",       tel:"",              pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:18, nome:"Renato Souza",                 tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:19, nome:"Mateus Finotelli",             tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:100, valorTotal:329.90, status:"parcial" },
-  { id:20, nome:"Leandro e Laura",              tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:0,   valorTotal:329.90, status:"pendente" },
-  { id:21, nome:"Breno Teixeira",               tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-  { id:22, nome:"Guilherme Coser",              tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
-];
+  const firebaseConfig = {
+    apiKey: "AIzaSyAts9fsoZ_GrF3MRHDRlAw61Xti2uBkdnM",
+    authDomain: "staffcheck-d6f20.firebaseapp.com",
+    projectId: "staffcheck-d6f20",
+    storageBucket: "staffcheck-d6f20.firebasestorage.app",
+    messagingSenderId: "1055570421019",
+    appId: "1:1055570421019:web:7b5dcc564bfe1c30189fbe"
+  };
 
-let currentFilter = 'all';
-let newStatus = 'pago';
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const reservasCol = collection(db, 'reservas_marchesini');
+  const mesasCol = collection(db, 'mesas_marchesini');
+  const auth = getAuth(app);
 
-function saldo(r) { return Math.max(0, r.valorTotal - r.valorPago); }
-function fmt(v)   { return 'R$ ' + v.toFixed(2).replace('.',','); }
+  let reservations = [];
+  let mesas = [];
+  let currentFilter = 'all';
+  let newStatus = 'pago';
+  let editStatusVal = 'pago';
+  let selectedDeleteId = null;
 
-// ══ PAGE NAV ══
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  window.scrollTo(0,0);
-  if (id==='reservas') renderReservations();
-  if (id==='home')     renderStats();
-  if (id==='mesas')    renderMesas();
-}
+  const PRECO_CASAL = 329.90;
 
-// ══ STATS ══
-function renderStats() {
-  const total   = reservations.length;
-  const pagos   = reservations.filter(r => r.status==='pago').length;
-  const pend    = reservations.filter(r => r.status==='pendente').length;
-  const pax     = reservations.reduce((s,r) => s+r.pax, 0);
-  const arrecadado = reservations.reduce((s,r) => s+r.valorPago, 0);
-  const falta      = reservations.reduce((s,r) => s+saldo(r), 0);
+  function saldo(r) { return Math.max(0, r.valorTotal - r.valorPago); }
+  function fmt(v)   { return 'R$ ' + v.toFixed(2).replace('.',','); }
 
-  document.getElementById('stats-bar').innerHTML = `
-    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Reservas</div></div>
-    <div class="stat-card paid"><div class="stat-num">${pagos}</div><div class="stat-label">Pagos</div></div>
-    <div class="stat-card pending"><div class="stat-num">${pend}</div><div class="stat-label">Pendentes</div></div>
-    <div class="stat-card"><div class="stat-num">${pax}</div><div class="stat-label">Pessoas</div></div>
-    <div class="stat-card debt"><div class="stat-num" style="font-size:.95rem">${fmt(falta)}</div><div class="stat-label">Falta</div></div>
-  `;
-  document.getElementById('btn-count-total').textContent = `${total} reservas · ${pax} pessoas`;
-}
-renderStats();
+  async function inicializar() {
+    try {
+      await signInAnonymously(auth);
+      console.log('✅ Autenticado');
+    } catch(e) {
+      console.warn('⚠️ Autenticação falhou:', e.message);
+    }
 
-// ══ RENDER RESERVAS ══
-function renderReservations() {
-  const query = (document.getElementById('search-input')?.value||'').toLowerCase();
-  let list = reservations.filter(r => {
-    if (query && !r.nome.toLowerCase().includes(query)) return false;
-    if (currentFilter==='paid'    && r.status!=='pago')     return false;
-    if (currentFilter==='pending' && r.status!=='pendente') return false;
-    if (currentFilter==='partial' && r.status!=='parcial')  return false;
-    if (currentFilter==='19h' && !r.hora.startsWith('19'))  return false;
-    if (currentFilter==='20h' && !r.hora.startsWith('20'))  return false;
-    return true;
-  });
+    // Inicializar mesas padrão se vazio
+    const snapMesas = await getDocs(mesasCol);
+    if (snapMesas.empty) {
+      const padrao = [];
+      for (let i=1; i<=28; i++) padrao.push(i.toString());
+      [31,32,33,34,100,101,102,103,104].forEach(i => padrao.push(i.toString()));
+      for (const num of padrao) {
+        await addDoc(mesasCol, { numero: num, capacidade: 4 });
+      }
+    }
 
-  const container = document.getElementById('reservations-list');
-  if (!list.length) {
-    container.innerHTML = `<div style="text-align:center;padding:40px;color:rgba(247,241,232,.4);font-style:italic;">Nenhuma reserva encontrada</div>`;
-    return;
+    // Seed reservas
+    const snapRes = await getDocs(reservasCol);
+    if (snapRes.empty) {
+      const dados = [
+        ["Lays e Alvaro Finezi","19993484480",2,"","",329.90,165.00],
+        ["Vinicius Boer","19991125597",2,"","",329.90,165.00],
+        ["Renato Goes","24992418044",2,"","",329.90,165.00],
+        ["Marina e Thomas Kors","",2,"","",329.90,165.00],
+        ["Gabi e André","",2,"","",329.90,0.00],
+        ["Margareth e Ger","",2,"","",329.90,0.00],
+        ["Guilherme e Isabella","",2,"19h","",329.90,165.00],
+        ["Wellington Semensin","",2,"20h","",329.90,165.00],
+        ["Thiago Reno Rossi","",2,"20h","",329.90,165.00],
+        ["Diego e Bia / Thiago e Aline","",4,"19h","",659.80,330.00],
+        ["Luiz Guilherme","",2,"","",329.90,165.00],
+        ["Aluísio e Fabiane","",2,"20h","",329.90,165.00],
+        ["Matheus Panini","",2,"19h30","",329.90,165.00],
+        ["Larissa Carneiro","",2,"20h20","",329.90,165.00],
+        ["Daniel B. Custódio","",2,"19h30","",329.90,165.00],
+        ["Vinicius e Julia Salustiano","",2,"19h30","",329.90,165.00],
+        ["Marcos Leoni Guimarães","",2,"","",329.90,165.00],
+        ["Renato Souza","",2,"20h","",329.90,165.00],
+        ["Mateus Finotelli","",2,"19h30","",329.90,100.00],
+        ["Leandro e Laura","",2,"20h","",329.90,0.00],
+        ["Breno Bonfim e Patrícia","",2,"19h30","",329.90,0.00],
+        ["Guilherme Coser","",2,"19h30","",329.90,165.00]
+      ];
+      for (const [nome,tel,pax,hora,mesa,vt,vp] of dados) {
+        let status = vp>=vt?'pago':(vp>0?'parcial':'pendente');
+        await addDoc(reservasCol, {nome,tel,pax,hora,mesa,valorTotal:vt,valorPago:vp,status});
+      }
+    }
+
+    // Sincronização em tempo real
+    onSnapshot(reservasCol, snap => {
+      reservations = snap.docs.map(d => ({id:d.id, ...d.data()}));
+      renderAll();
+      updateHomeBadge();
+    });
+    onSnapshot(mesasCol, snap => {
+      mesas = snap.docs.map(d => ({id:d.id, ...d.data()}));
+      if (document.getElementById('page-mesas').classList.contains('active')) renderMesas();
+    });
+
+    renderAll();
   }
 
-  container.innerHTML = list.map(r => {
-    const dev = saldo(r);
-    const badgeClass = r.status==='pago' ? 'yes' : r.status==='parcial' ? 'partial' : 'no';
-    const badgeText  = r.status==='pago' ? '✅ PAGO' : r.status==='parcial' ? '💳 PARCIAL' : '⏳ PENDENTE';
-    return `
-    <div class="res-card" id="card-${r.id}" onclick="toggleCard(${r.id})">
-      <div class="res-card-front">
-        <div class="res-num">${r.id}</div>
-        <div class="res-main">
-          <div class="res-name">${r.nome}</div>
-          <div class="res-meta">
-            <span>👥 ${r.pax} ${r.pax===1?'pessoa':'pessoas'}</span>
-            ${r.hora ? `<span class="sep">·</span><span>🕐 ${r.hora}</span>` : ''}
-            ${dev>0 ? `<span class="sep">·</span><span style="color:#e85c4c">falta ${fmt(dev)}</span>` : ''}
-          </div>
-        </div>
-        <div class="res-right">
-          <span class="badge-paid ${badgeClass}">${badgeText}</span>
-          ${r.hora ? `<span class="res-time">${r.hora}</span>` : ''}
-          <span class="res-mesa">${r.mesa ? '🪑 Mesa '+r.mesa : '⬜ S/ mesa'}</span>
-        </div>
-      </div>
-      <div class="res-detail" id="detail-${r.id}">
-        ${dev>0 ? `
-        <div class="debt-box${dev===0?' cleared':''}">
-          <div>
-            <div class="debt-label">Pago</div>
-            <div style="font-family:'Playfair Display',serif;font-size:.95rem;color:#4caf7d">${fmt(r.valorPago)}</div>
-          </div>
-          <div style="text-align:center">
-            <div class="debt-label">Total</div>
-            <div style="font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold2)">${fmt(r.valorTotal)}</div>
-          </div>
-          <div style="text-align:right">
-            <div class="debt-label">Falta pagar</div>
-            <div class="debt-val">${fmt(dev)}</div>
-          </div>
-        </div>` : `
-        <div class="debt-box cleared" style="margin:12px 0 8px">
-          <div class="debt-label">Pagamento completo ✅</div>
-          <div class="debt-val" style="color:#4caf7d">${fmt(r.valorPago)}</div>
-        </div>`}
-
-        <div class="detail-grid">
-          <div class="detail-item"><label>Nome</label><div class="dval">${r.nome}</div></div>
-          <div class="detail-item"><label>Telefone</label><div class="dval">${r.tel||'—'}</div></div>
-          <div class="detail-item"><label>Pessoas</label><div class="dval">${r.pax}</div></div>
-          <div class="detail-item"><label>Horário</label><div class="dval">${r.hora||'—'}</div></div>
-          <div class="detail-item"><label>Valor pago</label><div class="dval" style="color:var(--gold)">${fmt(r.valorPago)}</div></div>
-          <div class="detail-item"><label>Status</label><div class="dval" style="color:${r.status==='pago'?'#4caf7d':r.status==='parcial'?'#e8904c':'#e8a84c'}">${badgeText}</div></div>
-        </div>
-
-        <div class="edit-row" onclick="event.stopPropagation()">
-          <input class="edit-input" id="mesa-input-${r.id}" type="text" value="${r.mesa}" placeholder="Número da mesa...">
-          <button class="save-mesa-btn" onclick="saveMesa(${r.id})">Salvar Mesa</button>
-        </div>
-
-        <div class="quick-actions" onclick="event.stopPropagation()">
-          <button class="qa-btn" onclick="openEditModal(${r.id})">✏️ Editar tudo</button>
-          <button class="qa-btn" onclick="cycleStatus(${r.id})">${r.status==='pago'?'↩️ Pendente':r.status==='parcial'?'✅ Marcar pago':'💳 Parcial'}</button>
-          ${r.tel ? `<button class="qa-btn green" onclick="window.open('tel:${r.tel.replace(/\D/g,'')}')">📞 Ligar</button>` : ''}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function toggleCard(id) {
-  const card = document.getElementById('card-'+id);
-  const was  = card.classList.contains('expanded');
-  document.querySelectorAll('.res-card.expanded').forEach(c=>c.classList.remove('expanded'));
-  if (!was) card.classList.add('expanded');
-}
-
-function saveMesa(id) {
-  event.stopPropagation();
-  const val = document.getElementById('mesa-input-'+id).value.trim();
-  const r   = reservations.find(x=>x.id===id);
-  if (r) { r.mesa=val; renderReservations(); renderMesas(); showToast(val?`Mesa ${val} → ${r.nome.split(' ')[0]}`:'Mesa removida'); }
-}
-
-function cycleStatus(id) {
-  event.stopPropagation();
-  const r = reservations.find(x=>x.id===id);
-  if (!r) return;
-  const cycle = { pago:'pendente', pendente:'parcial', parcial:'pago' };
-  r.status = cycle[r.status];
-  if (r.status==='pago') r.valorPago = r.valorTotal;
-  if (r.status==='pendente') r.valorPago = 0;
-  renderReservations(); renderStats();
-  showToast(r.status==='pago'?'✅ Pago!':r.status==='parcial'?'💳 Parcial':'⏳ Pendente');
-}
-
-function setFilter(f,el) {
-  currentFilter=f;
-  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active'); renderReservations();
-}
-function filterReservations() { renderReservations(); }
-
-// ══ EDIT MODAL ══
-function openEditModal(id) {
-  event.stopPropagation();
-  const r = reservations.find(x=>x.id===id);
-  if (!r) return;
-  document.getElementById('modal-body').innerHTML = `
-    <div class="form-group"><label class="form-label">Nome</label>
-      <input class="form-input" id="e-nome" value="${r.nome}" placeholder="Nome do casal"></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Telefone</label>
-        <input class="form-input" id="e-tel" value="${r.tel}" placeholder="(19) 99999-9999"></div>
-      <div class="form-group"><label class="form-label">Nº pessoas</label>
-        <input class="form-input" id="e-pax" type="number" value="${r.pax}" min="1" max="20"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Horário</label>
-        <input class="form-input" id="e-hora" value="${r.hora}" placeholder="19h30"></div>
-      <div class="form-group"><label class="form-label">Mesa</label>
-        <input class="form-input" id="e-mesa" value="${r.mesa}" placeholder="—"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Valor total (R$)</label>
-        <input class="form-input" id="e-total" type="number" value="${r.valorTotal}" oninput="updateEditSaldo()"></div>
-      <div class="form-group"><label class="form-label">Valor pago (R$)</label>
-        <input class="form-input" id="e-pago" type="number" value="${r.valorPago}" oninput="updateEditSaldo()"></div>
-    </div>
-    <div class="valor-helper" id="edit-saldo-box">
-      <span class="vh-label">Saldo devedor:</span>
-      <span class="vh-val" id="edit-saldo-val">—</span>
-    </div>
-    <div class="form-group" style="margin-top:16px"><label class="form-label">Status</label>
-      <div class="toggle-group">
-        <div class="toggle-opt ${r.status==='pago'?'selected':''}"    id="et-pago"     onclick="selectEditStatus('pago')">✅ Pago</div>
-        <div class="toggle-opt ${r.status==='parcial'?'selected':''}" id="et-parcial"  onclick="selectEditStatus('parcial')">💳 Parcial</div>
-        <div class="toggle-opt ${r.status==='pendente'?'selected':''}"id="et-pendente" onclick="selectEditStatus('pendente')">⏳ Pendente</div>
-      </div>
-    </div>
-    <button class="submit-btn" onclick="saveEditModal(${id})">💾 Salvar Alterações</button>
-  `;
-  document.getElementById('edit-modal').classList.add('open');
-  updateEditSaldo();
-}
-
-function updateEditSaldo() {
-  const total = parseFloat(document.getElementById('e-total')?.value)||0;
-  const pago  = parseFloat(document.getElementById('e-pago')?.value)||0;
-  const dev   = Math.max(0, total-pago);
-  const box   = document.getElementById('edit-saldo-box');
-  const val   = document.getElementById('edit-saldo-val');
-  if (box && val) {
-    box.style.display='flex';
-    val.textContent = fmt(dev);
-    val.className   = 'vh-val ' + (dev===0?'green':'red');
+  function renderAll() {
+    renderStats();
+    if (document.getElementById('page-reservas').classList.contains('active')) renderReservations();
+    if (document.getElementById('page-mesas').classList.contains('active')) renderMesas();
   }
-}
 
-let editStatusVal = 'pago';
-function selectEditStatus(s) {
-  editStatusVal = s;
-  ['pago','parcial','pendente'].forEach(x => {
-    document.getElementById('et-'+x)?.classList.toggle('selected', x===s);
-  });
-}
-
-function saveEditModal(id) {
-  const r = reservations.find(x=>x.id===id);
-  if (!r) return;
-  r.nome       = document.getElementById('e-nome').value.trim() || r.nome;
-  r.tel        = document.getElementById('e-tel').value.trim();
-  r.pax        = parseInt(document.getElementById('e-pax').value)||r.pax;
-  r.hora       = document.getElementById('e-hora').value.trim();
-  r.mesa       = document.getElementById('e-mesa').value.trim();
-  r.valorTotal = parseFloat(document.getElementById('e-total').value)||r.valorTotal;
-  r.valorPago  = parseFloat(document.getElementById('e-pago').value)||0;
-  r.status     = editStatusVal;
-  closeEditModal();
-  renderReservations(); renderStats(); renderMesas();
-  showToast(`✅ ${r.nome.split(' ')[0]} atualizado!`);
-}
-
-function closeEditModal() { document.getElementById('edit-modal').classList.remove('open'); }
-function closeModal(e)    { if (e.target===document.getElementById('edit-modal')) closeEditModal(); }
-
-// ══ NOVA RESERVA ══
-function calcValorHelper() {
-  const total = parseFloat(document.getElementById('f-total')?.value)||0;
-  const pago  = parseFloat(document.getElementById('f-valor')?.value)||0;
-  const dev   = Math.max(0, total-pago);
-  const box   = document.getElementById('valor-helper');
-  const saldoEl = document.getElementById('vh-saldo');
-  if (pago>0 || total>0) {
-    box.style.display='flex';
-    saldoEl.textContent = fmt(dev);
-    saldoEl.className   = 'vh-val ' + (dev===0?'green':'red');
-  } else {
-    box.style.display='none';
+  function updateHomeBadge() {
+    const total = reservations.length;
+    const pax = reservations.reduce((s,r) => s + r.pax, 0);
+    document.getElementById('btn-count-total').textContent = `${total} reservas · ${pax} pessoas`;
   }
-}
 
-function togglePago(val) {
-  newStatus=val;
-  ['pago','parcial','pendente'].forEach(x => {
-    document.getElementById('tog-'+x).classList.toggle('selected', x===val);
+  window.showPage = function(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-'+id).classList.add('active');
+    window.scrollTo(0,0);
+    renderAll();
+  };
+
+  function renderStats() {
+    const total = reservations.length;
+    const pagos = reservations.filter(r => r.status==='pago').length;
+    const pend = reservations.filter(r => r.status==='pendente').length;
+    const pax = reservations.reduce((s,r) => s+r.pax, 0);
+    const falta = reservations.reduce((s,r) => s+saldo(r), 0);
+    document.getElementById('stats-bar').innerHTML = `
+      <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Reservas</div></div>
+      <div class="stat-card paid"><div class="stat-num">${pagos}</div><div class="stat-label">Pagos</div></div>
+      <div class="stat-card pending"><div class="stat-num">${pend}</div><div class="stat-label">Pendentes</div></div>
+      <div class="stat-card"><div class="stat-num">${pax}</div><div class="stat-label">Pessoas</div></div>
+      <div class="stat-card debt"><div class="stat-num" style="font-size:.95rem">${fmt(falta)}</div><div class="stat-label">Falta</div></div>
+    `;
+  }
+
+  function renderReservations() {
+    const query = (document.getElementById('search-input')?.value||'').toLowerCase();
+    let list = reservations.filter(r => {
+      if (query && !r.nome.toLowerCase().includes(query)) return false;
+      if (currentFilter==='paid'    && r.status!=='pago')     return false;
+      if (currentFilter==='pending' && r.status!=='pendente') return false;
+      if (currentFilter==='partial' && r.status!=='parcial')  return false;
+      if (currentFilter==='19h' && !r.hora.startsWith('19'))  return false;
+      if (currentFilter==='20h' && !r.hora.startsWith('20'))  return false;
+      return true;
+    });
+
+    const container = document.getElementById('reservations-list');
+    if (!list.length) {
+      container.innerHTML = `<div style="text-align:center;padding:40px;color:rgba(247,241,232,.4);font-style:italic;">Nenhuma reserva encontrada</div>`;
+      return;
+    }
+
+    container.innerHTML = list.map(r => {
+      const dev = saldo(r);
+      const badgeClass = r.status==='pago' ? 'yes' : r.status==='parcial' ? 'partial' : 'no';
+      const badgeText  = r.status==='pago' ? '✅ PAGO' : r.status==='parcial' ? '💳 PARCIAL' : '⏳ PENDENTE';
+      const mesaDestaque = r.mesa 
+        ? `<div class="mesa-destaque"><span class="mesa-numero">${r.mesa}</span></div>`
+        : `<div class="mesa-destaque-sem">⬜</div>`;
+      
+      return `
+      <div class="res-card" id="card-${r.id}" onclick="toggleCard('${r.id}')">
+        <div class="res-card-front">
+          <div class="res-num">${reservations.indexOf(r)+1}</div>
+          <div class="res-main">
+            <div class="res-name">${r.nome}</div>
+            <div class="res-meta">
+              <span>👥 ${r.pax} ${r.pax===1?'pessoa':'pessoas'}</span>
+              ${r.hora ? `<span class="sep">·</span><span>🕐 ${r.hora}</span>` : ''}
+              ${dev>0 ? `<span class="sep">·</span><span style="color:#e85c4c">falta ${fmt(dev)}</span>` : ''}
+            </div>
+          </div>
+          <div class="res-right">
+            <span class="badge-paid ${badgeClass}">${badgeText}</span>
+            ${r.hora ? `<span class="res-time">${r.hora}</span>` : ''}
+          </div>
+          ${mesaDestaque}
+        </div>
+        <div class="res-detail" id="detail-${r.id}">
+          ${r.mesa ? `
+          <div class="mesa-detail-box">
+            <div class="mesa-detail-icon">🪑</div>
+            <div>
+              <div class="mesa-detail-label">Mesa reservada</div>
+              <div class="mesa-detail-num">${r.mesa}</div>
+            </div>
+          </div>` : ''}
+          ${dev>0 ? `
+          <div class="debt-box">
+            <div>
+              <div class="debt-label">Pago</div>
+              <div style="font-family:'Playfair Display',serif;font-size:.95rem;color:#4caf7d">${fmt(r.valorPago)}</div>
+            </div>
+            <div style="text-align:center">
+              <div class="debt-label">Total</div>
+              <div style="font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold2)">${fmt(r.valorTotal)}</div>
+            </div>
+            <div style="text-align:right">
+              <div class="debt-label">Falta pagar</div>
+              <div class="debt-val">${fmt(dev)}</div>
+            </div>
+          </div>` : `
+          <div class="debt-box cleared" style="margin:12px 0 8px">
+            <div class="debt-label">Pagamento completo ✅</div>
+            <div class="debt-val" style="color:#4caf7d">${fmt(r.valorPago)}</div>
+          </div>`}
+
+          <div class="detail-grid">
+            <div class="detail-item"><label>Nome</label><div class="dval">${r.nome}</div></div>
+            <div class="detail-item"><label>Telefone</label><div class="dval">${r.tel||'—'}</div></div>
+            <div class="detail-item"><label>Pessoas</label><div class="dval">${r.pax}</div></div>
+            <div class="detail-item"><label>Horário</label><div class="dval">${r.hora||'—'}</div></div>
+            <div class="detail-item"><label>Valor pago</label><div class="dval" style="color:var(--gold)">${fmt(r.valorPago)}</div></div>
+            <div class="detail-item"><label>Status</label><div class="dval" style="color:${r.status==='pago'?'#4caf7d':r.status==='parcial'?'#e8904c':'#e8a84c'}">${badgeText}</div></div>
+          </div>
+
+          <div class="edit-row" onclick="event.stopPropagation()">
+            <input class="edit-input" id="mesa-input-${r.id}" type="text" value="${r.mesa}" placeholder="Número da mesa...">
+            <button class="save-mesa-btn" onclick="window.saveMesa('${r.id}', event)">Salvar Mesa</button>
+          </div>
+
+          <div class="quick-actions" onclick="event.stopPropagation()">
+            <button class="qa-btn" onclick="window.openEditModal('${r.id}', event)">✏️ Editar tudo</button>
+            <button class="qa-btn" onclick="window.cycleStatus('${r.id}', event)">${r.status==='pago'?'↩️ Pendente':r.status==='parcial'?'✅ Marcar pago':'💳 Parcial'}</button>
+            ${r.tel ? `<button class="qa-btn green" onclick="window.open('tel:${r.tel.replace(/\D/g,'')}')">📞 Ligar</button>` : ''}
+            <button class="qa-btn" style="color:#e85c4c;border-color:rgba(232,92,76,.4);" onclick="window.confirmDelete('${r.id}', event)">🗑️ Excluir</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.toggleCard = function(id) {
+    const card = document.getElementById('card-'+id);
+    if (!card) return;
+    const was = card.classList.contains('expanded');
+    document.querySelectorAll('.res-card.expanded').forEach(c=>c.classList.remove('expanded'));
+    if (!was) card.classList.add('expanded');
+  };
+
+  window.saveMesa = async function(id, event) {
+    if (event) event.stopPropagation();
+    const val = document.getElementById('mesa-input-'+id).value.trim();
+    const r = reservations.find(x=>x.id == id);
+    if (r) {
+      await updateDoc(doc(reservasCol, id), { mesa: val });
+      showToast(val ? `Mesa ${val} → ${r.nome.split(' ')[0]}` : 'Mesa removida');
+    }
+  };
+
+  window.cycleStatus = async function(id, event) {
+    if (event) event.stopPropagation();
+    const r = reservations.find(x=>x.id == id);
+    if (!r) return;
+    const cycle = { pago:'pendente', pendente:'parcial', parcial:'pago' };
+    const newStatus = cycle[r.status];
+    const update = { status: newStatus };
+    if (newStatus === 'pago') update.valorPago = r.valorTotal;
+    if (newStatus === 'pendente') update.valorPago = 0;
+    await updateDoc(doc(reservasCol, id), update);
+    showToast(newStatus==='pago'?'✅ Pago!':newStatus==='parcial'?'💳 Parcial':'⏳ Pendente');
+  };
+
+  window.setFilter = function(f, el) {
+    currentFilter = f;
+    document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active');
+    renderReservations();
+  };
+
+  window.filterReservations = function() { renderReservations(); };
+
+  window.openEditModal = function(id, event) {
+    if (event) event.stopPropagation();
+    const r = reservations.find(x=>x.id == id);
+    if (!r) return;
+    editStatusVal = r.status;
+    document.getElementById('modal-body').innerHTML = `
+      <div class="form-group"><label class="form-label">Nome</label>
+        <input class="form-input" id="e-nome" value="${r.nome}" placeholder="Nome do casal"></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Telefone</label>
+          <input class="form-input" id="e-tel" value="${r.tel}" placeholder="(19) 99999-9999"></div>
+        <div class="form-group"><label class="form-label">Nº pessoas</label>
+          <input class="form-input" id="e-pax" type="number" value="${r.pax}" min="1" max="20"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Horário</label>
+          <input class="form-input" id="e-hora" value="${r.hora}" placeholder="19h30"></div>
+        <div class="form-group"><label class="form-label">Mesa</label>
+          <input class="form-input" id="e-mesa" value="${r.mesa}" placeholder="—"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Valor total (R$)</label>
+          <input class="form-input" id="e-total" type="number" value="${r.valorTotal}" oninput="updateEditSaldo()"></div>
+        <div class="form-group"><label class="form-label">Valor pago (R$)</label>
+          <input class="form-input" id="e-pago" type="number" value="${r.valorPago}" oninput="updateEditSaldo()"></div>
+      </div>
+      <div class="valor-helper" id="edit-saldo-box">
+        <span class="vh-label">Saldo devedor:</span>
+        <span class="vh-val" id="edit-saldo-val">—</span>
+      </div>
+      <div class="form-group" style="margin-top:16px"><label class="form-label">Status</label>
+        <div class="toggle-group">
+          <div class="toggle-opt ${r.status==='pago'?'selected':''}" id="et-pago" onclick="window.selectEditStatus('pago')">✅ Pago</div>
+          <div class="toggle-opt ${r.status==='parcial'?'selected':''}" id="et-parcial" onclick="window.selectEditStatus('parcial')">💳 Parcial</div>
+          <div class="toggle-opt ${r.status==='pendente'?'selected':''}" id="et-pendente" onclick="window.selectEditStatus('pendente')">⏳ Pendente</div>
+        </div>
+      </div>
+      <button class="submit-btn" onclick="window.saveEditModal('${id}')">💾 Salvar Alterações</button>
+    `;
+    document.getElementById('edit-modal').classList.add('open');
+    window.updateEditSaldo();
+  };
+
+  window.updateEditSaldo = function() {
+    const total = parseFloat(document.getElementById('e-total')?.value)||0;
+    const pago  = parseFloat(document.getElementById('e-pago')?.value)||0;
+    const dev   = Math.max(0, total-pago);
+    const box   = document.getElementById('edit-saldo-box');
+    const val   = document.getElementById('edit-saldo-val');
+    if (box && val) {
+      box.style.display='flex';
+      val.textContent = fmt(dev);
+      val.className   = 'vh-val ' + (dev===0?'green':'red');
+    }
+  };
+
+  window.selectEditStatus = function(s) {
+    editStatusVal = s;
+    ['pago','parcial','pendente'].forEach(x => {
+      document.getElementById('et-'+x)?.classList.toggle('selected', x===s);
+    });
+  };
+
+  window.saveEditModal = async function(id) {
+    const r = reservations.find(x=>x.id == id);
+    if (!r) return;
+    const update = {
+      nome: document.getElementById('e-nome').value.trim() || r.nome,
+      tel: document.getElementById('e-tel').value.trim(),
+      pax: parseInt(document.getElementById('e-pax').value)||r.pax,
+      hora: document.getElementById('e-hora').value.trim(),
+      mesa: document.getElementById('e-mesa').value.trim(),
+      valorTotal: parseFloat(document.getElementById('e-total').value)||r.valorTotal,
+      valorPago: parseFloat(document.getElementById('e-pago').value)||0,
+      status: editStatusVal
+    };
+    await updateDoc(doc(reservasCol, id), update);
+    closeEditModal();
+    showToast(`✅ ${update.nome.split(' ')[0]} atualizado!`);
+  };
+
+  window.closeEditModal = function() { document.getElementById('edit-modal').classList.remove('open'); };
+  window.closeModal = function(e) { if (e.target === document.getElementById('edit-modal')) closeEditModal(); };
+
+  window.confirmDelete = function(id, event) {
+    if (event) event.stopPropagation();
+    selectedDeleteId = id;
+    const r = reservations.find(x=>x.id == id);
+    document.getElementById('confirm-msg').textContent = `Tem certeza que deseja excluir a reserva de "${r?.nome}"?`;
+    document.getElementById('confirm-modal').classList.add('open');
+  };
+
+  window.closeConfirmModal = function(e) {
+    if (e && e.target !== document.getElementById('confirm-modal')) return;
+    document.getElementById('confirm-modal').classList.remove('open');
+    selectedDeleteId = null;
+  };
+
+  document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
+    if (selectedDeleteId) {
+      await deleteDoc(doc(reservasCol, selectedDeleteId));
+      document.getElementById('confirm-modal').classList.remove('open');
+      selectedDeleteId = null;
+    }
   });
-}
 
-function addReservation() {
-  const nome  = document.getElementById('f-nome').value.trim();
-  const tel   = document.getElementById('f-tel').value.trim();
-  const pax   = parseInt(document.getElementById('f-pax').value)||2;
-  const hora  = document.getElementById('f-hora').value.trim();
-  const mesa  = document.getElementById('f-mesa').value.trim();
-  const total = parseFloat(document.getElementById('f-total').value)||PRECO_CASAL;
-  const pago  = parseFloat(document.getElementById('f-valor').value)||0;
+  window.calcValorHelper = function() {
+    const total = parseFloat(document.getElementById('f-total')?.value)||0;
+    const pago  = parseFloat(document.getElementById('f-valor')?.value)||0;
+    const dev   = Math.max(0, total-pago);
+    const box   = document.getElementById('valor-helper');
+    const saldoEl = document.getElementById('vh-saldo');
+    if (pago>0 || total>0) {
+      box.style.display='flex';
+      saldoEl.textContent = fmt(dev);
+      saldoEl.className   = 'vh-val ' + (dev===0?'green':'red');
+    } else {
+      box.style.display='none';
+    }
+  };
 
-  if (!nome) { showToast('⚠️ Informe o nome do responsável'); return; }
+  window.togglePago = function(val) {
+    newStatus = val;
+    ['pago','parcial','pendente'].forEach(x => {
+      document.getElementById('tog-'+x).classList.toggle('selected', x===val);
+    });
+  };
 
-  const newId = Math.max(...reservations.map(r=>r.id))+1;
-  reservations.push({ id:newId, nome, tel, pax, hora, mesa, valorPago:pago, valorTotal:total, status:newStatus });
+  window.addReservation = async function() {
+    const nome  = document.getElementById('f-nome').value.trim();
+    const tel   = document.getElementById('f-tel').value.trim();
+    const pax   = parseInt(document.getElementById('f-pax').value)||2;
+    const hora  = document.getElementById('f-hora').value.trim();
+    const mesa  = document.getElementById('f-mesa').value.trim();
+    const total = parseFloat(document.getElementById('f-total').value)||PRECO_CASAL;
+    const pago  = parseFloat(document.getElementById('f-valor').value)||0;
 
-  ['f-nome','f-tel','f-pax','f-hora','f-mesa','f-valor'].forEach(id => document.getElementById(id).value='');
-  document.getElementById('f-total').value = '329.90';
-  document.getElementById('valor-helper').style.display='none';
-  togglePago('pago');
-  renderStats();
-  showToast(`🎉 Reserva de ${nome.split(' ')[0]} confirmada! Falta: ${fmt(Math.max(0,total-pago))}`);
-  setTimeout(()=>showPage('reservas'),900);
-}
+    if (!nome) { showToast('⚠️ Informe o nome do responsável'); return; }
 
-// ══ MESAS ══
-function renderMesas() {
-  const occupied = reservations.filter(r=>r.mesa);
-  const free     = reservations.filter(r=>!r.mesa);
+    const nova = { nome, tel, pax, hora, mesa, valorPago: pago, valorTotal: total, status: newStatus };
+    await addDoc(reservasCol, nova);
+    showToast(`🎉 Reserva de ${nome.split(' ')[0]} confirmada!`);
 
-  document.getElementById('mesa-occupied').innerHTML = occupied.length
-    ? occupied.map(r=>`
-      <div class="mesa-card occupied">
-        <div class="m-num">Mesa ${r.mesa}</div>
-        <div class="m-name">${r.nome}</div>
-        <div class="m-time">${r.hora||'—'}</div>
-        <div class="m-pax">👥 ${r.pax} · ${saldo(r)>0?'<span style="color:#e85c4c">falta '+fmt(saldo(r))+'</span>':'<span style="color:#4caf7d">✅ quitado</span>'}</div>
-      </div>`).join('')
-    : `<div style="grid-column:1/-1;color:rgba(247,241,232,.3);font-style:italic;padding:10px 0;font-size:.85rem;">Nenhuma mesa atribuída ainda</div>`;
+    ['f-nome','f-tel','f-pax','f-hora','f-mesa','f-valor'].forEach(id => document.getElementById(id).value='');
+    document.getElementById('f-total').value = '329.90';
+    document.getElementById('valor-helper').style.display='none';
+    togglePago('pago');
+    setTimeout(() => showPage('reservas'), 900);
+  };
 
-  document.getElementById('mesa-free').innerHTML = free.length
-    ? free.map(r=>`
-      <div class="mesa-card" onclick="showPage('reservas')">
-        <div class="m-num" style="color:rgba(201,168,76,.4);font-size:.95rem;">⬜</div>
-        <div class="m-name">${r.nome}</div>
-        <div class="m-time">${r.hora||'horário não definido'}</div>
-        <div class="m-pax">👥 ${r.pax} · ${saldo(r)>0?'<span style="color:#e85c4c">falta '+fmt(saldo(r))+'</span>':'<span style="color:#4caf7d">✅</span>'}</div>
-      </div>`).join('')
-    : `<div style="grid-column:1/-1;color:rgba(76,175,125,.5);padding:10px 0;font-size:.85rem;">Todas as mesas atribuídas! 🎉</div>`;
+  // ══ NOVO MAPA DE MESAS ══
+  function renderMesas() {
+    const grid = document.getElementById('mesa-grid');
+    if (!mesas.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;color:rgba(247,241,232,.3);padding:20px;">Nenhuma mesa cadastrada.</div>';
+      return;
+    }
 
-  // Resumo financeiro
-  const totalBruto    = reservations.reduce((s,r)=>s+r.valorTotal,0);
-  const totalArrecad  = reservations.reduce((s,r)=>s+r.valorPago,0);
-  const totalFalta    = reservations.reduce((s,r)=>s+saldo(r),0);
-  const quitados      = reservations.filter(r=>saldo(r)===0).length;
-  const parciais      = reservations.filter(r=>saldo(r)>0&&r.valorPago>0).length;
-  const pendentes     = reservations.filter(r=>r.valorPago===0).length;
+    grid.innerHTML = mesas.map(m => {
+      const mesaNum = m.numero;
+      const capacidade = m.capacidade || 4;
+      const reservasNaMesa = reservations.filter(r => r.mesa === mesaNum);
+      const totalPessoas = reservasNaMesa.reduce((s,r) => s + r.pax, 0);
+      const ocupada = reservasNaMesa.length > 0;
+      const statusGeral = ocupada
+        ? (reservasNaMesa.every(r => saldo(r)===0) ? 'pago' : reservasNaMesa.some(r => saldo(r)>0 && r.valorPago>0) ? 'parcial' : 'pendente')
+        : 'disponivel';
+      
+      return `
+      <div class="mesa-card-visual ${ocupada ? 'ocupada' : 'disponivel'}" onclick="toggleMesaDetail('${m.id}')">
+        <div class="mesa-drawing-wrapper">
+          <div class="mesa-drawing">
+            <span class="mesa-numero-visual">${mesaNum}</span>
+            <div class="status-dot ${statusGeral}"></div>
+          </div>
+          <div class="cadeira c-top"></div>
+          <div class="cadeira c-bottom"></div>
+          <div class="cadeira c-left"></div>
+          <div class="cadeira c-right"></div>
+        </div>
+        <div class="mesa-info-visual">
+          <div class="mesa-nome">${ocupada ? reservasNaMesa.map(r => r.nome.split(' ')[0]).join(', ') : 'Livre'}</div>
+          <div class="mesa-horario">${totalPessoas}/${capacidade} pessoas</div>
+        </div>
+        <div id="mesa-detail-${m.id}" style="display:none;margin-top:8px;text-align:left;font-size:0.7rem;">
+          <input class="edit-input" id="capacidade-${m.id}" type="number" value="${capacidade}" placeholder="Capacidade" style="width:60px;display:inline-block;">
+          <button class="save-mesa-btn" onclick="window.salvarCapacidade('${m.id}', event)">Salvar</button>
+          ${reservasNaMesa.length ? `<div style="margin-top:4px;">Reservas: ${reservasNaMesa.map(r => `<div>• ${r.nome} (${r.pax}p)</div>`).join('')}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
 
-  document.getElementById('fin-resumo').innerHTML = `
-    <div class="fin-row"><span class="fin-label">Total esperado</span><span class="fin-val" style="color:var(--gold2)">${fmt(totalBruto)}</span></div>
-    <div class="fin-row"><span class="fin-label">Já arrecadado</span><span class="fin-val" style="color:#4caf7d">${fmt(totalArrecad)}</span></div>
-    <div class="fin-row fin-total"><span class="fin-label">⚠️ Falta receber</span><span class="fin-val" style="color:#e85c4c">${fmt(totalFalta)}</span></div>
-    <div style="border-top:1px solid rgba(201,168,76,.12);margin-top:10px;padding-top:10px;display:flex;gap:14px;justify-content:space-between">
-      <div style="text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#4caf7d">${quitados}</div><div style="font-size:.65rem;color:rgba(247,241,232,.45);text-transform:uppercase;letter-spacing:.1em">Quitados</div></div>
-      <div style="text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#e8904c">${parciais}</div><div style="font-size:.65rem;color:rgba(247,241,232,.45);text-transform:uppercase;letter-spacing:.1em">Parciais</div></div>
-      <div style="text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#e8a84c">${pendentes}</div><div style="font-size:.65rem;color:rgba(247,241,232,.45);text-transform:uppercase;letter-spacing:.1em">Pendentes</div></div>
-    </div>
-  `;
-}
+  window.toggleMesaDetail = function(id) {
+    const el = document.getElementById('mesa-detail-'+id);
+    if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  };
 
-// ══ TOAST ══
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
+  window.salvarCapacidade = async function(id, event) {
+    event.stopPropagation();
+    const val = parseInt(document.getElementById('capacidade-'+id).value)||4;
+    await updateDoc(doc(mesasCol, id), { capacidade: val });
+    showToast(`Capacidade alterada para ${val}`);
+  };
+
+  window.criarMesa = function() {
+    const numero = prompt('Número da nova mesa:');
+    if (numero && !mesas.find(m => m.numero === numero)) {
+      addDoc(mesasCol, { numero, capacidade: 4 });
+      showToast(`Mesa ${numero} criada!`);
+    } else {
+      showToast('Número inválido ou já existe.');
+    }
+  };
+
+  window.excluirMesa = function() {
+    const numero = prompt('Número da mesa a excluir:');
+    const mesa = mesas.find(m => m.numero === numero);
+    if (!mesa) return showToast('Mesa não encontrada.');
+    const temReservas = reservations.some(r => r.mesa === numero);
+    if (temReservas) return showToast('Essa mesa possui reservas. Remova-as primeiro.');
+    deleteDoc(doc(mesasCol, mesa.id));
+    showToast(`Mesa ${numero} excluída.`);
+  };
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),3000);
+  }
+
+  inicializar();
 </script>
 </body>
 </html>
