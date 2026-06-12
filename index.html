@@ -45,6 +45,52 @@
   .restaurant-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(201,168,76,.65); letter-spacing:.12em; margin-top:4px; }
   .holambra-tag { display:inline-block; margin-top:8px; font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(247,241,232,.35); border-top:1px solid rgba(201,168,76,.2); padding-top:6px; }
 
+  /* Crédito do desenvolvedor */
+  .dev-credit {
+    text-align: center;
+    padding: 16px 20px 8px;
+    margin-top: 20px;
+  }
+  .dev-ring {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    background: var(--dark);
+    overflow: hidden;
+  }
+  .dev-ring::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 27px;
+    background: conic-gradient(var(--italy-g), var(--italy-w), var(--italy-r), var(--italy-g));
+    animation: dev-spin 4s linear infinite;
+    z-index: 0;
+  }
+  .dev-ring::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 23px;
+    background: var(--dark);
+    z-index: 1;
+  }
+  @keyframes dev-spin { to { transform: rotate(360deg); } }
+  .dev-text {
+    position: relative;
+    z-index: 2;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--cream);
+    letter-spacing: 0.05em;
+    padding: 0 16px;
+  }
+
   .divider { display:flex; align-items:center; gap:10px; padding:0 24px; margin:4px 0 20px; }
   .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
   .divider-diamond { width:6px; height:6px; background:var(--gold); transform:rotate(45deg); }
@@ -305,13 +351,11 @@
     position: relative;
     cursor: pointer;
   }
-  /* Mesa livre - verde */
   .mesa-card-visual.livre {
     border-color: #2e7d32;
     background: rgba(46,125,50,0.12);
     box-shadow: 0 0 15px rgba(46,125,50,0.2);
   }
-  /* Mesa ocupada - vermelho */
   .mesa-card-visual.ocupada {
     border-color: #c62828;
     background: rgba(198,40,40,0.18);
@@ -342,12 +386,10 @@
     z-index: 1;
     transition: background 0.2s, border-color 0.2s;
   }
-  /* Cadeiras verdes para livre */
   .mesa-card-visual.livre .cadeira {
     background: rgba(46,125,50,0.15);
     border-color: #2e7d32;
   }
-  /* Cadeiras vermelhas para ocupada */
   .mesa-card-visual.ocupada .cadeira {
     background: rgba(198,40,40,0.2);
     border-color: #c62828;
@@ -427,6 +469,11 @@
     <div class="restaurant-name" style="font-style:italic;font-size:1.1rem;color:var(--gold)">di Roverbella</div>
     <div class="restaurant-sub">Ristorante & Forneria</div>
     <div class="holambra-tag">Holambra · SP · Brasil</div>
+    <div class="dev-credit">
+      <div class="dev-ring">
+        <span class="dev-text">Desenvolvido por Heitor Serra Neto</span>
+      </div>
+    </div>
   </header>
   <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
   <div class="event-banner">
@@ -603,7 +650,6 @@
     <button class="qa-btn" onclick="criarMesa()" style="flex:1;background:rgba(76,175,125,0.1);border-color:rgba(76,175,125,0.3);color:#4caf7d;">➕ Criar Mesa</button>
     <button class="qa-btn" onclick="excluirMesa()" style="flex:1;background:rgba(232,92,76,0.1);border-color:rgba(232,92,76,0.3);color:#e85c4c;">🗑️ Excluir Mesa</button>
   </div>
-  <!-- Botões de filtro das mesas -->
   <div class="filter-pills" style="padding:8px 16px 12px;">
     <div class="pill active" onclick="setMesaFilter('todas', this)">Todas</div>
     <div class="pill" onclick="setMesaFilter('livres', this)" style="color:#4caf50;border-color:#4caf50;">🟢 Livres</div>
@@ -657,6 +703,10 @@
       <span>🔗 Atribuir à mesa <span id="atribuir-numero"></span></span>
       <button class="modal-close" onclick="closeAtribuirModal()">✕</button>
     </div>
+    <div class="search-box" style="margin-bottom:16px;">
+      <span>🔍</span>
+      <input type="text" id="atribuir-search" placeholder="Buscar reserva..." oninput="filtrarAtribuirLista()">
+    </div>
     <div id="atribuir-lista" style="max-height: 50vh; overflow-y:auto;"></div>
   </div>
 </div>
@@ -690,6 +740,8 @@
   let newStatus = 'pago';
   let editStatusVal = 'pago';
   let selectedDeleteId = null;
+  let atribuirMesaAtual = null;
+  let todasReservasSemMesa = [];
 
   const PRECO_CASAL = 329.90;
 
@@ -924,7 +976,7 @@
 
   window.setFilter = function(f, el) {
     currentFilter = f;
-    document.querySelectorAll('.filter-pills .pill').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('#page-reservas .filter-pills .pill').forEach(p=>p.classList.remove('active'));
     el.classList.add('active');
     renderReservations();
   };
@@ -1089,7 +1141,6 @@
       return;
     }
 
-    // Ordenar mesas numericamente
     mesas.sort((a, b) => {
       const na = parseInt(a.numero), nb = parseInt(b.numero);
       if (na <= 28 && nb <= 28) return na - nb;
@@ -1104,7 +1155,6 @@
       return 0;
     });
 
-    // Aplicar filtro de visualização
     let mesasFiltradas = mesas;
     if (currentMesaFilter === 'livres') {
       mesasFiltradas = mesas.filter(m => !reservations.some(r => r.mesa === m.numero));
@@ -1146,6 +1196,7 @@
           <button class="save-mesa-btn" onclick="window.salvarCapacidade('${m.id}', event)">Salvar</button>
           <div style="margin-top:4px;">Reservas: ${reservasNaMesa.map(r => `<div>• ${r.nome} (${r.pax}p) <button style="background:none;border:none;color:#e85c4c;cursor:pointer;font-size:0.65rem;" onclick="window.removerClienteMesa('${r.id}', event)">❌</button></div>`).join('')}</div>
           <button class="qa-btn" style="margin-top:6px;color:#e85c4c;border-color:rgba(232,92,76,.4);" onclick="window.liberarMesa('${mesaNum}', event)">🔓 Liberar Mesa</button>
+          <button class="qa-btn" style="margin-top:6px;color:#4caf50;border-color:rgba(76,175,125,.4);" onclick="window.abrirAtribuir('${mesaNum}', event)">➕ Adicionar Pessoa</button>
         </div>` : ''}
       </div>`;
     }).join('');
@@ -1163,7 +1214,6 @@
     showToast(`Capacidade alterada para ${val}`);
   };
 
-  // Liberar mesa: remove a mesa de TODAS as reservas associadas (cliente volta a ficar sem mesa)
   window.liberarMesa = async function(numero, event) {
     event.stopPropagation();
     if (!confirm(`Liberar mesa ${numero}? Todos os clientes voltarão a ficar sem mesa.`)) return;
@@ -1174,7 +1224,6 @@
     showToast(`Mesa ${numero} liberada.`);
   };
 
-  // Remover um cliente específico da mesa (apenas ele volta a ficar sem mesa)
   window.removerClienteMesa = async function(reservaId, event) {
     event.stopPropagation();
     const r = reservations.find(r => r.id === reservaId);
@@ -1184,25 +1233,38 @@
     showToast(`${r.nome.split(' ')[0]} removido da mesa.`);
   };
 
-  window.abrirAtribuir = function(numero) {
+  window.abrirAtribuir = function(numero, event) {
+    if (event) event.stopPropagation();
+    atribuirMesaAtual = numero;
     document.getElementById('atribuir-numero').textContent = numero;
-    const semMesa = reservations.filter(r => !r.mesa);
-    const lista = document.getElementById('atribuir-lista');
-    if (semMesa.length === 0) {
-      lista.innerHTML = '<p style="color:rgba(247,241,232,.5);">Nenhuma reserva sem mesa no momento.</p>';
-    } else {
-      lista.innerHTML = semMesa.map(r => `
-        <div class="res-card" style="margin-bottom:8px;cursor:pointer;" onclick="atribuirReservaMesa('${r.id}', '${numero}')">
-          <div class="res-card-front" style="padding:12px;">
-            <div class="res-main">
-              <div class="res-name">${r.nome}</div>
-              <div class="res-meta"><span>👥 ${r.pax} · 🕐 ${r.hora||'—'}</span></div>
-            </div>
+    todasReservasSemMesa = reservations.filter(r => !r.mesa);
+    document.getElementById('atribuir-search').value = '';
+    renderAtribuirLista(todasReservasSemMesa);
+    document.getElementById('atribuir-modal').classList.add('open');
+  };
+
+  function renderAtribuirLista(lista) {
+    const container = document.getElementById('atribuir-lista');
+    if (lista.length === 0) {
+      container.innerHTML = '<p style="color:rgba(247,241,232,.5);">Nenhuma reserva sem mesa no momento.</p>';
+      return;
+    }
+    container.innerHTML = lista.map(r => `
+      <div class="res-card" style="margin-bottom:8px;cursor:pointer;" onclick="atribuirReservaMesa('${r.id}', '${atribuirMesaAtual}')">
+        <div class="res-card-front" style="padding:12px;">
+          <div class="res-main">
+            <div class="res-name">${r.nome}</div>
+            <div class="res-meta"><span>👥 ${r.pax} · 🕐 ${r.hora||'—'}</span></div>
           </div>
         </div>
-      `).join('');
-    }
-    document.getElementById('atribuir-modal').classList.add('open');
+      </div>
+    `).join('');
+  }
+
+  window.filtrarAtribuirLista = function() {
+    const query = (document.getElementById('atribuir-search')?.value||'').toLowerCase();
+    const filtrada = todasReservasSemMesa.filter(r => r.nome.toLowerCase().includes(query));
+    renderAtribuirLista(filtrada);
   };
 
   window.atribuirReservaMesa = async function(reservaId, mesaNum) {
