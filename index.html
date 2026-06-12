@@ -8,918 +8,571 @@
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
 
   :root {
-    --wine:    #6B1A1A;
-    --wine2:   #8B2020;
-    --gold:    #C9A84C;
-    --gold2:   #E8C97A;
-    --cream:   #F7F1E8;
-    --dark:    #1A0A0A;
-    --green:   #2D5A27;
-    --italy-r: #CE2B37;
-    --italy-w: #F4F5F0;
-    --italy-g: #009246;
-    --shadow:  rgba(201,168,76,0.35);
+    --wine:#6B1A1A; --wine2:#8B2020; --gold:#C9A84C; --gold2:#E8C97A;
+    --cream:#F7F1E8; --dark:#1A0A0A; --italy-r:#CE2B37; --italy-w:#F4F5F0; --italy-g:#009246;
   }
-
   * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--dark); font-family:'Inter',sans-serif; min-height:100vh; overflow-x:hidden; color:var(--cream); }
 
-  body {
-    background: var(--dark);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-    color: var(--cream);
-  }
-
-  /* ── BACKGROUND ── */
   .bg-layer {
-    position: fixed; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,26,26,0.55) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(45,90,39,0.2) 0%, transparent 60%),
-      linear-gradient(160deg, #0e0505 0%, #1a0a0a 40%, #0a0e0a 100%);
+    position:fixed; inset:0; z-index:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%,rgba(107,26,26,.55) 0%,transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 100%,rgba(45,90,39,.2) 0%,transparent 60%),
+                linear-gradient(160deg,#0e0505 0%,#1a0a0a 40%,#0a0e0a 100%);
   }
   .bg-texture {
-    position: fixed; inset: 0; z-index: 0; opacity: .04;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    position:fixed; inset:0; z-index:0; opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
+  .app { position:relative; z-index:1; min-height:100vh; }
 
-  /* ── WRAPPER ── */
-  .app { position: relative; z-index: 1; min-height: 100vh; }
-
-  /* ── HEADER ── */
-  header {
-    text-align: center;
-    padding: 36px 20px 24px;
-    position: relative;
-  }
-
-  .crest-ring {
-    width: 110px; height: 110px;
-    margin: 0 auto 16px;
-    position: relative;
-  }
+  /* HEADER */
+  header { text-align:center; padding:36px 20px 24px; }
+  .crest-ring { width:110px; height:110px; margin:0 auto 16px; position:relative; }
   .crest-ring::before {
-    content:'';
-    position:absolute; inset:-4px;
-    border-radius: 50%;
-    background: conic-gradient(var(--gold), var(--gold2), var(--gold), var(--gold2), var(--gold));
-    animation: spin-ring 8s linear infinite;
-    z-index:0;
+    content:''; position:absolute; inset:-4px; border-radius:50%;
+    background:conic-gradient(var(--gold),var(--gold2),var(--gold),var(--gold2),var(--gold));
+    animation:spin-ring 8s linear infinite; z-index:0;
   }
-  .crest-ring::after {
-    content:'';
-    position:absolute; inset:2px;
-    border-radius: 50%;
-    background: var(--dark);
-    z-index:1;
-  }
-  @keyframes spin-ring { to { transform: rotate(360deg); } }
+  .crest-ring::after { content:''; position:absolute; inset:2px; border-radius:50%; background:var(--dark); z-index:1; }
+  @keyframes spin-ring { to { transform:rotate(360deg); } }
+  .crest-svg { position:absolute; inset:8px; z-index:2; border-radius:50%; overflow:hidden; background:var(--wine); display:flex; align-items:center; justify-content:center; }
+  .shield-mini { width:60px; height:72px; position:relative; clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%); display:flex; overflow:hidden; border:1.5px solid var(--gold); }
+  .shield-mini .s-g { flex:1; background:var(--italy-g); }
+  .shield-mini .s-w { flex:1; background:var(--italy-w); }
+  .shield-mini .s-r { flex:1; background:var(--italy-r); }
+  .lion-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:28px; z-index:2; text-shadow:0 0 8px rgba(0,0,0,.8); }
+  .restaurant-name { font-family:'Playfair Display',serif; font-size:clamp(1.4rem,5vw,2rem); font-weight:700; color:var(--gold2); letter-spacing:.06em; text-shadow:0 0 20px rgba(201,168,76,.4); line-height:1.1; }
+  .restaurant-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:rgba(201,168,76,.65); letter-spacing:.12em; margin-top:4px; }
+  .holambra-tag { display:inline-block; margin-top:8px; font-size:.65rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(247,241,232,.35); border-top:1px solid rgba(201,168,76,.2); padding-top:6px; }
 
-  .crest-svg {
-    position: absolute; inset: 8px; z-index: 2;
-    border-radius: 50%;
-    overflow: hidden;
-    background: var(--wine);
-    display: flex; align-items: center; justify-content: center;
-  }
-  /* Italian flag shield as CSS */
-  .shield-mini {
-    width: 60px; height: 72px;
-    position: relative;
-    clip-path: polygon(0 0, 100% 0, 100% 72%, 50% 100%, 0 72%);
-    display: flex; overflow: hidden;
-    border: 1.5px solid var(--gold);
-  }
-  .shield-mini .s-g { flex:1; background: var(--italy-g); }
-  .shield-mini .s-w { flex:1; background: var(--italy-w); }
-  .shield-mini .s-r { flex:1; background: var(--italy-r); }
-  .lion-overlay {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; z-index:2;
-    text-shadow: 0 0 8px rgba(0,0,0,0.8);
-  }
+  /* DIVIDER */
+  .divider { display:flex; align-items:center; gap:10px; padding:0 24px; margin:4px 0 20px; }
+  .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+  .divider-diamond { width:6px; height:6px; background:var(--gold); transform:rotate(45deg); }
 
-  .restaurant-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.4rem, 5vw, 2rem);
-    font-weight: 700;
-    color: var(--gold2);
-    letter-spacing: 0.06em;
-    text-shadow: 0 0 20px rgba(201,168,76,0.4);
-    line-height: 1.1;
-  }
-  .restaurant-sub {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: rgba(201,168,76,0.65);
-    letter-spacing: 0.12em;
-    margin-top: 4px;
-  }
-  .holambra-tag {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(247,241,232,0.35);
-    border-top: 1px solid rgba(201,168,76,0.2);
-    padding-top: 6px;
-  }
-
-  /* ── GOLD DIVIDER ── */
-  .divider {
-    display: flex; align-items: center; gap: 10px;
-    padding: 0 24px; margin: 4px 0 20px;
-  }
-  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-  .divider-diamond {
-    width: 6px; height: 6px;
-    background: var(--gold);
-    transform: rotate(45deg);
-  }
-
-  /* ── EVENT BANNER ── */
+  /* EVENT BANNER */
   .event-banner {
-    margin: 0 16px 20px;
-    background: linear-gradient(135deg, rgba(107,26,26,0.9), rgba(139,32,32,0.7));
-    border: 1px solid rgba(201,168,76,0.4);
-    border-radius: 12px;
-    padding: 14px 18px;
-    display: flex; align-items: center; gap: 14px;
-    position: relative; overflow: hidden;
+    margin:0 16px 20px;
+    background:linear-gradient(135deg,rgba(107,26,26,.9),rgba(139,32,32,.7));
+    border:1px solid rgba(201,168,76,.4); border-radius:12px;
+    padding:14px 18px; display:flex; align-items:center; gap:14px;
+    position:relative; overflow:hidden;
   }
   .event-banner::before {
-    content:''; position:absolute; top:-50%; left:-50%;
-    width:200%; height:200%;
-    background: linear-gradient(45deg, transparent 40%, rgba(201,168,76,0.06) 50%, transparent 60%);
-    animation: shimmer-banner 4s ease-in-out infinite;
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background:linear-gradient(45deg,transparent 40%,rgba(201,168,76,.06) 50%,transparent 60%);
+    animation:shimmer-banner 4s ease-in-out infinite;
   }
   @keyframes shimmer-banner { 0%,100%{transform:translateX(-60%)} 50%{transform:translateX(60%)} }
-  .event-heart { font-size: 2rem; }
+  .event-heart { font-size:2rem; }
   .event-info { flex:1 }
   .event-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--gold2); }
-  .event-meta { font-size:0.75rem; color:rgba(247,241,232,0.6); margin-top:2px; }
+  .event-meta { font-size:.75rem; color:rgba(247,241,232,.6); margin-top:2px; }
   .event-price { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); font-weight:700; }
 
-  /* ── STATS BAR ── */
-  .stats-bar {
-    display: flex; gap: 8px;
-    padding: 0 16px 20px;
-  }
-  .stat-card {
-    flex: 1;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 10px;
-    padding: 10px 8px;
-    text-align: center;
-  }
-  .stat-num { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--gold2); line-height:1; }
-  .stat-label { font-size:0.6rem; text-transform:uppercase; letter-spacing:.1em; color:rgba(247,241,232,0.45); margin-top:3px; }
-  .stat-card.paid .stat-num { color: #4caf7d; }
-  .stat-card.pending .stat-num { color: #e8a84c; }
+  /* STATS */
+  .stats-bar { display:flex; gap:8px; padding:0 16px 20px; flex-wrap:wrap; }
+  .stat-card { flex:1; min-width:60px; background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.2); border-radius:10px; padding:10px 8px; text-align:center; }
+  .stat-num { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--gold2); line-height:1; }
+  .stat-label { font-size:.58rem; text-transform:uppercase; letter-spacing:.1em; color:rgba(247,241,232,.45); margin-top:3px; }
+  .stat-card.paid .stat-num { color:#4caf7d; }
+  .stat-card.pending .stat-num { color:#e8a84c; }
+  .stat-card.debt .stat-num { color:#e85c4c; }
 
-  /* ── MAIN BUTTONS ── */
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    padding: 0 16px 20px;
-  }
-
+  /* MAIN BUTTONS */
+  .main-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:0 16px 20px; }
   .main-btn {
-    position: relative;
-    border: none; cursor: pointer;
-    border-radius: 16px;
-    padding: 22px 12px 18px;
-    display: flex; flex-direction: column; align-items: center; gap: 10px;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-    -webkit-tap-highlight-color: transparent;
+    position:relative; border:none; cursor:pointer; border-radius:16px;
+    padding:22px 12px 18px; display:flex; flex-direction:column; align-items:center; gap:10px;
+    overflow:hidden; transform-style:preserve-3d;
+    transition:transform .18s ease; -webkit-tap-highlight-color:transparent;
   }
-  .main-btn:active { transform: scale(0.96) translateY(2px); }
-
-  /* Glowing border animation */
+  .main-btn:active { transform:scale(.96) translateY(2px); }
   .main-btn::before {
-    content: '';
-    position: absolute; inset: -1px;
-    border-radius: 17px;
-    background: conic-gradient(from var(--angle, 0deg), var(--gold), var(--wine2), var(--gold2), var(--wine), var(--gold));
-    animation: border-spin 3s linear infinite;
-    z-index: 0;
+    content:''; position:absolute; inset:-1px; border-radius:17px;
+    background:conic-gradient(from var(--angle,0deg),var(--gold),var(--wine2),var(--gold2),var(--wine),var(--gold));
+    animation:border-spin 3s linear infinite; z-index:0;
   }
-  .main-btn::after {
-    content: '';
-    position: absolute; inset: 1px;
-    border-radius: 15px;
-    background: var(--btn-bg, var(--wine));
-    z-index: 1;
-  }
+  .main-btn::after { content:''; position:absolute; inset:1px; border-radius:15px; background:var(--btn-bg,var(--wine)); z-index:1; }
   @property --angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
-  @keyframes border-spin { to { --angle: 360deg; } }
+  @keyframes border-spin { to { --angle:360deg; } }
+  .main-btn .btn-inner { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .main-btn .btn-icon { font-size:2.2rem; filter:drop-shadow(0 0 8px rgba(201,168,76,.6)); }
+  .main-btn .btn-label { font-family:'Playfair Display',serif; font-size:.85rem; font-weight:700; color:var(--gold2); text-align:center; letter-spacing:.04em; text-shadow:0 0 12px rgba(201,168,76,.5); line-height:1.2; }
+  .main-btn .btn-count { font-size:.65rem; color:rgba(247,241,232,.5); letter-spacing:.08em; }
+  .btn-reservas { --btn-bg:linear-gradient(145deg,#3a0d0d,#5c1515); }
+  .btn-nova     { --btn-bg:linear-gradient(145deg,#1a2d0e,#2d5a1a); }
+  .btn-cardapio { --btn-bg:linear-gradient(145deg,#0d1a3a,#152d5c); }
+  .btn-mesas    { --btn-bg:linear-gradient(145deg,#2d1a0d,#5c3a15); }
 
-  .main-btn .btn-inner {
-    position: relative; z-index: 2;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-  }
-  .main-btn .btn-icon { font-size: 2.2rem; filter: drop-shadow(0 0 8px rgba(201,168,76,0.6)); }
-  .main-btn .btn-label {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--gold2);
-    text-align: center;
-    letter-spacing: 0.04em;
-    text-shadow: 0 0 12px rgba(201,168,76,0.5);
-    line-height: 1.2;
-  }
-  .main-btn .btn-count {
-    font-size: 0.65rem;
-    color: rgba(247,241,232,0.5);
-    letter-spacing: 0.08em;
-  }
+  /* PAGES */
+  .page { display:none; padding:0 0 80px; animation:page-in .35s cubic-bezier(.22,1,.36,1); }
+  .page.active { display:block; }
+  @keyframes page-in { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 
-  .btn-reservas { --btn-bg: linear-gradient(145deg, #3a0d0d, #5c1515); }
-  .btn-nova    { --btn-bg: linear-gradient(145deg, #1a2d0e, #2d5a1a); }
-  .btn-cardapio { --btn-bg: linear-gradient(145deg, #0d1a3a, #152d5c); }
-  .btn-mesas   { --btn-bg: linear-gradient(145deg, #2d1a0d, #5c3a15); }
-
-  /* ── PAGES ── */
-  .page {
-    display: none;
-    padding: 0 0 80px;
-    animation: page-in 0.35s cubic-bezier(0.22,1,0.36,1);
-  }
-  .page.active { display: block; }
-  @keyframes page-in { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-
-  /* ── PAGE HEADER ── */
+  /* PAGE HEADER */
   .page-header {
-    display: flex; align-items: center; gap: 12px;
-    padding: 16px 16px 12px;
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-    margin-bottom: 16px;
-    position: sticky; top: 0; z-index: 10;
-    background: rgba(10,5,5,0.95);
-    backdrop-filter: blur(12px);
+    display:flex; align-items:center; gap:12px;
+    padding:16px 16px 12px; border-bottom:1px solid rgba(201,168,76,.15); margin-bottom:16px;
+    position:sticky; top:0; z-index:10; background:rgba(10,5,5,.95); backdrop-filter:blur(12px);
   }
   .back-btn {
-    width: 36px; height: 36px;
-    background: rgba(201,168,76,0.12);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 1rem;
-    transition: background 0.2s;
-    flex-shrink: 0;
+    width:36px; height:36px; background:rgba(201,168,76,.12); border:1px solid rgba(201,168,76,.3);
+    border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:1rem; transition:background .2s; flex-shrink:0;
   }
-  .back-btn:hover { background: rgba(201,168,76,0.22); }
-  .page-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: var(--gold2);
-    flex: 1;
-  }
+  .back-btn:hover { background:rgba(201,168,76,.22); }
+  .page-title { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--gold2); flex:1; }
 
-  /* ── SEARCH ── */
-  .search-wrap {
-    padding: 0 16px 12px;
-    position: sticky; top: 68px; z-index: 9;
-    background: rgba(10,5,5,0.9);
-    backdrop-filter: blur(8px);
-  }
-  .search-box {
-    display: flex; align-items: center; gap: 10px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 12px;
-    padding: 10px 14px;
-  }
-  .search-box input {
-    flex:1; background:none; border:none; outline:none;
-    color: var(--cream); font-family: 'Inter',sans-serif; font-size:0.9rem;
-  }
-  .search-box input::placeholder { color: rgba(247,241,232,0.35); }
+  /* SEARCH */
+  .search-wrap { padding:0 16px 12px; position:sticky; top:68px; z-index:9; background:rgba(10,5,5,.9); backdrop-filter:blur(8px); }
+  .search-box { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); border-radius:12px; padding:10px 14px; }
+  .search-box input { flex:1; background:none; border:none; outline:none; color:var(--cream); font-family:'Inter',sans-serif; font-size:.9rem; }
+  .search-box input::placeholder { color:rgba(247,241,232,.35); }
 
-  /* ── FILTER PILLS ── */
-  .filter-pills {
-    display: flex; gap: 8px;
-    padding: 0 16px 14px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
+  /* FILTER PILLS */
+  .filter-pills { display:flex; gap:8px; padding:0 16px 14px; overflow-x:auto; scrollbar-width:none; }
   .filter-pills::-webkit-scrollbar { display:none; }
-  .pill {
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(201,168,76,0.25);
-    font-size: 0.75rem;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-    color: rgba(247,241,232,0.6);
-    background: transparent;
-  }
-  .pill.active {
-    background: var(--gold);
-    color: var(--dark);
-    border-color: var(--gold);
-    font-weight: 600;
-  }
+  .pill { padding:6px 14px; border-radius:20px; border:1px solid rgba(201,168,76,.25); font-size:.75rem; cursor:pointer; white-space:nowrap; transition:all .2s; color:rgba(247,241,232,.6); background:transparent; }
+  .pill.active { background:var(--gold); color:var(--dark); border-color:var(--gold); font-weight:600; }
 
-  /* ── RESERVATION CARDS ── */
-  .reservations-list { padding: 0 16px; display: flex; flex-direction: column; gap: 10px; }
+  /* RESERVATION CARDS */
+  .reservations-list { padding:0 16px; display:flex; flex-direction:column; gap:10px; }
+  .res-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.18); border-radius:14px; overflow:hidden; cursor:pointer; transition:border-color .2s,transform .2s; }
+  .res-card:active { transform:scale(.99); }
+  .res-card.expanded { border-color:rgba(201,168,76,.5); }
+  .res-card-front { display:flex; align-items:center; gap:12px; padding:14px; }
+  .res-num { width:34px; height:34px; background:linear-gradient(135deg,var(--wine),var(--wine2)); border:1px solid rgba(201,168,76,.4); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:.85rem; color:var(--gold2); flex-shrink:0; font-weight:700; }
+  .res-main { flex:1; min-width:0; }
+  .res-name { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600; color:var(--cream); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .res-meta { display:flex; gap:8px; margin-top:3px; flex-wrap:wrap; }
+  .res-meta span { font-size:.7rem; color:rgba(247,241,232,.5); }
+  .res-meta .sep { color:rgba(247,241,232,.2); }
+  .res-right { display:flex; flex-direction:column; align-items:flex-end; gap:5px; flex-shrink:0; }
+  .badge-paid { padding:3px 9px; border-radius:20px; font-size:.65rem; font-weight:600; letter-spacing:.06em; }
+  .badge-paid.yes { background:rgba(76,175,125,.2); color:#4caf7d; border:1px solid rgba(76,175,125,.4); }
+  .badge-paid.no  { background:rgba(232,168,76,.2); color:#e8a84c; border:1px solid rgba(232,168,76,.4); }
+  .badge-paid.partial { background:rgba(232,100,76,.2); color:#e8904c; border:1px solid rgba(232,120,76,.4); }
+  .res-time { font-size:.7rem; color:rgba(201,168,76,.7); font-family:'Playfair Display',serif; }
+  .res-mesa { font-size:.7rem; color:rgba(247,241,232,.4); }
 
-  .res-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.18);
-    border-radius: 14px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .res-card:active { transform: scale(0.99); }
-  .res-card.expanded { border-color: rgba(201,168,76,0.5); }
+  /* DETAIL */
+  .res-detail { display:none; padding:0 14px 14px; border-top:1px solid rgba(201,168,76,.15); animation:detail-in .28s ease; }
+  @keyframes detail-in { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+  .res-card.expanded .res-detail { display:block; }
 
-  .res-card-front {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px;
+  /* SALDO DEVEDOR BOX */
+  .debt-box {
+    margin:12px 0 8px;
+    background:linear-gradient(135deg,rgba(232,92,76,.15),rgba(139,32,32,.2));
+    border:1px solid rgba(232,92,76,.4); border-radius:10px;
+    padding:10px 14px; display:flex; align-items:center; justify-content:space-between;
   }
+  .debt-box .debt-label { font-size:.72rem; color:rgba(247,241,232,.6); text-transform:uppercase; letter-spacing:.1em; }
+  .debt-box .debt-val { font-family:'Playfair Display',serif; font-size:1.1rem; color:#e85c4c; font-weight:700; }
+  .debt-box.cleared { background:rgba(76,175,125,.1); border-color:rgba(76,175,125,.3); }
+  .debt-box.cleared .debt-val { color:#4caf7d; }
 
-  .res-num {
-    width: 34px; height: 34px;
-    background: linear-gradient(135deg, var(--wine), var(--wine2));
-    border: 1px solid rgba(201,168,76,0.4);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 0.85rem;
-    color: var(--gold2);
-    flex-shrink: 0;
-    font-weight: 700;
-  }
+  /* DETAIL GRID */
+  .detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .detail-item label { font-size:.6rem; text-transform:uppercase; letter-spacing:.12em; color:rgba(201,168,76,.55); display:block; margin-bottom:3px; }
+  .detail-item .dval { font-size:.9rem; color:var(--cream); font-family:'Cormorant Garamond',serif; }
 
-  .res-main { flex: 1; min-width: 0; }
-  .res-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--cream);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .res-meta { display: flex; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
-  .res-meta span { font-size: 0.7rem; color: rgba(247,241,232,0.5); }
-  .res-meta .sep { color: rgba(247,241,232,0.2); }
+  /* INLINE EDIT */
+  .edit-row { display:flex; gap:8px; margin-top:10px; }
+  .edit-input { flex:1; background:rgba(255,255,255,.07); border:1px solid rgba(201,168,76,.3); border-radius:8px; padding:8px 12px; color:var(--cream); font-family:'Inter',sans-serif; font-size:.85rem; outline:none; transition:border-color .2s; }
+  .edit-input:focus { border-color:var(--gold); }
+  .edit-input::placeholder { color:rgba(247,241,232,.3); }
+  .save-mesa-btn { background:linear-gradient(135deg,var(--wine),var(--wine2)); border:1px solid rgba(201,168,76,.4); border-radius:8px; padding:8px 14px; color:var(--gold2); font-size:.8rem; cursor:pointer; font-weight:600; transition:opacity .2s; white-space:nowrap; }
+  .save-mesa-btn:active { opacity:.7; }
 
-  .res-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink:0; }
-  .badge-paid {
-    padding: 3px 9px; border-radius: 20px;
-    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
-  }
-  .badge-paid.yes { background: rgba(76,175,125,0.2); color: #4caf7d; border: 1px solid rgba(76,175,125,0.4); }
-  .badge-paid.no  { background: rgba(232,168,76,0.2); color: #e8a84c; border: 1px solid rgba(232,168,76,0.4); }
-  .res-time { font-size: 0.7rem; color: rgba(201,168,76,0.7); font-family:'Playfair Display',serif; }
-  .res-mesa { font-size: 0.7rem; color: rgba(247,241,232,0.4); }
+  /* QUICK ACTIONS */
+  .quick-actions { display:flex; gap:8px; margin-top:10px; }
+  .qa-btn { flex:1; padding:8px; border-radius:8px; font-size:.78rem; cursor:pointer; border:1px solid rgba(201,168,76,.25); background:rgba(255,255,255,.05); color:var(--cream); transition:all .2s; }
+  .qa-btn:active { opacity:.7; }
+  .qa-btn.green { border-color:rgba(76,175,125,.35); background:rgba(76,175,125,.1); color:#4caf7d; }
 
-  /* Flip expand */
-  .res-detail {
-    display: none;
-    padding: 0 14px 14px;
-    border-top: 1px solid rgba(201,168,76,0.15);
-    margin-top: 0;
-    animation: detail-in 0.28s ease;
+  /* EDIT MODAL */
+  .modal-overlay {
+    position:fixed; inset:0; z-index:100;
+    background:rgba(0,0,0,.75); backdrop-filter:blur(6px);
+    display:none; align-items:flex-end; justify-content:center;
   }
-  @keyframes detail-in { from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)} }
-  .res-card.expanded .res-detail { display: block; }
+  .modal-overlay.open { display:flex; }
+  .modal-sheet {
+    width:100%; max-width:480px;
+    background:linear-gradient(160deg,#1a0808,#0e0e0e);
+    border:1px solid rgba(201,168,76,.3);
+    border-radius:22px 22px 0 0;
+    padding:24px 20px 40px;
+    animation:sheet-up .3s cubic-bezier(.22,1,.36,1);
+    max-height:90vh; overflow-y:auto;
+  }
+  @keyframes sheet-up { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  .modal-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--gold2); margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; }
+  .modal-close { width:30px; height:30px; background:rgba(255,255,255,.08); border:none; border-radius:50%; color:var(--cream); font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
 
-  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
-  .detail-item label {
-    font-size: 0.6rem; text-transform: uppercase; letter-spacing: .12em;
-    color: rgba(201,168,76,0.55); display: block; margin-bottom: 3px;
-  }
-  .detail-item .dval {
-    font-size: 0.9rem; color: var(--cream);
-    font-family: 'Cormorant Garamond', serif;
-  }
+  /* FORM */
+  .form-section { padding:0 16px; }
+  .form-group { margin-bottom:18px; }
+  .form-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.15em; color:rgba(201,168,76,.65); display:block; margin-bottom:7px; }
+  .form-input { width:100%; background:rgba(255,255,255,.06); border:1px solid rgba(201,168,76,.25); border-radius:10px; padding:12px 14px; color:var(--cream); font-family:'Inter',sans-serif; font-size:.95rem; outline:none; transition:border-color .2s,background .2s; }
+  .form-input:focus { border-color:var(--gold); background:rgba(255,255,255,.09); }
+  .form-input::placeholder { color:rgba(247,241,232,.3); }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .toggle-group { display:flex; gap:8px; }
+  .toggle-opt { flex:1; padding:10px; border:1px solid rgba(201,168,76,.25); border-radius:10px; text-align:center; cursor:pointer; font-size:.85rem; color:rgba(247,241,232,.5); transition:all .2s; background:transparent; }
+  .toggle-opt.selected { background:linear-gradient(135deg,var(--wine),var(--wine2)); border-color:rgba(201,168,76,.5); color:var(--gold2); }
+  .submit-btn { width:100%; padding:16px; background:linear-gradient(135deg,var(--wine),#8B2020,var(--wine)); border:1px solid rgba(201,168,76,.5); border-radius:14px; color:var(--gold2); font-family:'Playfair Display',serif; font-size:1.05rem; cursor:pointer; font-weight:700; letter-spacing:.06em; position:relative; overflow:hidden; transition:transform .15s; margin-top:8px; }
+  .submit-btn:active { transform:scale(.98); }
+  .submit-btn::after { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent); animation:btn-shine 2.5s ease-in-out infinite; }
+  @keyframes btn-shine { to { left:200%; } }
 
-  .edit-row {
-    display: flex; gap: 8px; margin-top: 14px;
-  }
-  .edit-input {
-    flex: 1;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 8px;
-    padding: 8px 12px;
-    color: var(--cream);
-    font-family: 'Inter',sans-serif;
-    font-size: 0.85rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .edit-input:focus { border-color: var(--gold); }
-  .edit-input::placeholder { color: rgba(247,241,232,0.3); }
-  .save-mesa-btn {
-    background: linear-gradient(135deg, var(--wine), var(--wine2));
-    border: 1px solid rgba(201,168,76,0.4);
-    border-radius: 8px;
-    padding: 8px 14px;
-    color: var(--gold2);
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: opacity 0.2s;
-  }
-  .save-mesa-btn:active { opacity: 0.7; }
+  /* VALOR PAGO HELPER */
+  .valor-helper { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.18); border-radius:8px; padding:10px 12px; margin-top:8px; font-size:.8rem; display:flex; justify-content:space-between; align-items:center; }
+  .valor-helper .vh-label { color:rgba(247,241,232,.5); }
+  .valor-helper .vh-val { font-family:'Playfair Display',serif; font-size:.95rem; }
+  .vh-val.green { color:#4caf7d; }
+  .vh-val.red   { color:#e85c4c; }
 
-  /* ── NEW RESERVATION FORM ── */
-  .form-section { padding: 0 16px; }
-  .form-group { margin-bottom: 18px; }
-  .form-label {
-    font-size: 0.7rem; text-transform: uppercase; letter-spacing: .15em;
-    color: rgba(201,168,76,0.65); display: block; margin-bottom: 7px;
-  }
-  .form-input {
-    width: 100%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 10px;
-    padding: 12px 14px;
-    color: var(--cream);
-    font-family: 'Inter',sans-serif;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .form-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.09); }
-  .form-input::placeholder { color: rgba(247,241,232,0.3); }
+  /* MENU PAGE */
+  .menu-page { padding:0 16px 30px; }
+  .menu-section { margin-bottom:28px; }
+  .menu-section-title { display:flex; align-items:center; gap:10px; font-family:'Playfair Display',serif; font-size:.85rem; text-transform:uppercase; letter-spacing:.2em; color:var(--gold); margin-bottom:14px; }
+  .menu-section-title::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(201,168,76,.4),transparent); }
+  .menu-item { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.15); border-radius:12px; padding:14px; margin-bottom:10px; }
+  .menu-item-name { font-family:'Playfair Display',serif; font-size:1rem; color:var(--gold2); margin-bottom:5px; }
+  .menu-item-desc { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.9rem; color:rgba(247,241,232,.65); line-height:1.5; }
+  .menu-price-tag { text-align:center; margin-top:20px; padding:16px; background:linear-gradient(135deg,rgba(107,26,26,.5),rgba(139,32,32,.3)); border:1px solid rgba(201,168,76,.4); border-radius:14px; }
+  .menu-price-tag .price-val { font-family:'Playfair Display',serif; font-size:2rem; color:var(--gold2); font-weight:700; }
+  .menu-price-tag .price-label { font-size:.75rem; color:rgba(247,241,232,.5); letter-spacing:.1em; text-transform:uppercase; margin-top:2px; }
 
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  /* MESAS */
+  .mesa-grid-wrap { padding:0 16px; }
+  .mesa-grid-wrap h3 { font-family:'Playfair Display',serif; font-size:.85rem; color:rgba(201,168,76,.6); text-transform:uppercase; letter-spacing:.15em; margin-bottom:14px; }
+  .mesa-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:24px; }
+  .mesa-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.15); border-radius:12px; padding:12px 14px; }
+  .mesa-card.occupied { border-color:rgba(201,168,76,.4); background:rgba(107,26,26,.2); }
+  .mesa-card .m-num { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--gold2); font-weight:700; }
+  .mesa-card .m-name { font-size:.8rem; color:var(--cream); margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mesa-card .m-time { font-size:.7rem; color:rgba(201,168,76,.6); margin-top:2px; }
+  .mesa-card .m-pax { font-size:.7rem; color:rgba(247,241,232,.4); margin-top:1px; }
 
-  .toggle-group { display: flex; gap: 8px; }
-  .toggle-opt {
-    flex: 1; padding: 10px;
-    border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 10px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: rgba(247,241,232,0.5);
-    transition: all 0.2s;
-    background: transparent;
-  }
-  .toggle-opt.selected {
-    background: linear-gradient(135deg, var(--wine), var(--wine2));
-    border-color: rgba(201,168,76,0.5);
-    color: var(--gold2);
-  }
+  /* RESUMO FINANCEIRO */
+  .financeiro-box { margin:0 16px 20px; }
+  .fin-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.2); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
+  .fin-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .fin-row:last-child { margin-bottom:0; }
+  .fin-label { font-size:.72rem; color:rgba(247,241,232,.5); text-transform:uppercase; letter-spacing:.1em; }
+  .fin-val { font-family:'Playfair Display',serif; font-size:1rem; }
+  .fin-total { font-size:1.15rem; color:var(--gold2); border-top:1px solid rgba(201,168,76,.2); padding-top:10px; margin-top:4px; }
+  .fin-total .fin-label { color:rgba(201,168,76,.7); }
 
-  .submit-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--wine), #8B2020, var(--wine));
-    background-size: 200% 100%;
-    border: 1px solid rgba(201,168,76,0.5);
-    border-radius: 14px;
-    color: var(--gold2);
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    cursor: pointer;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    position: relative; overflow: hidden;
-    transition: transform 0.15s;
-    margin-top: 8px;
-  }
-  .submit-btn:active { transform: scale(0.98); }
-  .submit-btn::after {
-    content:''; position:absolute; top:0; left:-100%;
-    width:60%; height:100%;
-    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.2), transparent);
-    animation: btn-shine 2.5s ease-in-out infinite;
-  }
-  @keyframes btn-shine { to { left: 200%; } }
+  /* TOAST */
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:linear-gradient(135deg,var(--wine),var(--wine2)); border:1px solid rgba(201,168,76,.5); border-radius:12px; padding:12px 20px; color:var(--gold2); font-size:.85rem; font-family:'Playfair Display',serif; z-index:999; transition:transform .35s cubic-bezier(.22,1,.36,1); white-space:nowrap; }
+  .toast.show { transform:translateX(-50%) translateY(0); }
 
-  /* ── MENU PAGE ── */
-  .menu-page { padding: 0 16px 30px; }
-  .menu-section { margin-bottom: 28px; }
-  .menu-section-title {
-    display: flex; align-items: center; gap: 10px;
-    font-family: 'Playfair Display', serif;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: .2em;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-  .menu-section-title::after {
-    content:''; flex:1; height:1px;
-    background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
-  }
-
-  .menu-item {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 10px;
-  }
-  .menu-item-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: var(--gold2);
-    margin-bottom: 5px;
-  }
-  .menu-item-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: rgba(247,241,232,0.65);
-    line-height: 1.5;
-  }
-
-  .menu-price-tag {
-    text-align: center;
-    margin-top: 20px;
-    padding: 16px;
-    background: linear-gradient(135deg, rgba(107,26,26,0.5), rgba(139,32,32,0.3));
-    border: 1px solid rgba(201,168,76,0.4);
-    border-radius: 14px;
-  }
-  .menu-price-tag .price-val {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem; color: var(--gold2);
-    font-weight: 700;
-  }
-  .menu-price-tag .price-label {
-    font-size: 0.75rem; color: rgba(247,241,232,0.5);
-    letter-spacing: .1em; text-transform: uppercase;
-    margin-top: 2px;
-  }
-
-  /* ── MESA VIEW ── */
-  .mesa-grid-wrap { padding: 0 16px; }
-  .mesa-grid-wrap h3 {
-    font-family:'Playfair Display',serif;
-    font-size: 0.85rem;
-    color: rgba(201,168,76,0.6);
-    text-transform: uppercase;
-    letter-spacing: .15em;
-    margin-bottom: 14px;
-  }
-  .mesa-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px; margin-bottom: 24px;
-  }
-  .mesa-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 12px;
-    padding: 12px 14px;
-  }
-  .mesa-card.occupied {
-    border-color: rgba(201,168,76,0.4);
-    background: rgba(107,26,26,0.2);
-  }
-  .mesa-card .m-num {
-    font-family:'Playfair Display',serif;
-    font-size: 1.3rem; color: var(--gold2);
-    font-weight:700;
-  }
-  .mesa-card .m-name {
-    font-size: 0.8rem; color: var(--cream);
-    margin-top: 3px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .mesa-card .m-time { font-size: 0.7rem; color: rgba(201,168,76,0.6); margin-top: 2px; }
-  .mesa-card .m-pax { font-size: 0.7rem; color: rgba(247,241,232,0.4); margin-top:1px; }
-
-  /* ── TOAST ── */
-  .toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-    background: linear-gradient(135deg, var(--wine), var(--wine2));
-    border: 1px solid rgba(201,168,76,0.5);
-    border-radius: 12px;
-    padding: 12px 20px;
-    color: var(--gold2);
-    font-size: 0.85rem;
-    font-family: 'Playfair Display', serif;
-    z-index: 999;
-    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-    white-space: nowrap;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* ── SCROLL ── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 2px; }
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:rgba(201,168,76,.3); border-radius:2px; }
 </style>
 </head>
 <body>
 <div class="bg-layer"></div>
 <div class="bg-texture"></div>
-
 <div class="app">
 
-  <!-- ══════════════ HOME ══════════════ -->
-  <div id="page-home" class="page active">
-    <header>
-      <div class="crest-ring">
-        <div class="crest-svg">
-          <div class="shield-mini">
-            <div class="s-g"></div>
-            <div class="s-w"></div>
-            <div class="s-r"></div>
-            <div class="lion-overlay">🦁</div>
-          </div>
+<!-- ══ HOME ══ -->
+<div id="page-home" class="page active">
+  <header>
+    <div class="crest-ring">
+      <div class="crest-svg">
+        <div class="shield-mini">
+          <div class="s-g"></div><div class="s-w"></div><div class="s-r"></div>
+          <div class="lion-overlay">🦁</div>
         </div>
       </div>
-      <div class="restaurant-name">Marchesini</div>
-      <div class="restaurant-name" style="font-style:italic;font-size:1.1rem;color:var(--gold)">di Roverbella</div>
-      <div class="restaurant-sub">Ristorante & Forneria</div>
-      <div class="holambra-tag">Holambra · SP · Brasil</div>
-    </header>
-
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-diamond"></div>
-      <div class="divider-line"></div>
     </div>
-
-    <div class="event-banner">
-      <div class="event-heart">💑</div>
-      <div class="event-info">
-        <div class="event-title">Dia dos Namorados — 12/06</div>
-        <div class="event-meta">Menu Especial · Cardápio exclusivo do Chef</div>
-      </div>
-      <div class="event-price">R$ 329,90<br><span style="font-size:.65rem;color:rgba(247,241,232,.5)">por casal</span></div>
+    <div class="restaurant-name">Marchesini</div>
+    <div class="restaurant-name" style="font-style:italic;font-size:1.1rem;color:var(--gold)">di Roverbella</div>
+    <div class="restaurant-sub">Ristorante & Forneria</div>
+    <div class="holambra-tag">Holambra · SP · Brasil</div>
+  </header>
+  <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+  <div class="event-banner">
+    <div class="event-heart">💑</div>
+    <div class="event-info">
+      <div class="event-title">Dia dos Namorados — 12/06</div>
+      <div class="event-meta">Menu Especial · Cardápio exclusivo do Chef</div>
     </div>
-
-    <div class="stats-bar" id="stats-bar">
-      <!-- preenchido por JS -->
-    </div>
-
-    <div class="main-grid">
-      <button class="main-btn btn-reservas" onclick="showPage('reservas')">
-        <div class="btn-inner">
-          <span class="btn-icon">📋</span>
-          <span class="btn-label">Ver Reservas</span>
-          <span class="btn-count" id="btn-count-total">carregando...</span>
-        </div>
-      </button>
-      <button class="main-btn btn-nova" onclick="showPage('nova')">
-        <div class="btn-inner">
-          <span class="btn-icon">✍️</span>
-          <span class="btn-label">Nova Reserva</span>
-          <span class="btn-count">Adicionar casal</span>
-        </div>
-      </button>
-      <button class="main-btn btn-cardapio" onclick="showPage('cardapio')">
-        <div class="btn-inner">
-          <span class="btn-icon">🍽️</span>
-          <span class="btn-label">Cardápio Dia dos Namorados</span>
-          <span class="btn-count">Menu especial</span>
-        </div>
-      </button>
-      <button class="main-btn btn-mesas" onclick="showPage('mesas')">
-        <div class="btn-inner">
-          <span class="btn-icon">🪑</span>
-          <span class="btn-label">Mapa de Mesas</span>
-          <span class="btn-count">Visão geral</span>
-        </div>
-      </button>
-    </div>
-  </div><!-- /home -->
-
-  <!-- ══════════════ RESERVAS ══════════════ -->
-  <div id="page-reservas" class="page">
-    <div class="page-header">
-      <div class="back-btn" onclick="showPage('home')">◀</div>
-      <div class="page-title">📋 Reservas — 12/06</div>
-    </div>
-    <div class="search-wrap">
-      <div class="search-box">
-        <span>🔍</span>
-        <input type="text" id="search-input" placeholder="Buscar por nome..." oninput="filterReservations()">
-      </div>
-    </div>
-    <div class="filter-pills">
-      <div class="pill active" onclick="setFilter('all',this)">Todos</div>
-      <div class="pill" onclick="setFilter('paid',this)">✅ Pago</div>
-      <div class="pill" onclick="setFilter('pending',this)">⏳ Pendente</div>
-      <div class="pill" onclick="setFilter('19h',this)">19h</div>
-      <div class="pill" onclick="setFilter('20h',this)">20h</div>
-    </div>
-    <div class="reservations-list" id="reservations-list"></div>
+    <div class="event-price">R$ 329,90<br><span style="font-size:.65rem;color:rgba(247,241,232,.5)">por casal</span></div>
   </div>
+  <div class="stats-bar" id="stats-bar"></div>
+  <div class="main-grid">
+    <button class="main-btn btn-reservas" onclick="showPage('reservas')">
+      <div class="btn-inner">
+        <span class="btn-icon">📋</span>
+        <span class="btn-label">Ver Reservas</span>
+        <span class="btn-count" id="btn-count-total">carregando...</span>
+      </div>
+    </button>
+    <button class="main-btn btn-nova" onclick="showPage('nova')">
+      <div class="btn-inner">
+        <span class="btn-icon">✍️</span>
+        <span class="btn-label">Nova Reserva</span>
+        <span class="btn-count">Adicionar casal</span>
+      </div>
+    </button>
+    <button class="main-btn btn-cardapio" onclick="showPage('cardapio')">
+      <div class="btn-inner">
+        <span class="btn-icon">🍽️</span>
+        <span class="btn-label">Cardápio Dia dos Namorados</span>
+        <span class="btn-count">Menu especial</span>
+      </div>
+    </button>
+    <button class="main-btn btn-mesas" onclick="showPage('mesas')">
+      <div class="btn-inner">
+        <span class="btn-icon">🪑</span>
+        <span class="btn-label">Mapa de Mesas</span>
+        <span class="btn-count">Visão geral</span>
+      </div>
+    </button>
+  </div>
+</div>
 
-  <!-- ══════════════ NOVA RESERVA ══════════════ -->
-  <div id="page-nova" class="page">
-    <div class="page-header">
-      <div class="back-btn" onclick="showPage('home')">◀</div>
-      <div class="page-title">✍️ Nova Reserva</div>
+<!-- ══ RESERVAS ══ -->
+<div id="page-reservas" class="page">
+  <div class="page-header">
+    <div class="back-btn" onclick="showPage('home')">◀</div>
+    <div class="page-title">📋 Reservas — 12/06</div>
+  </div>
+  <div class="search-wrap">
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="search-input" placeholder="Buscar por nome..." oninput="filterReservations()">
     </div>
-    <div class="form-section">
+  </div>
+  <div class="filter-pills">
+    <div class="pill active" onclick="setFilter('all',this)">Todos</div>
+    <div class="pill" onclick="setFilter('paid',this)">✅ Pago</div>
+    <div class="pill" onclick="setFilter('pending',this)">⏳ Pendente</div>
+    <div class="pill" onclick="setFilter('partial',this)">💳 Parcial</div>
+    <div class="pill" onclick="setFilter('19h',this)">19h</div>
+    <div class="pill" onclick="setFilter('20h',this)">20h</div>
+  </div>
+  <div class="reservations-list" id="reservations-list"></div>
+</div>
+
+<!-- ══ NOVA RESERVA ══ -->
+<div id="page-nova" class="page">
+  <div class="page-header">
+    <div class="back-btn" onclick="showPage('home')">◀</div>
+    <div class="page-title">✍️ Nova Reserva</div>
+  </div>
+  <div class="form-section">
+    <div class="form-group">
+      <label class="form-label">Nome do responsável</label>
+      <input class="form-input" id="f-nome" type="text" placeholder="Ex: João e Maria Silva">
+    </div>
+    <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Nome do responsável</label>
-        <input class="form-input" id="f-nome" type="text" placeholder="Ex: João e Maria Silva">
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Telefone</label>
-          <input class="form-input" id="f-tel" type="tel" placeholder="(19) 99999-9999">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Nº de pessoas</label>
-          <input class="form-input" id="f-pax" type="number" min="1" max="20" placeholder="2">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Horário</label>
-          <input class="form-input" id="f-hora" type="text" placeholder="19h30">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Mesa (opcional)</label>
-          <input class="form-input" id="f-mesa" type="text" placeholder="—">
-        </div>
+        <label class="form-label">Telefone</label>
+        <input class="form-input" id="f-tel" type="tel" placeholder="(19) 99999-9999">
       </div>
       <div class="form-group">
-        <label class="form-label">Valor pago (R$)</label>
-        <input class="form-input" id="f-valor" type="number" placeholder="165 ou 329,90">
+        <label class="form-label">Nº de pessoas</label>
+        <input class="form-input" id="f-pax" type="number" min="1" max="20" placeholder="2" oninput="calcValorHelper()">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Horário</label>
+        <input class="form-input" id="f-hora" type="text" placeholder="19h30">
       </div>
       <div class="form-group">
-        <label class="form-label">Status do pagamento</label>
-        <div class="toggle-group">
-          <div class="toggle-opt selected" id="tog-pago" onclick="togglePago(true)">✅ Pago</div>
-          <div class="toggle-opt" id="tog-pendente" onclick="togglePago(false)">⏳ Pendente</div>
-        </div>
+        <label class="form-label">Mesa (opcional)</label>
+        <input class="form-input" id="f-mesa" type="text" placeholder="—">
       </div>
-      <button class="submit-btn" onclick="addReservation()">Confirmar Reserva</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Valor total da reserva (R$)</label>
+      <input class="form-input" id="f-total" type="number" placeholder="329,90" oninput="calcValorHelper()" value="329.90">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Valor já pago (R$)</label>
+      <input class="form-input" id="f-valor" type="number" placeholder="165,00" oninput="calcValorHelper()">
+      <div class="valor-helper" id="valor-helper" style="display:none">
+        <span class="vh-label">Saldo devedor:</span>
+        <span class="vh-val" id="vh-saldo">—</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Status do pagamento</label>
+      <div class="toggle-group">
+        <div class="toggle-opt selected" id="tog-pago" onclick="togglePago('pago')">✅ Pago</div>
+        <div class="toggle-opt" id="tog-parcial" onclick="togglePago('parcial')">💳 Parcial</div>
+        <div class="toggle-opt" id="tog-pendente" onclick="togglePago('pendente')">⏳ Pendente</div>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="addReservation()">Confirmar Reserva</button>
+  </div>
+</div>
+
+<!-- ══ CARDÁPIO ══ -->
+<div id="page-cardapio" class="page">
+  <div class="page-header">
+    <div class="back-btn" onclick="showPage('home')">◀</div>
+    <div class="page-title">🍽️ Menu — Dia dos Namorados</div>
+  </div>
+  <div class="menu-page">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold2);font-style:italic;">Dia dos Namorados</div>
+      <div style="font-size:.75rem;color:rgba(247,241,232,.5);letter-spacing:.15em;text-transform:uppercase;margin-top:4px;">Menu Especial · 12 de Junho de 2026</div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">✦ Entrada</div>
+      <div class="menu-item">
+        <div class="menu-item-name">🧀 Brie, Mel e Figo</div>
+        <div class="menu-item-desc">Queijo brie envolto em massa folhada, servido com figos confitados e mel.</div>
+      </div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">✦ Principais</div>
+      <div class="menu-item">
+        <div class="menu-item-name">🥩 Opção 1 — Veludo Terroso</div>
+        <div class="menu-item-desc">Medalhão de mignon selado, demi-glace, aligot de mandioca, farofa crocante de brioche, tartar de pêras e cogumelos na manteiga de missô.</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-name">🐟 Opção 2 — Maré de Inverno</div>
+        <div class="menu-item-desc">Filé de Saint Peter na manteiga de tomilho, purê de mandioquinha, crocante de alho-poró, farofa de castanha-do-pará, redução de mirtilo com aceto balsâmico e azeite de coentro.</div>
+      </div>
+    </div>
+    <div class="menu-section">
+      <div class="menu-section-title">✦ Sobremesa</div>
+      <div class="menu-item">
+        <div class="menu-item-name">🍋 Releitura da Torta de Limão</div>
+        <div class="menu-item-desc">Crumble de amêndoas, lemon curd, mousse de cream cheese, creme de limão-siciliano, merengue italiano e gelatina de caipirinha.</div>
+      </div>
+    </div>
+    <div class="menu-price-tag">
+      <div class="price-val">R$ 329,90</div>
+      <div class="price-label">Por casal · Bebida e taxa à parte</div>
+      <div style="font-size:.7rem;color:rgba(247,241,232,.4);margin-top:8px;">Cardápio exclusivo do Chef</div>
+      <div style="margin-top:10px;font-size:.8rem;color:rgba(201,168,76,.7);">📱 Pré-venda · (19) 99696-9633</div>
     </div>
   </div>
+</div>
 
-  <!-- ══════════════ CARDÁPIO ══════════════ -->
-  <div id="page-cardapio" class="page">
-    <div class="page-header">
-      <div class="back-btn" onclick="showPage('home')">◀</div>
-      <div class="page-title">🍽️ Menu — Dia dos Namorados</div>
-    </div>
-    <div class="menu-page">
-
-      <div style="text-align:center;margin-bottom:24px;">
-        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--gold2);font-style:italic;">Dia dos Namorados</div>
-        <div style="font-size:.75rem;color:rgba(247,241,232,.5);letter-spacing:.15em;text-transform:uppercase;margin-top:4px;">Menu Especial · 12 de Junho de 2026</div>
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-section-title">✦ Entrada</div>
-        <div class="menu-item">
-          <div class="menu-item-name">🧀 Brie, Mel e Figo</div>
-          <div class="menu-item-desc">Queijo brie envolto em massa folhada, servido com figos confitados e mel.</div>
-        </div>
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-section-title">✦ Principais</div>
-        <div class="menu-item">
-          <div class="menu-item-name">🥩 Opção 1 — Veludo Terroso</div>
-          <div class="menu-item-desc">Medalhão de mignon selado, demi-glace, aligot de mandioca, farofa crocante de brioche, tartar de pêras e cogumelos na manteiga de missô.</div>
-        </div>
-        <div class="menu-item">
-          <div class="menu-item-name">🐟 Opção 2 — Maré de Inverno</div>
-          <div class="menu-item-desc">Filé de Saint Peter na manteiga de tomilho, purê de mandioquinha, crocante de alho-poró, farofa de castanha-do-pará, redução de mirtilo com aceto balsâmico e azeite de coentro.</div>
-        </div>
-      </div>
-
-      <div class="menu-section">
-        <div class="menu-section-title">✦ Sobremesa</div>
-        <div class="menu-item">
-          <div class="menu-item-name">🍋 Releitura da Torta de Limão</div>
-          <div class="menu-item-desc">Crumble de amêndoas, lemon curd, mousse de cream cheese, creme de limão-siciliano, merengue italiano e gelatina de caipirinha.</div>
-        </div>
-      </div>
-
-      <div class="menu-price-tag">
-        <div class="price-val">R$ 329,90</div>
-        <div class="price-label">Por casal · Bebida e taxa à parte</div>
-        <div style="font-size:.7rem;color:rgba(247,241,232,.4);margin-top:8px;">Cardápio exclusivo do Chef</div>
-        <div style="margin-top:10px;font-size:.8rem;color:rgba(201,168,76,.7);">📱 Pré-venda · (19) 99696-9633</div>
-      </div>
-
-    </div>
+<!-- ══ MESAS ══ -->
+<div id="page-mesas" class="page">
+  <div class="page-header">
+    <div class="back-btn" onclick="showPage('home')">◀</div>
+    <div class="page-title">🪑 Mapa de Mesas</div>
   </div>
-
-  <!-- ══════════════ MESAS ══════════════ -->
-  <div id="page-mesas" class="page">
-    <div class="page-header">
-      <div class="back-btn" onclick="showPage('home')">◀</div>
-      <div class="page-title">🪑 Mapa de Mesas</div>
-    </div>
-    <div class="mesa-grid-wrap">
-      <h3>Mesas Ocupadas</h3>
-      <div class="mesa-grid" id="mesa-occupied"></div>
-      <h3>Mesas Disponíveis / Sem Mesa Definida</h3>
-      <div class="mesa-grid" id="mesa-free"></div>
-    </div>
+  <div class="mesa-grid-wrap">
+    <h3>Mesas Ocupadas</h3>
+    <div class="mesa-grid" id="mesa-occupied"></div>
+    <h3>Sem Mesa Definida</h3>
+    <div class="mesa-grid" id="mesa-free"></div>
   </div>
+  <div class="financeiro-box">
+    <div style="font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(201,168,76,.6);text-transform:uppercase;letter-spacing:.15em;margin-bottom:14px;">💰 Resumo Financeiro</div>
+    <div class="fin-card" id="fin-resumo"></div>
+  </div>
+</div>
 
 </div><!-- /app -->
+
+<!-- ══ MODAL EDIÇÃO ══ -->
+<div class="modal-overlay" id="edit-modal" onclick="closeModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">
+      <span>✏️ Editar Reserva</span>
+      <button class="modal-close" onclick="closeEditModal()">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════
-//  DATA
-// ══════════════════════════════════════
+// ══ PREÇO BASE ══
+const PRECO_CASAL = 329.90;
+
+// ══ DATA ══
 let reservations = [
-  { id:1,  nome:"Lays e Alvaro Finezi",            tel:"19 99348-4480", pax:2, hora:"",     mesa:"", valor:165, pago:true  },
-  { id:2,  nome:"Vinicius Boer",                   tel:"19 99112-5597", pax:2, hora:"",     mesa:"", valor:165, pago:true  },
-  { id:3,  nome:"Renato Goes",                     tel:"24 99241-8044", pax:2, hora:"",     mesa:"", valor:165, pago:true  },
-  { id:4,  nome:"Marina e Thomas Kors",            tel:"",              pax:2, hora:"",     mesa:"", valor:165, pago:true  },
-  { id:5,  nome:"Gabi e André",                    tel:"",              pax:2, hora:"",     mesa:"", valor:165, pago:false },
-  { id:6,  nome:"Margareth e Ger",                 tel:"",              pax:2, hora:"",     mesa:"", valor:165, pago:false },
-  { id:7,  nome:"Guilherme e Isabella",            tel:"",              pax:2, hora:"19h",  mesa:"", valor:165, pago:true  },
-  { id:8,  nome:"Wellington Semensin",             tel:"",              pax:2, hora:"20h",  mesa:"", valor:165, pago:true  },
-  { id:9,  nome:"Thiago Reno Rossi",               tel:"",              pax:2, hora:"20h",  mesa:"", valor:165, pago:true  },
-  { id:10, nome:"Diego e Bia / Thiago e Aline",    tel:"",              pax:4, hora:"19h",  mesa:"", valor:330, pago:true  },
-  { id:11, nome:"Luiz Guilherme",                  tel:"",              pax:2, hora:"",     mesa:"", valor:165, pago:true  },
-  { id:12, nome:"Aluísio e Fabiane",               tel:"",              pax:2, hora:"20h",  mesa:"", valor:165, pago:true  },
-  { id:13, nome:"Matheus Panini",                  tel:"",              pax:2, hora:"19h30",mesa:"", valor:165, pago:true  },
-  { id:14, nome:"Larissa Carneiro",                tel:"",              pax:2, hora:"20h20",mesa:"", valor:165, pago:true  },
-  { id:15, nome:"Daniel B. Custódio",              tel:"",              pax:2, hora:"19h30",mesa:"", valor:165, pago:true  },
-  { id:16, nome:"Vinicius e Julia Salustiano",     tel:"",              pax:2, hora:"19h30",mesa:"", valor:165, pago:true  },
-  { id:17, nome:"Marcos Leoni Guimarães",          tel:"",              pax:2, hora:"",     mesa:"", valor:165, pago:true  },
-  { id:18, nome:"Renato Souza",                    tel:"",              pax:2, hora:"20h",  mesa:"", valor:165, pago:true  },
-  { id:19, nome:"Mateus Finotelli",                tel:"",              pax:2, hora:"19h30",mesa:"", valor:100, pago:true  },
-  { id:20, nome:"Leandro e Laura",                 tel:"",              pax:2, hora:"20h",  mesa:"", valor:165, pago:false },
-  { id:21, nome:"Breno Teixeira",                  tel:"",              pax:2, hora:"19h30",mesa:"", valor:165, pago:true  },
-  { id:22, nome:"Guilherme Coser",                 tel:"",              pax:2, hora:"19h30",mesa:"", valor:165, pago:true  },
+  { id:1,  nome:"Lays e Alvaro Finezi",         tel:"19 99348-4480", pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:2,  nome:"Vinicius Boer",                tel:"19 99112-5597", pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:3,  nome:"Renato Goes",                  tel:"24 99241-8044", pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:4,  nome:"Marina e Thomas Kors",         tel:"",              pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:5,  nome:"Gabi e André",                 tel:"",              pax:2, hora:"",      mesa:"", valorPago:0,   valorTotal:329.90, status:"pendente" },
+  { id:6,  nome:"Margareth e Ger",              tel:"",              pax:2, hora:"",      mesa:"", valorPago:0,   valorTotal:329.90, status:"pendente" },
+  { id:7,  nome:"Guilherme e Isabella",         tel:"",              pax:2, hora:"19h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:8,  nome:"Wellington Semensin",          tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:9,  nome:"Thiago Reno Rossi",            tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:10, nome:"Diego e Bia / Thiago e Aline", tel:"",              pax:4, hora:"19h",   mesa:"", valorPago:330, valorTotal:659.80, status:"parcial" },
+  { id:11, nome:"Luiz Guilherme",               tel:"",              pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:12, nome:"Aluísio e Fabiane",            tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:13, nome:"Matheus Panini",               tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:14, nome:"Larissa Carneiro",             tel:"",              pax:2, hora:"20h20", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:15, nome:"Daniel B. Custódio",           tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:16, nome:"Vinicius e Julia Salustiano",  tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:17, nome:"Marcos Leoni Guimarães",       tel:"",              pax:2, hora:"",      mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:18, nome:"Renato Souza",                 tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:19, nome:"Mateus Finotelli",             tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:100, valorTotal:329.90, status:"parcial" },
+  { id:20, nome:"Leandro e Laura",              tel:"",              pax:2, hora:"20h",   mesa:"", valorPago:0,   valorTotal:329.90, status:"pendente" },
+  { id:21, nome:"Breno Teixeira",               tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
+  { id:22, nome:"Guilherme Coser",              tel:"",              pax:2, hora:"19h30", mesa:"", valorPago:165, valorTotal:329.90, status:"parcial" },
 ];
 
 let currentFilter = 'all';
-let newPago = true;
+let newStatus = 'pago';
 
-// ══════════════════════════════════════
-//  PAGE NAVIGATION
-// ══════════════════════════════════════
+function saldo(r) { return Math.max(0, r.valorTotal - r.valorPago); }
+function fmt(v)   { return 'R$ ' + v.toFixed(2).replace('.',','); }
+
+// ══ PAGE NAV ══
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('page-'+id).classList.add('active');
   window.scrollTo(0,0);
-  if (id === 'reservas') renderReservations();
-  if (id === 'home')     renderStats();
-  if (id === 'mesas')    renderMesas();
+  if (id==='reservas') renderReservations();
+  if (id==='home')     renderStats();
+  if (id==='mesas')    renderMesas();
 }
 
-// ══════════════════════════════════════
-//  STATS
-// ══════════════════════════════════════
+// ══ STATS ══
 function renderStats() {
-  const total = reservations.length;
-  const paid  = reservations.filter(r => r.pago).length;
-  const pend  = total - paid;
-  const pax   = reservations.reduce((s,r) => s + r.pax, 0);
-  const receita = reservations.filter(r=>r.pago).reduce((s,r)=>s+r.valor,0);
+  const total   = reservations.length;
+  const pagos   = reservations.filter(r => r.status==='pago').length;
+  const pend    = reservations.filter(r => r.status==='pendente').length;
+  const pax     = reservations.reduce((s,r) => s+r.pax, 0);
+  const arrecadado = reservations.reduce((s,r) => s+r.valorPago, 0);
+  const falta      = reservations.reduce((s,r) => s+saldo(r), 0);
 
   document.getElementById('stats-bar').innerHTML = `
-    <div class="stat-card">
-      <div class="stat-num">${total}</div>
-      <div class="stat-label">Reservas</div>
-    </div>
-    <div class="stat-card paid">
-      <div class="stat-num">${paid}</div>
-      <div class="stat-label">Pagos</div>
-    </div>
-    <div class="stat-card pending">
-      <div class="stat-num">${pend}</div>
-      <div class="stat-label">Pendentes</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">${pax}</div>
-      <div class="stat-label">Pessoas</div>
-    </div>
+    <div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">Reservas</div></div>
+    <div class="stat-card paid"><div class="stat-num">${pagos}</div><div class="stat-label">Pagos</div></div>
+    <div class="stat-card pending"><div class="stat-num">${pend}</div><div class="stat-label">Pendentes</div></div>
+    <div class="stat-card"><div class="stat-num">${pax}</div><div class="stat-label">Pessoas</div></div>
+    <div class="stat-card debt"><div class="stat-num" style="font-size:.95rem">${fmt(falta)}</div><div class="stat-label">Falta</div></div>
   `;
   document.getElementById('btn-count-total').textContent = `${total} reservas · ${pax} pessoas`;
 }
 renderStats();
 
-// ══════════════════════════════════════
-//  RENDER RESERVATIONS
-// ══════════════════════════════════════
+// ══ RENDER RESERVAS ══
 function renderReservations() {
-  const query  = (document.getElementById('search-input')?.value || '').toLowerCase();
+  const query = (document.getElementById('search-input')?.value||'').toLowerCase();
   let list = reservations.filter(r => {
     if (query && !r.nome.toLowerCase().includes(query)) return false;
-    if (currentFilter === 'paid'    && !r.pago) return false;
-    if (currentFilter === 'pending' && r.pago)  return false;
-    if (currentFilter === '19h'  && !r.hora.startsWith('19')) return false;
-    if (currentFilter === '20h'  && !r.hora.startsWith('20')) return false;
+    if (currentFilter==='paid'    && r.status!=='pago')     return false;
+    if (currentFilter==='pending' && r.status!=='pendente') return false;
+    if (currentFilter==='partial' && r.status!=='parcial')  return false;
+    if (currentFilter==='19h' && !r.hora.startsWith('19'))  return false;
+    if (currentFilter==='20h' && !r.hora.startsWith('20'))  return false;
     return true;
   });
 
@@ -929,184 +582,285 @@ function renderReservations() {
     return;
   }
 
-  container.innerHTML = list.map(r => `
+  container.innerHTML = list.map(r => {
+    const dev = saldo(r);
+    const badgeClass = r.status==='pago' ? 'yes' : r.status==='parcial' ? 'partial' : 'no';
+    const badgeText  = r.status==='pago' ? '✅ PAGO' : r.status==='parcial' ? '💳 PARCIAL' : '⏳ PENDENTE';
+    return `
     <div class="res-card" id="card-${r.id}" onclick="toggleCard(${r.id})">
       <div class="res-card-front">
         <div class="res-num">${r.id}</div>
         <div class="res-main">
           <div class="res-name">${r.nome}</div>
           <div class="res-meta">
-            <span>👥 ${r.pax} ${r.pax === 1 ? 'pessoa' : 'pessoas'}</span>
+            <span>👥 ${r.pax} ${r.pax===1?'pessoa':'pessoas'}</span>
             ${r.hora ? `<span class="sep">·</span><span>🕐 ${r.hora}</span>` : ''}
-            ${r.tel  ? `<span class="sep">·</span><span>📱 ${r.tel}</span>` : ''}
+            ${dev>0 ? `<span class="sep">·</span><span style="color:#e85c4c">falta ${fmt(dev)}</span>` : ''}
           </div>
         </div>
         <div class="res-right">
-          <span class="badge-paid ${r.pago ? 'yes' : 'no'}">${r.pago ? '✅ PAGO' : '⏳ PENDENTE'}</span>
+          <span class="badge-paid ${badgeClass}">${badgeText}</span>
           ${r.hora ? `<span class="res-time">${r.hora}</span>` : ''}
-          <span class="res-mesa">${r.mesa ? '🪑 Mesa ' + r.mesa : '⬜ S/ mesa'}</span>
+          <span class="res-mesa">${r.mesa ? '🪑 Mesa '+r.mesa : '⬜ S/ mesa'}</span>
         </div>
       </div>
       <div class="res-detail" id="detail-${r.id}">
+        ${dev>0 ? `
+        <div class="debt-box${dev===0?' cleared':''}">
+          <div>
+            <div class="debt-label">Pago</div>
+            <div style="font-family:'Playfair Display',serif;font-size:.95rem;color:#4caf7d">${fmt(r.valorPago)}</div>
+          </div>
+          <div style="text-align:center">
+            <div class="debt-label">Total</div>
+            <div style="font-family:'Playfair Display',serif;font-size:.95rem;color:var(--gold2)">${fmt(r.valorTotal)}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="debt-label">Falta pagar</div>
+            <div class="debt-val">${fmt(dev)}</div>
+          </div>
+        </div>` : `
+        <div class="debt-box cleared" style="margin:12px 0 8px">
+          <div class="debt-label">Pagamento completo ✅</div>
+          <div class="debt-val" style="color:#4caf7d">${fmt(r.valorPago)}</div>
+        </div>`}
+
         <div class="detail-grid">
-          <div class="detail-item">
-            <label>Nome</label>
-            <div class="dval">${r.nome}</div>
-          </div>
-          <div class="detail-item">
-            <label>Telefone</label>
-            <div class="dval">${r.tel || '—'}</div>
-          </div>
-          <div class="detail-item">
-            <label>Pessoas</label>
-            <div class="dval">${r.pax}</div>
-          </div>
-          <div class="detail-item">
-            <label>Horário</label>
-            <div class="dval">${r.hora || '—'}</div>
-          </div>
-          <div class="detail-item">
-            <label>Valor pago</label>
-            <div class="dval" style="color:var(--gold)">R$ ${r.valor},00</div>
-          </div>
-          <div class="detail-item">
-            <label>Pagamento</label>
-            <div class="dval" style="color:${r.pago ? '#4caf7d' : '#e8a84c'}">${r.pago ? '✅ Confirmado' : '⏳ Pendente'}</div>
-          </div>
+          <div class="detail-item"><label>Nome</label><div class="dval">${r.nome}</div></div>
+          <div class="detail-item"><label>Telefone</label><div class="dval">${r.tel||'—'}</div></div>
+          <div class="detail-item"><label>Pessoas</label><div class="dval">${r.pax}</div></div>
+          <div class="detail-item"><label>Horário</label><div class="dval">${r.hora||'—'}</div></div>
+          <div class="detail-item"><label>Valor pago</label><div class="dval" style="color:var(--gold)">${fmt(r.valorPago)}</div></div>
+          <div class="detail-item"><label>Status</label><div class="dval" style="color:${r.status==='pago'?'#4caf7d':r.status==='parcial'?'#e8904c':'#e8a84c'}">${badgeText}</div></div>
         </div>
-        <div class="edit-row">
-          <input class="edit-input" id="mesa-input-${r.id}" type="text" 
-            value="${r.mesa}" placeholder="Número da mesa..." 
-            onclick="event.stopPropagation()">
-          <button class="save-mesa-btn" onclick="event.stopPropagation(); saveMesa(${r.id})">Salvar Mesa</button>
+
+        <div class="edit-row" onclick="event.stopPropagation()">
+          <input class="edit-input" id="mesa-input-${r.id}" type="text" value="${r.mesa}" placeholder="Número da mesa...">
+          <button class="save-mesa-btn" onclick="saveMesa(${r.id})">Salvar Mesa</button>
         </div>
-        <div style="margin-top:10px;display:flex;gap:8px;">
-          <button onclick="event.stopPropagation(); togglePagamento(${r.id})"
-            style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(201,168,76,.3);
-            background:rgba(255,255,255,.05);color:var(--cream);font-size:.8rem;cursor:pointer;">
-            ${r.pago ? '↩️ Marcar Pendente' : '✅ Marcar Pago'}
-          </button>
-          ${r.tel ? `<button onclick="event.stopPropagation(); window.open('tel:${r.tel.replace(/\D/g,'')}')"
-            style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(76,175,125,.3);
-            background:rgba(76,175,125,.1);color:#4caf7d;font-size:.8rem;cursor:pointer;">
-            📞 Ligar
-          </button>` : ''}
+
+        <div class="quick-actions" onclick="event.stopPropagation()">
+          <button class="qa-btn" onclick="openEditModal(${r.id})">✏️ Editar tudo</button>
+          <button class="qa-btn" onclick="cycleStatus(${r.id})">${r.status==='pago'?'↩️ Pendente':r.status==='parcial'?'✅ Marcar pago':'💳 Parcial'}</button>
+          ${r.tel ? `<button class="qa-btn green" onclick="window.open('tel:${r.tel.replace(/\D/g,'')}')">📞 Ligar</button>` : ''}
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 function toggleCard(id) {
-  const card = document.getElementById('card-' + id);
-  const wasExpanded = card.classList.contains('expanded');
-  document.querySelectorAll('.res-card.expanded').forEach(c => c.classList.remove('expanded'));
-  if (!wasExpanded) card.classList.add('expanded');
+  const card = document.getElementById('card-'+id);
+  const was  = card.classList.contains('expanded');
+  document.querySelectorAll('.res-card.expanded').forEach(c=>c.classList.remove('expanded'));
+  if (!was) card.classList.add('expanded');
 }
 
 function saveMesa(id) {
-  const val = document.getElementById('mesa-input-' + id).value.trim();
-  const res = reservations.find(r => r.id === id);
-  if (res) {
-    res.mesa = val;
-    renderReservations();
-    renderMesas();
-    showToast(val ? `Mesa ${val} atribuída para ${res.nome.split(' ')[0]}` : 'Mesa removida');
-  }
+  event.stopPropagation();
+  const val = document.getElementById('mesa-input-'+id).value.trim();
+  const r   = reservations.find(x=>x.id===id);
+  if (r) { r.mesa=val; renderReservations(); renderMesas(); showToast(val?`Mesa ${val} → ${r.nome.split(' ')[0]}`:'Mesa removida'); }
 }
 
-function togglePagamento(id) {
-  const res = reservations.find(r => r.id === id);
-  if (res) {
-    res.pago = !res.pago;
-    renderReservations();
-    renderStats();
-    showToast(res.pago ? '✅ Marcado como pago!' : '⏳ Marcado como pendente');
-  }
+function cycleStatus(id) {
+  event.stopPropagation();
+  const r = reservations.find(x=>x.id===id);
+  if (!r) return;
+  const cycle = { pago:'pendente', pendente:'parcial', parcial:'pago' };
+  r.status = cycle[r.status];
+  if (r.status==='pago') r.valorPago = r.valorTotal;
+  if (r.status==='pendente') r.valorPago = 0;
+  renderReservations(); renderStats();
+  showToast(r.status==='pago'?'✅ Pago!':r.status==='parcial'?'💳 Parcial':'⏳ Pendente');
 }
 
-function setFilter(f, el) {
-  currentFilter = f;
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  renderReservations();
+function setFilter(f,el) {
+  currentFilter=f;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active'); renderReservations();
 }
-
 function filterReservations() { renderReservations(); }
 
-// ══════════════════════════════════════
-//  ADD RESERVATION
-// ══════════════════════════════════════
+// ══ EDIT MODAL ══
+function openEditModal(id) {
+  event.stopPropagation();
+  const r = reservations.find(x=>x.id===id);
+  if (!r) return;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="form-group"><label class="form-label">Nome</label>
+      <input class="form-input" id="e-nome" value="${r.nome}" placeholder="Nome do casal"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Telefone</label>
+        <input class="form-input" id="e-tel" value="${r.tel}" placeholder="(19) 99999-9999"></div>
+      <div class="form-group"><label class="form-label">Nº pessoas</label>
+        <input class="form-input" id="e-pax" type="number" value="${r.pax}" min="1" max="20"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Horário</label>
+        <input class="form-input" id="e-hora" value="${r.hora}" placeholder="19h30"></div>
+      <div class="form-group"><label class="form-label">Mesa</label>
+        <input class="form-input" id="e-mesa" value="${r.mesa}" placeholder="—"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Valor total (R$)</label>
+        <input class="form-input" id="e-total" type="number" value="${r.valorTotal}" oninput="updateEditSaldo()"></div>
+      <div class="form-group"><label class="form-label">Valor pago (R$)</label>
+        <input class="form-input" id="e-pago" type="number" value="${r.valorPago}" oninput="updateEditSaldo()"></div>
+    </div>
+    <div class="valor-helper" id="edit-saldo-box">
+      <span class="vh-label">Saldo devedor:</span>
+      <span class="vh-val" id="edit-saldo-val">—</span>
+    </div>
+    <div class="form-group" style="margin-top:16px"><label class="form-label">Status</label>
+      <div class="toggle-group">
+        <div class="toggle-opt ${r.status==='pago'?'selected':''}"    id="et-pago"     onclick="selectEditStatus('pago')">✅ Pago</div>
+        <div class="toggle-opt ${r.status==='parcial'?'selected':''}" id="et-parcial"  onclick="selectEditStatus('parcial')">💳 Parcial</div>
+        <div class="toggle-opt ${r.status==='pendente'?'selected':''}"id="et-pendente" onclick="selectEditStatus('pendente')">⏳ Pendente</div>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="saveEditModal(${id})">💾 Salvar Alterações</button>
+  `;
+  document.getElementById('edit-modal').classList.add('open');
+  updateEditSaldo();
+}
+
+function updateEditSaldo() {
+  const total = parseFloat(document.getElementById('e-total')?.value)||0;
+  const pago  = parseFloat(document.getElementById('e-pago')?.value)||0;
+  const dev   = Math.max(0, total-pago);
+  const box   = document.getElementById('edit-saldo-box');
+  const val   = document.getElementById('edit-saldo-val');
+  if (box && val) {
+    box.style.display='flex';
+    val.textContent = fmt(dev);
+    val.className   = 'vh-val ' + (dev===0?'green':'red');
+  }
+}
+
+let editStatusVal = 'pago';
+function selectEditStatus(s) {
+  editStatusVal = s;
+  ['pago','parcial','pendente'].forEach(x => {
+    document.getElementById('et-'+x)?.classList.toggle('selected', x===s);
+  });
+}
+
+function saveEditModal(id) {
+  const r = reservations.find(x=>x.id===id);
+  if (!r) return;
+  r.nome       = document.getElementById('e-nome').value.trim() || r.nome;
+  r.tel        = document.getElementById('e-tel').value.trim();
+  r.pax        = parseInt(document.getElementById('e-pax').value)||r.pax;
+  r.hora       = document.getElementById('e-hora').value.trim();
+  r.mesa       = document.getElementById('e-mesa').value.trim();
+  r.valorTotal = parseFloat(document.getElementById('e-total').value)||r.valorTotal;
+  r.valorPago  = parseFloat(document.getElementById('e-pago').value)||0;
+  r.status     = editStatusVal;
+  closeEditModal();
+  renderReservations(); renderStats(); renderMesas();
+  showToast(`✅ ${r.nome.split(' ')[0]} atualizado!`);
+}
+
+function closeEditModal() { document.getElementById('edit-modal').classList.remove('open'); }
+function closeModal(e)    { if (e.target===document.getElementById('edit-modal')) closeEditModal(); }
+
+// ══ NOVA RESERVA ══
+function calcValorHelper() {
+  const total = parseFloat(document.getElementById('f-total')?.value)||0;
+  const pago  = parseFloat(document.getElementById('f-valor')?.value)||0;
+  const dev   = Math.max(0, total-pago);
+  const box   = document.getElementById('valor-helper');
+  const saldoEl = document.getElementById('vh-saldo');
+  if (pago>0 || total>0) {
+    box.style.display='flex';
+    saldoEl.textContent = fmt(dev);
+    saldoEl.className   = 'vh-val ' + (dev===0?'green':'red');
+  } else {
+    box.style.display='none';
+  }
+}
+
 function togglePago(val) {
-  newPago = val;
-  document.getElementById('tog-pago').classList.toggle('selected', val);
-  document.getElementById('tog-pendente').classList.toggle('selected', !val);
+  newStatus=val;
+  ['pago','parcial','pendente'].forEach(x => {
+    document.getElementById('tog-'+x).classList.toggle('selected', x===val);
+  });
 }
 
 function addReservation() {
   const nome  = document.getElementById('f-nome').value.trim();
   const tel   = document.getElementById('f-tel').value.trim();
-  const pax   = parseInt(document.getElementById('f-pax').value) || 2;
+  const pax   = parseInt(document.getElementById('f-pax').value)||2;
   const hora  = document.getElementById('f-hora').value.trim();
   const mesa  = document.getElementById('f-mesa').value.trim();
-  const valor = parseFloat(document.getElementById('f-valor').value) || 165;
+  const total = parseFloat(document.getElementById('f-total').value)||PRECO_CASAL;
+  const pago  = parseFloat(document.getElementById('f-valor').value)||0;
 
   if (!nome) { showToast('⚠️ Informe o nome do responsável'); return; }
 
-  const newId = Math.max(...reservations.map(r=>r.id)) + 1;
-  reservations.push({ id: newId, nome, tel, pax, hora, mesa, valor, pago: newPago });
+  const newId = Math.max(...reservations.map(r=>r.id))+1;
+  reservations.push({ id:newId, nome, tel, pax, hora, mesa, valorPago:pago, valorTotal:total, status:newStatus });
 
-  document.getElementById('f-nome').value  = '';
-  document.getElementById('f-tel').value   = '';
-  document.getElementById('f-pax').value   = '';
-  document.getElementById('f-hora').value  = '';
-  document.getElementById('f-mesa').value  = '';
-  document.getElementById('f-valor').value = '';
-  togglePago(true);
-
+  ['f-nome','f-tel','f-pax','f-hora','f-mesa','f-valor'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('f-total').value = '329.90';
+  document.getElementById('valor-helper').style.display='none';
+  togglePago('pago');
   renderStats();
-  showToast(`🎉 Reserva de ${nome.split(' ')[0]} confirmada!`);
-  setTimeout(() => showPage('reservas'), 800);
+  showToast(`🎉 Reserva de ${nome.split(' ')[0]} confirmada! Falta: ${fmt(Math.max(0,total-pago))}`);
+  setTimeout(()=>showPage('reservas'),900);
 }
 
-// ══════════════════════════════════════
-//  MESAS
-// ══════════════════════════════════════
+// ══ MESAS ══
 function renderMesas() {
-  const occupied = reservations.filter(r => r.mesa);
-  const free     = reservations.filter(r => !r.mesa);
+  const occupied = reservations.filter(r=>r.mesa);
+  const free     = reservations.filter(r=>!r.mesa);
 
   document.getElementById('mesa-occupied').innerHTML = occupied.length
-    ? occupied.map(r => `
+    ? occupied.map(r=>`
       <div class="mesa-card occupied">
         <div class="m-num">Mesa ${r.mesa}</div>
         <div class="m-name">${r.nome}</div>
-        <div class="m-time">${r.hora || '—'}</div>
-        <div class="m-pax">👥 ${r.pax} pessoas</div>
-      </div>
-    `).join('')
+        <div class="m-time">${r.hora||'—'}</div>
+        <div class="m-pax">👥 ${r.pax} · ${saldo(r)>0?'<span style="color:#e85c4c">falta '+fmt(saldo(r))+'</span>':'<span style="color:#4caf7d">✅ quitado</span>'}</div>
+      </div>`).join('')
     : `<div style="grid-column:1/-1;color:rgba(247,241,232,.3);font-style:italic;padding:10px 0;font-size:.85rem;">Nenhuma mesa atribuída ainda</div>`;
 
   document.getElementById('mesa-free').innerHTML = free.length
-    ? free.map(r => `
+    ? free.map(r=>`
       <div class="mesa-card" onclick="showPage('reservas')">
         <div class="m-num" style="color:rgba(201,168,76,.4);font-size:.95rem;">⬜</div>
         <div class="m-name">${r.nome}</div>
-        <div class="m-time">${r.hora || 'horário não definido'}</div>
-        <div class="m-pax">👥 ${r.pax} · ${r.pago ? '✅ pago' : '⏳ pendente'}</div>
-      </div>
-    `).join('')
+        <div class="m-time">${r.hora||'horário não definido'}</div>
+        <div class="m-pax">👥 ${r.pax} · ${saldo(r)>0?'<span style="color:#e85c4c">falta '+fmt(saldo(r))+'</span>':'<span style="color:#4caf7d">✅</span>'}</div>
+      </div>`).join('')
     : `<div style="grid-column:1/-1;color:rgba(76,175,125,.5);padding:10px 0;font-size:.85rem;">Todas as mesas atribuídas! 🎉</div>`;
+
+  // Resumo financeiro
+  const totalBruto    = reservations.reduce((s,r)=>s+r.valorTotal,0);
+  const totalArrecad  = reservations.reduce((s,r)=>s+r.valorPago,0);
+  const totalFalta    = reservations.reduce((s,r)=>s+saldo(r),0);
+  const quitados      = reservations.filter(r=>saldo(r)===0).length;
+  const parciais      = reservations.filter(r=>saldo(r)>0&&r.valorPago>0).length;
+  const pendentes     = reservations.filter(r=>r.valorPago===0).length;
+
+  document.getElementById('fin-resumo').innerHTML = `
+    <div class="fin-row"><span class="fin-label">Total esperado</span><span class="fin-val" style="color:var(--gold2)">${fmt(totalBruto)}</span></div>
+    <div class="fin-row"><span class="fin-label">Já arrecadado</span><span class="fin-val" style="color:#4caf7d">${fmt(totalArrecad)}</span></div>
+    <div class="fin-row fin-total"><span class="fin-label">⚠️ Falta receber</span><span class="fin-val" style="color:#e85c4c">${fmt(totalFalta)}</span></div>
+    <div style="border-top:1px solid rgba(201,168,76,.12);margin-top:10px;padding-top:10px;display:flex;gap:14px;justify-content:space-between">
+      <div style="text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#4caf7d">${quitados}</div><div style="font-size:.65rem;color:rgba(247,241,232,.45);text-transform:uppercase;letter-spacing:.1em">Quitados</div></div>
+      <div style="text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#e8904c">${parciais}</div><div style="font-size:.65rem;color:rgba(247,241,232,.45);text-transform:uppercase;letter-spacing:.1em">Parciais</div></div>
+      <div style="text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#e8a84c">${pendentes}</div><div style="font-size:.65rem;color:rgba(247,241,232,.45);text-transform:uppercase;letter-spacing:.1em">Pendentes</div></div>
+    </div>
+  `;
 }
 
-// ══════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════
+// ══ TOAST ══
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 </script>
 </body>
