@@ -293,16 +293,11 @@
   .menu-price-tag .price-val { font-family:'Playfair Display',serif; font-size:2rem; color:var(--gold2); font-weight:700; }
   .menu-price-tag .price-label { font-size:.75rem; color:rgba(247,241,232,.5); letter-spacing:.1em; text-transform:uppercase; margin-top:2px; }
 
-  /* ========= NOVO MAPA DE MESAS VISUAL ========= */
-  .mesa-grid-visual {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 16px;
-    padding: 0 16px 24px;
-  }
+  /* ========= MAPA DE MESAS ========= */
+  .mesa-grid-visual { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; padding: 0 16px 24px; }
   .mesa-card-visual {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(201,168,76,0.2);
+    border: 2px solid rgba(201,168,76,0.2);
     border-radius: 16px;
     padding: 12px 10px 10px;
     text-align: center;
@@ -310,24 +305,19 @@
     position: relative;
     cursor: pointer;
   }
+  /* Mesa livre - verde */
+  .mesa-card-visual.livre {
+    border-color: #2e7d32;
+    background: rgba(46,125,50,0.12);
+    box-shadow: 0 0 15px rgba(46,125,50,0.2);
+  }
+  /* Mesa ocupada - vermelho */
   .mesa-card-visual.ocupada {
-    border-color: rgba(201,168,76,0.5);
-    background: rgba(107,26,26,0.15);
-    box-shadow: 0 4px 20px rgba(201,168,76,0.08);
+    border-color: #c62828;
+    background: rgba(198,40,40,0.18);
+    box-shadow: 0 0 15px rgba(198,40,40,0.3);
   }
-  .mesa-card-visual.disponivel {
-    border-style: dashed;
-    opacity: 0.6;
-  }
-  .mesa-drawing-wrapper {
-    position: relative;
-    width: 100%;
-    height: 90px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .mesa-drawing-wrapper { position: relative; width: 100%; height: 90px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; }
   .mesa-drawing {
     position: relative;
     width: 70px;
@@ -341,14 +331,7 @@
     justify-content: center;
     z-index: 2;
   }
-  .mesa-drawing .mesa-numero-visual {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #E8C97A;
-    text-shadow: 0 0 10px rgba(201,168,76,0.8);
-    line-height: 1;
-  }
+  .mesa-drawing .mesa-numero-visual { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: #E8C97A; text-shadow: 0 0 10px rgba(201,168,76,0.8); line-height: 1; }
   .cadeira {
     position: absolute;
     width: 16px;
@@ -357,10 +340,17 @@
     border: 1.5px solid rgba(201,168,76,0.45);
     border-radius: 3px;
     z-index: 1;
-    transition: background 0.2s;
+    transition: background 0.2s, border-color 0.2s;
   }
+  /* Cadeiras verdes para livre */
+  .mesa-card-visual.livre .cadeira {
+    background: rgba(46,125,50,0.15);
+    border-color: #2e7d32;
+  }
+  /* Cadeiras vermelhas para ocupada */
   .mesa-card-visual.ocupada .cadeira {
-    background: rgba(201,168,76,0.12);
+    background: rgba(198,40,40,0.2);
+    border-color: #c62828;
   }
   .cadeira.c-top { top: 6px; left: 50%; transform: translateX(-50%); }
   .cadeira.c-bottom { bottom: 6px; left: 50%; transform: translateX(-50%); }
@@ -376,9 +366,11 @@
     border: 2px solid #1a0a0a;
     z-index: 3;
   }
+  .status-dot.livre { background: #4caf50; }
   .status-dot.pago { background: #4caf7d; }
   .status-dot.parcial { background: #e8904c; }
-  .status-dot.pendente { background: #e8a84c; }
+  .status-dot.pendente { background: #e85c4c; }
+
   .mesa-info-visual { margin-top: 4px; }
   .mesa-info-visual .mesa-nome {
     font-family: 'Cormorant Garamond', serif;
@@ -389,29 +381,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .mesa-info-visual .mesa-nome.livre {
-    color: rgba(247,241,232,0.35);
-    font-style: italic;
-  }
-  .mesa-info-visual .mesa-horario {
-    font-size: 0.7rem;
-    color: rgba(201,168,76,0.7);
-    font-family: 'Playfair Display', serif;
-    margin-top: 2px;
-  }
-  .legenda-mesas {
-    display: flex;
-    gap: 16px;
-    padding: 0 16px 16px;
-    flex-wrap: wrap;
-    font-size: 0.7rem;
-    color: rgba(247,241,232,0.5);
-  }
+  .mesa-info-visual .mesa-nome.livre { color: rgba(247,241,232,0.4); font-style: italic; }
+  .mesa-info-visual .mesa-horario { font-size: 0.7rem; color: rgba(201,168,76,0.7); font-family: 'Playfair Display', serif; margin-top: 2px; }
+  .legenda-mesas { display: flex; gap: 16px; padding: 0 16px 16px; flex-wrap: wrap; font-size: 0.7rem; color: rgba(247,241,232,0.5); }
   .legenda-item { display: flex; align-items: center; gap: 6px; }
   .legenda-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legenda-dot.livre { background: #4caf50; }
   .legenda-dot.pago { background: #4caf7d; }
   .legenda-dot.parcial { background: #e8904c; }
-  .legenda-dot.pendente { background: #e8a84c; }
+  .legenda-dot.pendente { background: #e85c4c; }
 
   .fin-card { background:rgba(255,255,255,.04); border:1px solid rgba(201,168,76,.2); border-radius:12px; padding:14px 16px; margin-bottom:10px; }
   .fin-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
@@ -625,13 +603,20 @@
     <button class="qa-btn" onclick="criarMesa()" style="flex:1;background:rgba(76,175,125,0.1);border-color:rgba(76,175,125,0.3);color:#4caf7d;">➕ Criar Mesa</button>
     <button class="qa-btn" onclick="excluirMesa()" style="flex:1;background:rgba(232,92,76,0.1);border-color:rgba(232,92,76,0.3);color:#e85c4c;">🗑️ Excluir Mesa</button>
   </div>
+  <!-- Botões de filtro das mesas -->
+  <div class="filter-pills" style="padding:8px 16px 12px;">
+    <div class="pill active" onclick="setMesaFilter('todas', this)">Todas</div>
+    <div class="pill" onclick="setMesaFilter('livres', this)" style="color:#4caf50;border-color:#4caf50;">🟢 Livres</div>
+    <div class="pill" onclick="setMesaFilter('ocupadas', this)" style="color:#e85c4c;border-color:#e85c4c;">🔴 Ocupadas</div>
+  </div>
   <div style="padding:0 16px 12px;font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(201,168,76,.6);text-transform:uppercase;letter-spacing:.15em;">Todas as Mesas</div>
   <div class="mesa-grid-visual" id="mesa-grid"></div>
   <div class="legenda-mesas">
     <span>Legenda:</span>
-    <div class="legenda-item"><div class="legenda-dot pago"></div> Pago</div>
-    <div class="legenda-item"><div class="legenda-dot parcial"></div> Parcial</div>
-    <div class="legenda-item"><div class="legenda-dot pendente"></div> Pendente</div>
+    <div class="legenda-item"><div class="legenda-dot livre"></div> Livre</div>
+    <div class="legenda-item"><div class="legenda-dot pago"></div> Ocupada (Pago)</div>
+    <div class="legenda-item"><div class="legenda-dot parcial"></div> Ocupada (Parcial)</div>
+    <div class="legenda-item"><div class="legenda-dot pendente"></div> Ocupada (Pendente)</div>
   </div>
   <div class="financeiro-box" style="padding:0 16px 20px;">
     <div style="font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(201,168,76,.6);text-transform:uppercase;letter-spacing:.15em;margin-bottom:14px;">💰 Resumo Financeiro</div>
@@ -641,6 +626,7 @@
 
 </div>
 
+<!-- ══ MODAL EDIÇÃO ══ -->
 <div class="modal-overlay" id="edit-modal" onclick="closeModal(event)">
   <div class="modal-sheet" onclick="event.stopPropagation()">
     <div class="modal-title">
@@ -651,6 +637,7 @@
   </div>
 </div>
 
+<!-- ══ MODAL DE CONFIRMAÇÃO ══ -->
 <div class="modal-overlay" id="confirm-modal" onclick="closeConfirmModal(event)">
   <div class="modal-sheet" onclick="event.stopPropagation()" style="text-align:center;">
     <div style="font-size:2rem;margin-bottom:8px;">🗑️</div>
@@ -660,6 +647,17 @@
       <button class="qa-btn" onclick="closeConfirmModal()" style="flex:1;">Cancelar</button>
       <button class="qa-btn" id="confirm-delete-btn" style="flex:1;border-color:rgba(232,92,76,.5);background:rgba(232,92,76,.2);color:#e85c4c;">Excluir</button>
     </div>
+  </div>
+</div>
+
+<!-- ══ MODAL DE ATRIBUIR MESA ══ -->
+<div class="modal-overlay" id="atribuir-modal" onclick="closeAtribuirModal(event)">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">
+      <span>🔗 Atribuir à mesa <span id="atribuir-numero"></span></span>
+      <button class="modal-close" onclick="closeAtribuirModal()">✕</button>
+    </div>
+    <div id="atribuir-lista" style="max-height: 50vh; overflow-y:auto;"></div>
   </div>
 </div>
 
@@ -688,6 +686,7 @@
   let reservations = [];
   let mesas = [];
   let currentFilter = 'all';
+  let currentMesaFilter = 'todas';
   let newStatus = 'pago';
   let editStatusVal = 'pago';
   let selectedDeleteId = null;
@@ -705,18 +704,16 @@
       console.warn('⚠️ Autenticação falhou:', e.message);
     }
 
-    // Inicializar mesas padrão se vazio
     const snapMesas = await getDocs(mesasCol);
     if (snapMesas.empty) {
       const padrao = [];
       for (let i=1; i<=28; i++) padrao.push(i.toString());
-      [31,32,33,34,100,101,102,103,104].forEach(i => padrao.push(i.toString()));
+      [31,32,33,34,100,101,102,103,104,105].forEach(i => padrao.push(i.toString()));
       for (const num of padrao) {
         await addDoc(mesasCol, { numero: num, capacidade: 4 });
       }
     }
 
-    // Seed reservas
     const snapRes = await getDocs(reservasCol);
     if (snapRes.empty) {
       const dados = [
@@ -749,7 +746,6 @@
       }
     }
 
-    // Sincronização em tempo real
     onSnapshot(reservasCol, snap => {
       reservations = snap.docs.map(d => ({id:d.id, ...d.data()}));
       renderAll();
@@ -928,7 +924,7 @@
 
   window.setFilter = function(f, el) {
     currentFilter = f;
-    document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.filter-pills .pill').forEach(p=>p.classList.remove('active'));
     el.classList.add('active');
     renderReservations();
   };
@@ -1085,7 +1081,7 @@
     setTimeout(() => showPage('reservas'), 900);
   };
 
-  // ══ NOVO MAPA DE MESAS ══
+  // ══ MAPA DE MESAS ══
   function renderMesas() {
     const grid = document.getElementById('mesa-grid');
     if (!mesas.length) {
@@ -1093,18 +1089,44 @@
       return;
     }
 
-    grid.innerHTML = mesas.map(m => {
+    // Ordenar mesas numericamente
+    mesas.sort((a, b) => {
+      const na = parseInt(a.numero), nb = parseInt(b.numero);
+      if (na <= 28 && nb <= 28) return na - nb;
+      if (na >= 31 && na <= 34 && nb >= 31 && nb <= 34) return na - nb;
+      if (na >= 100 && nb >= 100) return na - nb;
+      if (na <= 28 && (nb >= 31 || nb >= 100)) return -1;
+      if ((na >= 31 && na <= 34) && (nb <= 28 || nb >= 100)) {
+        if (nb <= 28) return 1;
+        if (nb >= 100) return -1;
+      }
+      if (na >= 100 && nb < 100) return 1;
+      return 0;
+    });
+
+    // Aplicar filtro de visualização
+    let mesasFiltradas = mesas;
+    if (currentMesaFilter === 'livres') {
+      mesasFiltradas = mesas.filter(m => !reservations.some(r => r.mesa === m.numero));
+    } else if (currentMesaFilter === 'ocupadas') {
+      mesasFiltradas = mesas.filter(m => reservations.some(r => r.mesa === m.numero));
+    }
+
+    grid.innerHTML = mesasFiltradas.map(m => {
       const mesaNum = m.numero;
       const capacidade = m.capacidade || 4;
       const reservasNaMesa = reservations.filter(r => r.mesa === mesaNum);
       const totalPessoas = reservasNaMesa.reduce((s,r) => s + r.pax, 0);
       const ocupada = reservasNaMesa.length > 0;
-      const statusGeral = ocupada
-        ? (reservasNaMesa.every(r => saldo(r)===0) ? 'pago' : reservasNaMesa.some(r => saldo(r)>0 && r.valorPago>0) ? 'parcial' : 'pendente')
-        : 'disponivel';
+      let statusGeral = 'livre';
+      if (ocupada) {
+        if (reservasNaMesa.every(r => saldo(r)===0)) statusGeral = 'pago';
+        else if (reservasNaMesa.some(r => saldo(r)>0 && r.valorPago>0)) statusGeral = 'parcial';
+        else statusGeral = 'pendente';
+      }
       
       return `
-      <div class="mesa-card-visual ${ocupada ? 'ocupada' : 'disponivel'}" onclick="toggleMesaDetail('${m.id}')">
+      <div class="mesa-card-visual ${ocupada ? 'ocupada' : 'livre'}" onclick="${ocupada ? `toggleMesaDetail('${m.id}')` : `abrirAtribuir('${mesaNum}')`}">
         <div class="mesa-drawing-wrapper">
           <div class="mesa-drawing">
             <span class="mesa-numero-visual">${mesaNum}</span>
@@ -1116,14 +1138,15 @@
           <div class="cadeira c-right"></div>
         </div>
         <div class="mesa-info-visual">
-          <div class="mesa-nome">${ocupada ? reservasNaMesa.map(r => r.nome.split(' ')[0]).join(', ') : 'Livre'}</div>
+          <div class="mesa-nome ${!ocupada ? 'livre' : ''}">${ocupada ? reservasNaMesa.map(r => r.nome.split(' ')[0]).join(', ') : 'Livre'}</div>
           <div class="mesa-horario">${totalPessoas}/${capacidade} pessoas</div>
         </div>
-        <div id="mesa-detail-${m.id}" style="display:none;margin-top:8px;text-align:left;font-size:0.7rem;">
+        ${ocupada ? `<div id="mesa-detail-${m.id}" style="display:none;margin-top:8px;text-align:left;font-size:0.7rem;" onclick="event.stopPropagation()">
           <input class="edit-input" id="capacidade-${m.id}" type="number" value="${capacidade}" placeholder="Capacidade" style="width:60px;display:inline-block;">
           <button class="save-mesa-btn" onclick="window.salvarCapacidade('${m.id}', event)">Salvar</button>
-          ${reservasNaMesa.length ? `<div style="margin-top:4px;">Reservas: ${reservasNaMesa.map(r => `<div>• ${r.nome} (${r.pax}p)</div>`).join('')}</div>` : ''}
-        </div>
+          <div style="margin-top:4px;">Reservas: ${reservasNaMesa.map(r => `<div>• ${r.nome} (${r.pax}p) <button style="background:none;border:none;color:#e85c4c;cursor:pointer;font-size:0.65rem;" onclick="window.removerClienteMesa('${r.id}', event)">❌</button></div>`).join('')}</div>
+          <button class="qa-btn" style="margin-top:6px;color:#e85c4c;border-color:rgba(232,92,76,.4);" onclick="window.liberarMesa('${mesaNum}', event)">🔓 Liberar Mesa</button>
+        </div>` : ''}
       </div>`;
     }).join('');
   }
@@ -1138,6 +1161,66 @@
     const val = parseInt(document.getElementById('capacidade-'+id).value)||4;
     await updateDoc(doc(mesasCol, id), { capacidade: val });
     showToast(`Capacidade alterada para ${val}`);
+  };
+
+  // Liberar mesa: remove a mesa de TODAS as reservas associadas (cliente volta a ficar sem mesa)
+  window.liberarMesa = async function(numero, event) {
+    event.stopPropagation();
+    if (!confirm(`Liberar mesa ${numero}? Todos os clientes voltarão a ficar sem mesa.`)) return;
+    const reservasAfetadas = reservations.filter(r => r.mesa === numero);
+    for (const r of reservasAfetadas) {
+      await updateDoc(doc(reservasCol, r.id), { mesa: "" });
+    }
+    showToast(`Mesa ${numero} liberada.`);
+  };
+
+  // Remover um cliente específico da mesa (apenas ele volta a ficar sem mesa)
+  window.removerClienteMesa = async function(reservaId, event) {
+    event.stopPropagation();
+    const r = reservations.find(r => r.id === reservaId);
+    if (!r) return;
+    if (!confirm(`Remover ${r.nome} da mesa ${r.mesa}?`)) return;
+    await updateDoc(doc(reservasCol, reservaId), { mesa: "" });
+    showToast(`${r.nome.split(' ')[0]} removido da mesa.`);
+  };
+
+  window.abrirAtribuir = function(numero) {
+    document.getElementById('atribuir-numero').textContent = numero;
+    const semMesa = reservations.filter(r => !r.mesa);
+    const lista = document.getElementById('atribuir-lista');
+    if (semMesa.length === 0) {
+      lista.innerHTML = '<p style="color:rgba(247,241,232,.5);">Nenhuma reserva sem mesa no momento.</p>';
+    } else {
+      lista.innerHTML = semMesa.map(r => `
+        <div class="res-card" style="margin-bottom:8px;cursor:pointer;" onclick="atribuirReservaMesa('${r.id}', '${numero}')">
+          <div class="res-card-front" style="padding:12px;">
+            <div class="res-main">
+              <div class="res-name">${r.nome}</div>
+              <div class="res-meta"><span>👥 ${r.pax} · 🕐 ${r.hora||'—'}</span></div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    document.getElementById('atribuir-modal').classList.add('open');
+  };
+
+  window.atribuirReservaMesa = async function(reservaId, mesaNum) {
+    await updateDoc(doc(reservasCol, reservaId), { mesa: mesaNum });
+    document.getElementById('atribuir-modal').classList.remove('open');
+    showToast(`Reserva vinculada à mesa ${mesaNum}!`);
+  };
+
+  window.closeAtribuirModal = function(e) {
+    if (e && e.target !== document.getElementById('atribuir-modal')) return;
+    document.getElementById('atribuir-modal').classList.remove('open');
+  };
+
+  window.setMesaFilter = function(filtro, el) {
+    currentMesaFilter = filtro;
+    document.querySelectorAll('#page-mesas .filter-pills .pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    renderMesas();
   };
 
   window.criarMesa = function() {
