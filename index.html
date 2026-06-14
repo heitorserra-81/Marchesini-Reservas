@@ -342,6 +342,86 @@ body.has-bottom-nav .toast{bottom:80px;}
 .mesa-card-visual.alerta-tempo{border-color:#e8904c!important;animation:pulse-orange 1.5s ease infinite;}
 .mesa-alerta-badge{position:absolute;top:4px;left:4px;background:rgba(232,144,76,.9);color:#1a0a0a;font-size:.5rem;font-weight:700;padding:2px 5px;border-radius:6px;z-index:4;letter-spacing:.05em;}
 
+
+/* ══ MESA SELECIONADA (dois toques) ══ */
+@keyframes pulsa-selecao{
+  0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.7),0 0 20px rgba(201,168,76,.3);}
+  50%{box-shadow:0 0 0 6px rgba(201,168,76,.2),0 0 30px rgba(201,168,76,.5);}
+}
+.mesa-card-visual.selecionada-juntar{
+  border-color:var(--gold)!important;
+  background:rgba(201,168,76,.15)!important;
+  animation:pulsa-selecao .8s ease infinite;
+  z-index:10;
+}
+.mesa-badge-selecionada{
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:var(--dark);
+  font-size:.5rem;font-weight:700;padding:2px 8px;border-radius:10px;
+  white-space:nowrap;z-index:5;letter-spacing:.06em;
+  box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+/* ══ CONTADOR FILA NO MAPA ══ */
+.fila-counter-mesas{
+  margin:0 16px 12px;
+  background:linear-gradient(135deg,rgba(107,26,26,.6),rgba(139,32,32,.4));
+  border:1px solid rgba(201,168,76,.3);border-radius:10px;
+  padding:10px 16px;display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:all .2s;
+}
+.fila-counter-mesas:active{transform:scale(.98);}
+.fila-counter-num{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold2);font-weight:700;}
+.fila-counter-label{font-size:.7rem;color:rgba(247,241,232,.5);text-transform:uppercase;letter-spacing:.1em;}
+.fila-btn-add{background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.4);border-radius:20px;padding:6px 14px;color:var(--gold2);font-size:.75rem;cursor:pointer;font-family:'Playfair Display',serif;}
+
+/* ══ PÁGINA FILA ══ */
+.fila-vazia{text-align:center;padding:40px 20px;color:rgba(247,241,232,.3);font-style:italic;}
+.fila-item{
+  background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);
+  border-radius:14px;padding:14px 16px;margin:0 16px 10px;
+  display:flex;align-items:center;gap:12px;
+  transition:all .2s;
+}
+.fila-num{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--wine),var(--wine2));
+  border:1px solid rgba(201,168,76,.4);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold2);
+  font-weight:700;flex-shrink:0;
+}
+.fila-info{flex:1;}
+.fila-nome{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--cream);font-weight:600;}
+.fila-meta{font-size:.7rem;color:rgba(247,241,232,.5);margin-top:3px;display:flex;gap:8px;}
+.fila-tempo{font-family:'Playfair Display',serif;font-size:.85rem;color:var(--gold);flex-shrink:0;}
+.fila-actions{display:flex;gap:6px;flex-shrink:0;}
+.fila-btn{padding:6px 10px;border-radius:8px;font-size:.7rem;cursor:pointer;border:1px solid;transition:all .2s;font-family:'Playfair Display',serif;}
+.fila-btn.sentar{background:rgba(76,175,125,.15);border-color:rgba(76,175,125,.4);color:#4caf7d;}
+.fila-btn.remover{background:rgba(232,92,76,.1);border-color:rgba(232,92,76,.3);color:#e85c4c;}
+
+/* ══ NOTIFICAÇÃO MESA LIVRE ══ */
+.notif-mesa-livre{
+  position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-120px);
+  z-index:600;
+  background:linear-gradient(135deg,rgba(46,125,50,.95),rgba(27,94,32,.95));
+  border:1px solid rgba(76,175,80,.5);border-radius:16px;
+  padding:14px 20px;min-width:280px;max-width:90vw;
+  box-shadow:0 8px 24px rgba(0,0,0,.6);
+  transition:transform .4s cubic-bezier(.22,1,.36,1);
+  cursor:pointer;
+}
+.notif-mesa-livre.show{transform:translateX(-50%) translateY(0);}
+.notif-titulo{font-family:'Playfair Display',serif;font-size:.95rem;color:#e8f5e9;margin-bottom:4px;}
+.notif-sub{font-size:.75rem;color:rgba(232,245,233,.7);}
+.notif-acao{margin-top:10px;display:flex;gap:8px;}
+.notif-btn{flex:1;padding:8px;border-radius:8px;font-size:.78rem;cursor:pointer;border:1px solid;font-family:'Playfair Display',serif;text-align:center;}
+.notif-btn.sim{background:rgba(76,175,80,.3);border-color:rgba(76,175,80,.6);color:#a5d6a7;}
+.notif-btn.nao{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:rgba(232,245,233,.7);}
+
+/* ══ BOTÃO FILA NA HOME ══ */
+.btn-fila{--btn-bg:linear-gradient(145deg,#1a0a2d,#3a1560);}
+
 /* ══ PAGE TRANSITION ══ */
 .page-transition-overlay{
   position:fixed;inset:0;z-index:490;
@@ -1044,6 +1124,24 @@ body.has-bottom-nav .toast{bottom:76px;}
         </div>
       </div>
     </div>
+    <div class="flip-btn-wrapper btn-fila" id="fbw-fila" onclick="handleFlipBtn('fila',this)">
+      <div class="flip-btn-inner">
+        <div class="flip-btn-front btn-fila">
+          <div class="btn-inner">
+            <span class="btn-icon">🕐</span>
+            <span class="btn-label">Fila de Espera</span>
+            <span class="btn-count" id="btn-fila-sub">Ninguém esperando</span>
+          </div>
+        </div>
+        <div class="flip-btn-back">
+          <div class="btn-inner">
+            <span style="font-size:1.6rem;">🕐</span>
+            <span class="back-label">Abrindo...</span>
+            <span class="back-hint">Fila de espera</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="flip-btn-wrapper btn-historico" id="fbw-historico" onclick="handleFlipBtn('historico',this)">
       <div class="flip-btn-inner">
         <div class="flip-btn-front btn-historico">
@@ -1062,7 +1160,8 @@ body.has-bottom-nav .toast{bottom:76px;}
         </div>
       </div>
     </div>
-    <div class="flip-btn-wrapper btn-config" id="fbw-config" onclick="handleFlipBtn('config',this)">
+    <!-- Config centralizado — ocupa as 2 colunas -->
+    <div class="flip-btn-wrapper btn-config" id="fbw-config" onclick="handleFlipBtn('config',this)" style="grid-column:1/-1;max-width:50%;margin:0 auto;width:100%;">
       <div class="flip-btn-inner">
         <div class="flip-btn-front btn-config">
           <div class="btn-inner">
@@ -1145,6 +1244,7 @@ body.has-bottom-nav .toast{bottom:76px;}
     <div class="pill" onclick="setMesaFilter('livres',this)" style="color:#4caf50;border-color:#4caf50;">🟢 Livres</div>
     <div class="pill" onclick="setMesaFilter('ocupadas',this)" style="color:#e85c4c;border-color:#e85c4c;">🔴 Ocupadas</div>
   </div>
+  <div id="fila-counter-mesas-wrap"></div>
   <div style="padding:0 16px 8px;font-size:.72rem;color:rgba(247,241,232,.35);text-align:center;" id="mesa-instrucao">
     Toque para ver detalhes · Segure para arrastar e juntar mesas
   </div>
@@ -1160,6 +1260,18 @@ body.has-bottom-nav .toast{bottom:76px;}
     <div style="font-family:'Playfair Display',serif;font-size:.85rem;color:rgba(201,168,76,.6);text-transform:uppercase;letter-spacing:.15em;margin-bottom:14px;">💰 Resumo Financeiro</div>
     <div class="fin-card" id="fin-resumo"></div>
   </div>
+</div>
+
+<!-- FILA DE ESPERA -->
+<div id="page-fila" class="page">
+  <div class="page-header">
+    <button class="wood-back-btn" onclick="flipBack()">◀ Voltar</button>
+    <div class="page-title">🕐 Fila de Espera</div>
+    <div class="page-header-actions">
+      <button class="hdr-btn" onclick="abrirAddFila()">+ Pessoa</button>
+    </div>
+  </div>
+  <div id="fila-content" style="padding-bottom:40px;"></div>
 </div>
 
 <!-- HISTÓRICO -->
@@ -1360,6 +1472,7 @@ const db   = firebase.firestore();
 const auth = firebase.auth();
 
 const reservasCol  = db.collection('reservas_marchesini');
+const filaCol2     = db.collection('fila_marchesini');
 const mesasCol     = db.collection('mesas_marchesini');
 const configCol    = db.collection('config_marchesini');
 const historicoCol = db.collection('historico_marchesini');
@@ -1383,6 +1496,9 @@ let dragGhostActive = false;
 let isDragging = false;
 let dragStartX = 0, dragStartY = 0;
 let mesaDragNum = null;
+let filaEspera = [];
+let filaCol = null;
+let mesaSelecionadaParaJuntar = null;
 let mesaDragTimeout = null;
 let currentPage = 'home';
 let bannerData = { icon:'⛅', titulo:'Bom dia, equipe!', meta:'Marchesini di Roverbella · Holambra', preco:'', tema:'clima' };
@@ -1491,6 +1607,7 @@ function showPageDirect(id){
   if(id==='historico')renderHistorico();
   if(id==='config')   renderConfig();
   if(id==='mesas')    renderMesas();
+  if(id==='fila')     renderFila();
   atualizarBottomNav();
 }
 
@@ -1518,6 +1635,13 @@ async function inicializar(){
     console.warn('Erro mesas:',e);
     showToast('⚠️ Erro ao carregar mesas. Recarregue o app.');
   }
+
+  filaCol2.onSnapshot(snap=>{
+    filaEspera = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.entrada||0)-(b.entrada||0));
+    renderFila();
+    atualizarContadorFila();
+    verificarMesaLivreParaFila();
+  });
 
   reservasCol.onSnapshot( snap=>{
     reservations = snap.docs.map(d=>({id:d.id,...d.data()}));
@@ -2508,168 +2632,6 @@ function buildMesaSVG(cap,num,ocupada){
 }
 
 // ══ DRAG MESAS (juntar) — corrigido ══
-window.startMesaDrag = function(e, num){
-  // Não ativa se clicou no botão +
-  if(e.target.closest('.mesa-btn-rapido')) return;
-
-  const startX = e.clientX;
-  const startY = e.clientY;
-  let dragAtivo = false;
-  let cancelado = false;
-  let cardEl = null;
-  let offsetX = 0, offsetY = 0;
-  let ultimoDestino = null;
-
-  clearTimeout(mesaDragTimeout);
-
-  // Long press de 550ms para ativar
-  mesaDragTimeout = setTimeout(()=>{
-    if(cancelado) return;
-    dragAtivo = true;
-    mesaDragNum = num;
-    cardEl = document.getElementById('mc-'+String(num).replace(/\+/g,'_'));
-    if(!cardEl) return;
-
-    // Pegar posição do card para offset
-    const rect = cardEl.getBoundingClientRect();
-    offsetX = startX - rect.left - rect.width/2;
-    offsetY = startY - rect.top - rect.height/2;
-
-    // Ativar visual 3D — card levanta
-    cardEl.classList.add('drag-ativo');
-    cardEl.style.position = 'fixed';
-    cardEl.style.width = rect.width + 'px';
-    cardEl.style.height = rect.height + 'px';
-    cardEl.style.left = (startX - rect.width/2 - offsetX) + 'px';
-    cardEl.style.top = (startY - rect.height/2 - offsetY) + 'px';
-    cardEl.style.zIndex = '500';
-    cardEl.style.pointerEvents = 'none';
-
-    // Criar placeholder no lugar original
-    const placeholder = document.createElement('div');
-    placeholder.id = 'mesa-placeholder';
-    placeholder.style.cssText = `width:${rect.width}px;height:${rect.height}px;border-radius:16px;border:2px dashed rgba(201,168,76,.3);background:rgba(201,168,76,.05);`;
-    cardEl.parentNode.insertBefore(placeholder, cardEl.nextSibling);
-
-    navigator.vibrate && navigator.vibrate([40, 15, 40]);
-    showToast('🔗 Solte em outra mesa para juntar');
-  }, 550);
-
-  const onMove = (ev) => {
-    const dy = Math.abs(ev.clientY - startY);
-
-    if(!dragAtivo){
-      // Cancela se mover muito antes do long press
-      if(dy > 12 || Math.abs(ev.clientX - startX) > 12){
-        cancelado = true;
-        clearTimeout(mesaDragTimeout);
-      }
-      return;
-    }
-
-    // Mover o card com o dedo
-    if(cardEl){
-      cardEl.style.left = (ev.clientX - cardEl.offsetWidth/2) + 'px';
-      cardEl.style.top  = (ev.clientY - cardEl.offsetHeight/2) + 'px';
-    }
-
-    // Detectar mesa destino
-    cardEl && (cardEl.style.pointerEvents = 'none');
-    const elAbaixo = document.elementFromPoint(ev.clientX, ev.clientY);
-    const destino = elAbaixo?.closest('.mesa-card-visual');
-
-    // Limpar destino anterior
-    if(ultimoDestino && ultimoDestino !== destino){
-      ultimoDestino.classList.remove('drag-destino');
-      ultimoDestino = null;
-    }
-
-    if(destino && destino.dataset.mesa && destino.dataset.mesa !== num){
-      destino.classList.add('drag-destino');
-      ultimoDestino = destino;
-    }
-  };
-
-  const finalizarDrag = (ev) => {
-    clearTimeout(mesaDragTimeout);
-    document.removeEventListener('pointermove', onMove);
-    document.removeEventListener('pointerup', finalizarDrag);
-    document.removeEventListener('pointercancel', cancelarDrag);
-
-    // Remover placeholder
-    const ph = document.getElementById('mesa-placeholder');
-    if(ph) ph.remove();
-
-    if(!dragAtivo || !cardEl){
-      mesaDragNum = null;
-      return;
-    }
-
-    // Limpar destino visual
-    if(ultimoDestino) ultimoDestino.classList.remove('drag-destino');
-
-    // Detectar onde soltou
-    cardEl.style.pointerEvents = 'auto';
-    const elFinal = document.elementFromPoint(ev.clientX, ev.clientY);
-    const mesaDestino = elFinal?.closest('.mesa-card-visual');
-
-    // Resetar card para posição original
-    cardEl.classList.remove('drag-ativo');
-    cardEl.classList.add('drag-pousando');
-    cardEl.style.position = '';
-    cardEl.style.width = '';
-    cardEl.style.height = '';
-    cardEl.style.left = '';
-    cardEl.style.top = '';
-    cardEl.style.zIndex = '';
-    cardEl.style.pointerEvents = '';
-    setTimeout(()=>{ if(cardEl) cardEl.classList.remove('drag-pousando'); }, 400);
-
-    // Juntar se soltou em outra mesa
-    if(mesaDestino && mesaDestino.dataset.mesa && mesaDestino.dataset.mesa !== num){
-      confirmarJuntarMesas(num, mesaDestino.dataset.mesa);
-    }
-
-    mesaDragNum = null;
-    dragAtivo = false;
-    cardEl = null;
-  };
-
-  const cancelarDrag = () => {
-    clearTimeout(mesaDragTimeout);
-    document.removeEventListener('pointermove', onMove);
-    document.removeEventListener('pointerup', finalizarDrag);
-    document.removeEventListener('pointercancel', cancelarDrag);
-
-    const ph = document.getElementById('mesa-placeholder');
-    if(ph) ph.remove();
-
-    if(ultimoDestino) ultimoDestino.classList.remove('drag-destino');
-
-    if(cardEl){
-      cardEl.classList.remove('drag-ativo');
-      cardEl.classList.add('drag-pousando');
-      cardEl.style.position = '';
-      cardEl.style.width = '';
-      cardEl.style.height = '';
-      cardEl.style.left = '';
-      cardEl.style.top = '';
-      cardEl.style.zIndex = '';
-      cardEl.style.pointerEvents = '';
-      setTimeout(()=>{ if(cardEl) cardEl.classList.remove('drag-pousando'); }, 400);
-    }
-
-    mesaDragNum = null;
-    dragAtivo = false;
-    cancelado = true;
-    cardEl = null;
-  };
-
-  document.addEventListener('pointermove', onMove, {passive:true});
-  document.addEventListener('pointerup', finalizarDrag);
-  document.addEventListener('pointercancel', cancelarDrag);
-};
-
 async function confirmarJuntarMesas(n1,n2){
   // Validar que não é a mesma mesa ou já juntada
   if(n1===n2) return;
@@ -3707,6 +3669,317 @@ function renderRelatorioMensal(){
 
   return html;
 }
+
+
+
+// ══ SISTEMA DE FILA ══
+
+function atualizarContadorFila(){
+  const total = filaEspera.length;
+  // Sub no botão home
+  const el = document.getElementById('btn-fila-sub');
+  if(el) el.textContent = total>0 ? `${total} aguardando` : 'Ninguém esperando';
+
+  // Contador no mapa de mesas
+  const wrap = document.getElementById('fila-counter-mesas-wrap');
+  if(wrap){
+    if(total>0){
+      wrap.innerHTML=`<div class="fila-counter-mesas" onclick="handleFlipBtn('fila',document.getElementById('fbw-fila'))">
+        <div>
+          <div class="fila-counter-num">${total}</div>
+          <div class="fila-counter-label">na fila de espera</div>
+        </div>
+        <button class="fila-btn-add" onclick="event.stopPropagation();abrirAddFila()">+ Pessoa</button>
+      </div>`;
+    } else {
+      wrap.innerHTML='';
+    }
+  }
+}
+
+function renderFila(){
+  const container = document.getElementById('fila-content');
+  if(!container) return;
+
+  if(!filaEspera.length){
+    container.innerHTML=`<div class="fila-vazia">
+      <div style="font-size:3rem;margin-bottom:12px;">🕐</div>
+      <div>Nenhuma pessoa na fila</div>
+      <div style="margin-top:8px;font-size:.8rem;">Quando o salão lotar, adicione pessoas aqui</div>
+      <button class="submit-btn" onclick="abrirAddFila()" style="margin-top:20px;max-width:200px;">+ Adicionar à fila</button>
+    </div>`;
+    return;
+  }
+
+  const agora = Date.now();
+  container.innerHTML = filaEspera.map((p,idx)=>{
+    const espera = agora - (p.entrada||agora);
+    const mins = Math.floor(espera/60000);
+    const tempoStr = mins<1?'agora':mins<60?`${mins}min`:`${Math.floor(mins/60)}h${mins%60?mins%60+'min':''}`;
+    return `<div class="fila-item" id="fila-${p.id}">
+      <div class="fila-num">${idx+1}º</div>
+      <div class="fila-info">
+        <div class="fila-nome">${escHtml(p.nome||'Sem nome')}</div>
+        <div class="fila-meta">
+          <span>👥 ${p.pax} ${p.pax===1?'pessoa':'pessoas'}</span>
+          ${p.obs?`<span>· 📝 ${escHtml(p.obs)}</span>`:''}
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="fila-tempo">${tempoStr}</div>
+        <div class="fila-actions" style="margin-top:6px;">
+          <button class="fila-btn sentar" onclick="sentarFilaNaMesa('${p.id}')">🪑 Sentar</button>
+          <button class="fila-btn remover" onclick="removerDaFila('${p.id}')">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Atualizar tempos a cada minuto
+  clearInterval(window._filaTimer);
+  window._filaTimer = setInterval(()=>{
+    if(document.getElementById('page-fila')?.classList.contains('active')) renderFila();
+  }, 30000);
+}
+
+window.abrirAddFila = function(){
+  const ov = document.createElement('div');
+  ov.className='modal-overlay open';
+  ov.onclick=function(e){if(e.target===ov)ov.remove();};
+  ov.innerHTML=`<div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">
+      <span>🕐 Adicionar à Fila</span>
+      <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nome / Apelido (opcional)</label>
+      <input class="form-input" id="fila-nome-input" placeholder="Ex: João, Mesa da janela...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Quantas pessoas *</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${[1,2,3,4,5,6,7,8].map(n=>`<div class="numpad-btn" style="width:56px;height:52px;font-size:1.2rem;" onclick="selecionarPaxFila(${n},this)">${n}</div>`).join('')}
+      </div>
+      <input type="hidden" id="fila-pax-val" value="2">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observação (opcional)</label>
+      <input class="form-input" id="fila-obs-input" placeholder="Ex: cadeirinha, alergia...">
+    </div>
+    <button class="submit-btn" onclick="confirmarAddFila(this.closest('.modal-overlay'))">Entrar na Fila →</button>
+  </div>`;
+  document.body.appendChild(ov);
+  // Selecionar 2 por padrão
+  setTimeout(()=>{
+    const btns = ov.querySelectorAll('.numpad-btn');
+    if(btns[1]) { btns[1].style.background='rgba(201,168,76,.3)'; btns[1].style.borderColor='var(--gold)'; }
+  },50);
+};
+
+window.selecionarPaxFila = function(n, el){
+  document.getElementById('fila-pax-val').value = n;
+  el.closest('.form-group').querySelectorAll('.numpad-btn').forEach(b=>{
+    b.style.background=''; b.style.borderColor='';
+  });
+  el.style.background='rgba(201,168,76,.3)';
+  el.style.borderColor='var(--gold)';
+};
+
+window.confirmarAddFila = async function(ov){
+  const nome = document.getElementById('fila-nome-input')?.value.trim()||'';
+  const pax  = parseInt(document.getElementById('fila-pax-val')?.value)||2;
+  const obs  = document.getElementById('fila-obs-input')?.value.trim()||'';
+  await filaCol2.add({nome:nome||`${pax} pessoas`,pax,obs,entrada:Date.now()});
+  ov.remove();
+  showToast(`🕐 ${nome||pax+' pessoas'} entrou na fila!`);
+  // Navegar para a fila se não estiver lá
+  if(currentPage!=='fila') handleFlipBtn('fila',document.getElementById('fbw-fila'));
+};
+
+window.removerDaFila = async function(id){
+  const p = filaEspera.find(x=>x.id===id);
+  openConfirm('Remover da fila?',`${p?.nome||'Pessoa'} vai sair da fila.`,'🕐',async()=>{
+    await filaCol2.doc(id).delete();
+    showToast('Removido da fila.');
+  },'Remover');
+};
+
+window.sentarFilaNaMesa = function(filaId){
+  const p = filaEspera.find(x=>x.id===filaId);
+  if(!p) return;
+  // Mostrar mesas livres com capacidade suficiente
+  const mesasOk = mesas.filter(m=>{
+    const ocup = reservations.filter(r=>r.mesa===m.numero&&!r.finalizado);
+    const pessoasOcup = ocup.reduce((s,r)=>s+r.pax,0);
+    return (m.capacidade||4) - pessoasOcup >= p.pax;
+  }).sort((a,b)=>parseNumMesa(a.numero)-parseNumMesa(b.numero));
+
+  const ov = document.createElement('div');
+  ov.className='modal-overlay open';
+  ov.onclick=function(e){if(e.target===ov)ov.remove();};
+  ov.innerHTML=`<div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">
+      <span>🪑 Sentar ${escHtml(p.nome||'')}</span>
+      <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
+    </div>
+    <div style="font-size:.75rem;color:rgba(247,241,232,.5);margin-bottom:14px;">👥 ${p.pax} ${p.pax===1?'pessoa':'pessoas'} · Escolha a mesa:</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      ${mesasOk.map(m=>`<button class="qa-btn green" onclick="confirmarSentarFila('${filaId}','${m.numero}',this.closest('.modal-overlay'))">Mesa ${m.numero}</button>`).join('')}
+      ${!mesasOk.length?'<p style="color:rgba(247,241,232,.4);">Nenhuma mesa com capacidade disponível.</p>':''}
+    </div>
+  </div>`;
+  document.body.appendChild(ov);
+};
+
+window.confirmarSentarFila = async function(filaId, mesaNum, ov){
+  const p = filaEspera.find(x=>x.id===filaId);
+  if(!p) return;
+  const sp = configData.sistemaPagamento;
+  const nova = {
+    nome: p.nome||`${p.pax} pessoas`,
+    tel:'', pax:p.pax, hora:'', mesa:mesaNum,
+    valorPago:0, valorTotal:sp?(configData.valorPadrao||0):0,
+    status:'pendente', finalizado:false,
+    horaSentado:new Date().toISOString(),
+    obs:p.obs||''
+  };
+  await reservasCol.add(nova);
+  await filaCol2.doc(filaId).delete();
+  ov.remove();
+  showToast(`✅ ${nova.nome} → Mesa ${mesaNum}!`);
+  handleFlipBtn('mesas', document.getElementById('fbw-mesas'));
+};
+
+// Verificar quando mesa libera se há alguém na fila
+function verificarMesaLivreParaFila(){
+  if(!filaEspera.length) return;
+  const proximo = filaEspera[0];
+  const mesasOk = mesas.filter(m=>{
+    const ocup = reservations.filter(r=>r.mesa===m.numero&&!r.finalizado);
+    const pessoasOcup = ocup.reduce((s,r)=>s+r.pax,0);
+    return (m.capacidade||4) - pessoasOcup >= proximo.pax;
+  });
+  if(mesasOk.length>0) mostrarNotifMesaLivre(proximo, mesasOk[0]);
+}
+
+let notifTimeout = null;
+function mostrarNotifMesaLivre(pessoa, mesa){
+  // Não mostrar se já existe uma notif
+  if(document.getElementById('notif-mesa-livre')) return;
+  const notif = document.createElement('div');
+  notif.id='notif-mesa-livre';
+  notif.className='notif-mesa-livre';
+  notif.innerHTML=`<div class="notif-titulo">🪑 Mesa ${mesa.numero} está disponível!</div>
+    <div class="notif-sub">${escHtml(pessoa.nome||pessoa.pax+' pessoas')} é o próximo da fila</div>
+    <div class="notif-acao">
+      <div class="notif-btn sim" onclick="sentarFilaNaMesa('${pessoa.id}');document.getElementById('notif-mesa-livre')?.remove()">Sentar agora</div>
+      <div class="notif-btn nao" onclick="this.closest('#notif-mesa-livre').remove()">Depois</div>
+    </div>`;
+  document.body.appendChild(notif);
+  setTimeout(()=>notif.classList.add('show'),50);
+  // Auto-remover em 8 segundos
+  clearTimeout(notifTimeout);
+  notifTimeout = setTimeout(()=>notif.classList.remove('show'), 8000);
+  setTimeout(()=>notif?.remove(), 8500);
+  // Som discreto
+  try{
+    const ctx = new(window.AudioContext||window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.frequency.setValueAtTime(880,ctx.currentTime);
+    osc.frequency.setValueAtTime(1100,ctx.currentTime+0.1);
+    gain.gain.setValueAtTime(0.1,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);
+    osc.start(ctx.currentTime);osc.stop(ctx.currentTime+0.3);
+  }catch(e){}
+}
+
+
+// ══ SELEÇÃO MESA DOIS TOQUES (substituindo drag) ══
+window.startMesaDrag = function(e, num){
+  // Não ativa no botão +
+  if(e.target.closest('.mesa-btn-rapido')) return;
+
+  clearTimeout(mesaDragTimeout);
+  mesaDragTimeout = setTimeout(()=>{
+    // Vibrar para confirmar long press
+    navigator.vibrate && navigator.vibrate([40,15,40]);
+
+    if(mesaSelecionadaParaJuntar === num){
+      // Toque na mesma mesa — desselecionar
+      deselecionarMesa();
+      return;
+    }
+
+    if(mesaSelecionadaParaJuntar){
+      // Já tem uma selecionada — juntar com esta
+      const n1 = mesaSelecionadaParaJuntar;
+      deselecionarMesa();
+      confirmarJuntarMesas(n1, num);
+      return;
+    }
+
+    // Selecionar esta mesa
+    mesaSelecionadaParaJuntar = num;
+    const cardEl = document.getElementById('mc-'+String(num).replace(/\+/g,'_'));
+    if(cardEl){
+      cardEl.classList.add('selecionada-juntar');
+      // Badge
+      const badge = document.createElement('div');
+      badge.className='mesa-badge-selecionada';
+      badge.id='badge-selecionada';
+      badge.textContent='✓ SELECIONADA';
+      cardEl.appendChild(badge);
+    }
+    showToast('✓ Mesa '+num+' selecionada — toque em outra para juntar');
+
+    // Auto-cancelar em 10 segundos
+    clearTimeout(window._selecaoTimer);
+    window._selecaoTimer = setTimeout(deselecionarMesa, 10000);
+  }, 500);
+
+  // Cancelar se mover antes do tempo
+  const onMove = (ev)=>{
+    if(Math.abs(ev.clientX-e.clientX)>10 || Math.abs(ev.clientY-e.clientY)>10){
+      clearTimeout(mesaDragTimeout);
+      document.removeEventListener('pointermove',onMove);
+    }
+  };
+  const onUp = ()=>{
+    clearTimeout(mesaDragTimeout);
+    document.removeEventListener('pointermove',onMove);
+    document.removeEventListener('pointerup',onUp);
+  };
+  document.addEventListener('pointermove',onMove,{passive:true});
+  document.addEventListener('pointerup',onUp);
+};
+
+function deselecionarMesa(){
+  clearTimeout(window._selecaoTimer);
+  if(mesaSelecionadaParaJuntar){
+    const cardEl = document.getElementById('mc-'+String(mesaSelecionadaParaJuntar).replace(/\+/g,'_'));
+    if(cardEl){
+      cardEl.classList.remove('selecionada-juntar');
+      const badge = cardEl.querySelector('#badge-selecionada');
+      if(badge) badge.remove();
+    }
+  }
+  mesaSelecionadaParaJuntar = null;
+}
+
+// Toque em mesa quando há uma selecionada — juntar
+const _origAbrirMesa = window.abrirMesaFullscreen;
+window.abrirMesaFullscreen = function(num){
+  if(mesaSelecionadaParaJuntar && mesaSelecionadaParaJuntar !== num){
+    const n1 = mesaSelecionadaParaJuntar;
+    deselecionarMesa();
+    confirmarJuntarMesas(n1, num);
+    return;
+  }
+  deselecionarMesa();
+  _origAbrirMesa(num);
+};
 
 
 inicializar();
