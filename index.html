@@ -319,7 +319,7 @@ body{background:var(--dark);font-family:'Inter',sans-serif;min-height:100vh;over
 
 /* ══ BARRA NAV INFERIOR ══ */
 .bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  position:fixed;bottom:0;left:0;right:0;z-index:190;
   background:rgba(10,5,5,.97);border-top:1px solid rgba(201,168,76,.25);
   display:none;align-items:center;justify-content:space-around;
   padding:6px 4px 10px;
@@ -335,7 +335,7 @@ body{background:var(--dark);font-family:'Inter',sans-serif;min-height:100vh;over
 
 /* Quando bottom nav está ativa, adicionar padding ao conteúdo */
 body.has-bottom-nav .page{padding-bottom:120px;}
-body.has-bottom-nav .toast{bottom:80px;}
+
 
 /* ══ ALERTA MESA DEMORADA ══ */
 @keyframes pulse-orange{0%,100%{box-shadow:0 0 10px rgba(232,144,76,.3);}50%{box-shadow:0 0 25px rgba(232,144,76,.7),0 0 0 2px rgba(232,144,76,.4);}}
@@ -421,6 +421,53 @@ body.has-bottom-nav .toast{bottom:80px;}
 
 /* ══ BOTÃO FILA NA HOME ══ */
 .btn-fila{--btn-bg:linear-gradient(145deg,#1a0a2d,#3a1560);}
+
+
+
+/* ══ BOTÃO WHATSAPP ══ */
+.btn-whatsapp{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:50%;
+  background:#25D366;border:none;cursor:pointer;
+  box-shadow:0 2px 8px rgba(37,211,102,.4);
+  transition:transform .15s,box-shadow .15s;
+  flex-shrink:0;
+}
+.btn-whatsapp:active{transform:scale(.88);box-shadow:0 1px 4px rgba(37,211,102,.3);}
+.btn-whatsapp svg{width:20px;height:20px;fill:#fff;}
+
+/* ══ TELA CHEIA ADICIONAR FILA ══ */
+.add-fila-fullscreen{
+  position:fixed;inset:0;z-index:400;
+  background:linear-gradient(160deg,#1a0808,#0e0e0e);
+  display:none;flex-direction:column;align-items:stretch;
+  overflow-y:auto;
+}
+.add-fila-fullscreen.open{display:flex;animation:fullscreen-in .35s cubic-bezier(.22,1,.36,1);}
+.af-header-full{
+  display:flex;align-items:center;gap:12px;
+  padding:20px 20px 16px;
+  background:rgba(0,0,0,.3);backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(201,168,76,.2);
+  position:sticky;top:0;z-index:5;
+}
+.af-header-full .rf-close{cursor:pointer;}
+.af-body{padding:24px 20px 40px;}
+.pax-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px;}
+.pax-btn{
+  aspect-ratio:1;border-radius:14px;
+  background:rgba(255,255,255,.06);border:2px solid rgba(201,168,76,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;
+  color:rgba(247,241,232,.6);cursor:pointer;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;
+}
+.pax-btn:active{transform:scale(.9);}
+.pax-btn.ativo{
+  background:rgba(201,168,76,.2);border-color:var(--gold);
+  color:var(--gold2);
+  box-shadow:0 0 12px rgba(201,168,76,.3);
+}
 
 /* ══ PAGE TRANSITION ══ */
 .page-transition-overlay{
@@ -537,8 +584,34 @@ header{text-align:center;padding:36px 20px 24px;}
 .turno-btn.fechar{background:rgba(232,92,76,.15);border-color:#e85c4c;color:#e85c4c;}
 
 /* ══ STATS BAR ══ */
-.stats-bar{display:flex;gap:8px;padding:0 16px 20px;}
-.stat-card{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .2s,flex .3s ease;min-width:0;}
+/* Wrapper moldura luminosa */
+.stats-wrapper{
+  margin:0 16px 20px;
+  position:relative;
+  border-radius:14px;
+  padding:2px;
+  overflow:hidden;
+}
+.stats-wrapper::before{
+  content:'';position:absolute;inset:-1px;border-radius:15px;
+  background:conic-gradient(from var(--angle,0deg),var(--gold),var(--italy-r),var(--wine2),var(--italy-g),var(--gold2),var(--gold));
+  animation:border-spin 3s linear infinite;z-index:0;
+}
+.stats-wrapper::after{
+  content:'';position:absolute;inset:2px;border-radius:12px;
+  background:rgba(10,5,5,.95);z-index:1;
+}
+.stats-bar{
+  position:relative;z-index:2;
+  display:flex;gap:6px;padding:10px 10px;
+  flex-wrap:wrap;
+}
+.stat-card{
+  flex:1;min-width:0;
+  background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.15);
+  border-radius:10px;padding:10px 6px;text-align:center;
+  cursor:pointer;transition:all .2s,flex .3s ease;
+}
 .stat-card:active{transform:scale(.96);}
 .stat-num{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold2);line-height:1;}
 .stat-label{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(247,241,232,.45);margin-top:3px;}
@@ -925,9 +998,38 @@ select.form-input option{background:#1a0a0a;color:var(--cream);}
 .modal-close{width:30px;height:30px;background:rgba(255,255,255,.08);border:none;border-radius:50%;color:var(--cream);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
 /* ══ TOAST ══ */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,var(--wine),var(--wine2));border:1px solid rgba(201,168,76,.5);border-radius:12px;padding:12px 20px;color:var(--gold2);font-size:.85rem;font-family:'Playfair Display',serif;z-index:999;transition:transform .35s cubic-bezier(.22,1,.36,1),bottom .3s ease;white-space:nowrap;}
-.toast.show{transform:translateX(-50%) translateY(0);}
-body.has-bottom-nav .toast{bottom:76px;}
+/* ══ TOAST NOVA ANIMAÇÃO LATERAL ══ */
+@keyframes toast-enter{
+  0%{opacity:0;transform:translateX(120px) scale(.9);}
+  60%{opacity:1;transform:translateX(-8px) scale(1.02);}
+  100%{opacity:1;transform:translateX(0) scale(1);}
+}
+@keyframes toast-exit{
+  0%{opacity:1;transform:translateX(0) scale(1);}
+  20%{transform:translateX(-6px) scale(1.02);}
+  100%{opacity:0;transform:translateX(140px) scale(.9);}
+}
+.toast{
+  position:fixed;
+  bottom:100px;
+  right:16px;
+  left:auto;
+  transform:none;
+  background:linear-gradient(135deg,var(--wine),var(--wine2));
+  border:1px solid rgba(201,168,76,.5);
+  border-radius:12px;
+  padding:12px 18px;
+  color:var(--gold2);
+  font-size:.85rem;
+  font-family:'Playfair Display',serif;
+  z-index:9999;
+  white-space:nowrap;
+  pointer-events:none;
+  opacity:0;
+  max-width:calc(100vw - 32px);
+}
+.toast.show{animation:toast-enter .35s cubic-bezier(.22,1,.36,1) forwards;}
+.toast.hide{animation:toast-exit .3s ease-in forwards;}
 
 /* Drag ghost reserva */
 .drag-ghost{position:fixed;z-index:9999;pointer-events:none;display:none;}
@@ -1032,8 +1134,9 @@ body.has-bottom-nav .toast{bottom:76px;}
     <div class="banner-msg" id="banner-msg" style="display:none;"></div>
   </div>
 
-  <div id="home-pessoas-counter"></div>
-  <div class="stats-bar" id="stats-bar"></div>
+  <div class="stats-wrapper">
+    <div class="stats-bar" id="stats-bar"></div>
+  </div>
 
   <div class="main-grid" id="main-grid">
     <div class="flip-btn-wrapper btn-reservas" id="fbw-reservas" onclick="handleFlipBtn('reservas',this)">
@@ -1072,24 +1175,7 @@ body.has-bottom-nav .toast{bottom:76px;}
         </div>
       </div>
     </div>
-    <div class="flip-btn-wrapper btn-cardapio" id="fbw-cardapio" onclick="handleFlipBtn('cardapio',this)">
-      <div class="flip-btn-inner">
-        <div class="flip-btn-front btn-cardapio">
-          <div class="btn-inner">
-            <span class="btn-icon">🍽️</span>
-            <span class="btn-label">Cardápio</span>
-            <span class="btn-count">Menu do dia</span>
-          </div>
-        </div>
-        <div class="flip-btn-back">
-          <div class="btn-inner">
-            <span style="font-size:1.6rem;">🍽️</span>
-            <span class="back-label">Abrindo...</span>
-            <span class="back-hint">Menu do dia</span>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="flip-btn-wrapper btn-mesas" id="fbw-mesas" onclick="handleFlipBtn('mesas',this)">
       <div class="flip-btn-inner">
         <div class="flip-btn-front btn-mesas">
@@ -1160,8 +1246,7 @@ body.has-bottom-nav .toast{bottom:76px;}
         </div>
       </div>
     </div>
-    <!-- Config centralizado — ocupa as 2 colunas -->
-    <div class="flip-btn-wrapper btn-config" id="fbw-config" onclick="handleFlipBtn('config',this)" style="grid-column:1/-1;max-width:50%;margin:0 auto;width:100%;">
+    <div class="flip-btn-wrapper btn-config" id="fbw-config" onclick="handleFlipBtn('config',this)">
       <div class="flip-btn-inner">
         <div class="flip-btn-front btn-config">
           <div class="btn-inner">
@@ -1393,6 +1478,43 @@ body.has-bottom-nav .toast{bottom:76px;}
   </div>
 </div>
 
+<!-- TELA CHEIA ADICIONAR FILA -->
+<div class="add-fila-fullscreen" id="add-fila-fullscreen">
+  <div class="af-header-full">
+    <div class="rf-close" onclick="fecharAddFilaFullscreen()">✕</div>
+    <div class="rf-title">🕐 Adicionar à Fila</div>
+  </div>
+  <div class="af-body">
+    <div class="form-group">
+      <label class="form-label">Nome / Apelido (opcional)</label>
+      <input class="form-input" id="aff-nome" placeholder="Ex: João, Família Silva...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Quantas pessoas? *</label>
+      <div class="pax-selector" id="aff-pax-selector">
+        <div class="pax-btn" onclick="selecionarPaxAddFila(1,this)">1</div>
+        <div class="pax-btn ativo" onclick="selecionarPaxAddFila(2,this)">2</div>
+        <div class="pax-btn" onclick="selecionarPaxAddFila(3,this)">3</div>
+        <div class="pax-btn" onclick="selecionarPaxAddFila(4,this)">4</div>
+        <div class="pax-btn" onclick="selecionarPaxAddFila(5,this)">5</div>
+        <div class="pax-btn" onclick="selecionarPaxAddFila(6,this)">6</div>
+        <div class="pax-btn" onclick="selecionarPaxAddFila(8,this)">8</div>
+        <div class="pax-btn" onclick="selecionarPaxAddFila(10,this)">10</div>
+      </div>
+      <input type="hidden" id="aff-pax" value="2">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Telefone / WhatsApp (opcional)</label>
+      <input class="form-input" id="aff-tel" type="tel" placeholder="(19) 99999-9999" oninput="formatarTel(this)" maxlength="15">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observação (opcional)</label>
+      <input class="form-input" id="aff-obs" placeholder="Ex: aniversário, cadeirinha...">
+    </div>
+    <button class="submit-btn" onclick="confirmarAddFilaFullscreen()">🕐 Entrar na Fila</button>
+  </div>
+</div>
+
 <!-- NUMPAD RÁPIDO -->
 <div class="numpad-overlay" id="numpad-overlay" onclick="if(event.target===this)fecharNumpad()">
   <div class="numpad-sheet" onclick="event.stopPropagation()">
@@ -1618,30 +1740,41 @@ async function inicializar(){
 
   try{
     const snapM = await mesasCol.get();
+    const mesasExistentes = new Set(snapM.docs.map(d=>d.data().numero));
+    const todasNums = [];
+    for(let i=1;i<=28;i++) todasNums.push(i.toString());
+    [31,32,33,34,100,101,102,103,104,105].forEach(i=>todasNums.push(i.toString()));
+
     if(snapM.empty){
-      showToast('🪑 Criando mesas do salão...');
-      const nums = [];
-      for(let i=1;i<=28;i++) nums.push(i.toString());
-      [31,32,33,34,100,101,102,103,104,105].forEach(i=>nums.push(i.toString()));
-      // Criar em paralelo para ser mais rápido
-      const batch = [];
-      for(const n of nums){
-        batch.push(mesasCol.add({numero:n,capacidade:4,formato:'quad',ordem:parseInt(n)||999}));
+      // Criar todas as mesas
+      showToast('🪑 Configurando mesas...');
+      await Promise.all(todasNums.map(n=>mesasCol.add({numero:n,capacidade:4,formato:'quad',ordem:parseInt(n)||999})));
+      showToast('✅ Mesas prontas!');
+    } else {
+      // Recriar apenas as que sumiram (exceto juntadas)
+      const faltando = todasNums.filter(n=>{
+        // Verificar se este número existe diretamente ou como parte de uma junção
+        if(mesasExistentes.has(n)) return false;
+        // Verificar se está juntada em alguma mesa existente
+        const estaJuntada = [...mesasExistentes].some(m=>m.includes('+')&&m.split('+').includes(n));
+        return !estaJuntada;
+      });
+      if(faltando.length>0){
+        console.log('Recriando mesas faltando:', faltando);
+        await Promise.all(faltando.map(n=>mesasCol.add({numero:n,capacidade:4,formato:'quad',ordem:parseInt(n)||999})));
+        if(faltando.length<=3) showToast(`✅ Mesa${faltando.length>1?'s':''} ${faltando.join(', ')} restaurada${faltando.length>1?'s':''}!`);
       }
-      await Promise.all(batch);
-      showToast('✅ Mesas criadas com sucesso!');
     }
   }catch(e){
     console.warn('Erro mesas:',e);
-    showToast('⚠️ Erro ao carregar mesas. Recarregue o app.');
   }
 
-  filaCol2.onSnapshot(snap=>{
+  db.collection('fila_marchesini').onSnapshot(snap=>{
     filaEspera = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.entrada||0)-(b.entrada||0));
     renderFila();
     atualizarContadorFila();
     verificarMesaLivreParaFila();
-  });
+  },err=>{ console.error('Erro fila onSnapshot:',err); });
 
   reservasCol.onSnapshot( snap=>{
     reservations = snap.docs.map(d=>({id:d.id,...d.data()}));
@@ -1655,6 +1788,28 @@ async function inicializar(){
     historico = snap.docs.map(d=>({id:d.id,...d.data()}));
     if(document.getElementById('page-historico').classList.contains('active')) renderHistorico();
   });
+
+  // ══ LEITURA INICIAL IMEDIATA — sem esperar onSnapshot ══
+  // Carrega todos os dados na primeira abertura sem delay
+  try{
+    const [snapR, snapM, snapH, snapF] = await Promise.all([
+      reservasCol.get(),
+      mesasCol.get(),
+      historicoCol.get(),
+      db.collection('fila_marchesini').orderBy('entrada').get()
+    ]);
+    if(reservations.length===0)
+      reservations = snapR.docs.map(d=>({id:d.id,...d.data()}));
+    if(mesas.length===0)
+      mesas = snapM.docs.map(d=>({id:d.id,...d.data()}));
+    if(historico.length===0)
+      historico = snapH.docs.map(d=>({id:d.id,...d.data()}));
+    if(filaEspera.length===0)
+      filaEspera = snapF.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.entrada||0)-(b.entrada||0));
+    renderAll();
+    renderFila();
+    atualizarContadorFila();
+  }catch(e){ console.warn('Leitura inicial:',e); }
 
   renderAll();
   renderNovaForm();
@@ -2022,7 +2177,6 @@ function renderAll(){
   updateHomeCounts();
   updateTurnoUI();
   atualizarHeaderCompact();
-  atualizarContadorHome();
   atualizarBottomNav();
   if(document.getElementById('page-reservas').classList.contains('active')) renderReservations();
   if(document.getElementById('page-mesas').classList.contains('active')) renderMesas();
@@ -2041,7 +2195,7 @@ function updateHomeCounts(){
 // ══ STATS ══
 function renderStats(){
   const ativos = reservations.filter(r=>!r.finalizado);
-  const total  = ativos.length;
+  const mesasOcup = new Set(ativos.filter(r=>r.mesa).map(r=>r.mesa)).size;
   const pagos  = ativos.filter(r=>r.status==='pago').length;
   const pend   = ativos.filter(r=>r.status==='pendente'||r.status==='parcial').length;
   const pax    = ativos.reduce((s,r)=>s+r.pax,0);
@@ -2049,7 +2203,8 @@ function renderStats(){
   const sc     = configData.showCards;
   const sp     = configData.sistemaPagamento;
   const cards  = [];
-  if(sc.reservas) cards.push(`<div class="stat-card" onclick="handleFlipBtn('reservas',document.getElementById('fbw-reservas'))"><div class="stat-num">${total}</div><div class="stat-label">Reservas</div></div>`);
+  // Mesas ocupadas substitui Reservas
+  if(sc.reservas) cards.push(`<div class="stat-card" onclick="handleFlipBtn('mesas',document.getElementById('fbw-mesas'))"><div class="stat-num">${mesasOcup}</div><div class="stat-label" style="line-height:1.3">Mesas<br>ocup.</div></div>`);
   if(sc.pago&&sp)     cards.push(`<div class="stat-card paid"><div class="stat-num">${pagos}</div><div class="stat-label">Pagos</div></div>`);
   if(sc.pendente&&sp) cards.push(`<div class="stat-card pending"><div class="stat-num">${pend}</div><div class="stat-label">Pendentes</div></div>`);
   if(sc.pessoas)  cards.push(`<div class="stat-card people"><div class="stat-num">${pax}</div><div class="stat-label">Pessoas</div></div>`);
@@ -2633,55 +2788,102 @@ function buildMesaSVG(cap,num,ocupada){
 
 // ══ DRAG MESAS (juntar) — corrigido ══
 async function confirmarJuntarMesas(n1,n2){
-  // Validar que não é a mesma mesa ou já juntada
   if(n1===n2) return;
+  // Buscar mesas atualizadas do estado
   const m1=mesas.find(x=>x.numero===n1);
   const m2=mesas.find(x=>x.numero===n2);
   if(!m1||!m2){ showToast('Erro: mesa não encontrada.'); return; }
 
-  openConfirm(`Juntar mesas?`,`Unir Mesa ${n1} e Mesa ${n2}?`,'🔗',async()=>{
+  openConfirm(`Juntar mesas?`,`Unir Mesa ${n1} com Mesa ${n2}?`,'🔗',async()=>{
     try{
-      const novaNum=`${n1}+${n2}`;
-      const novaCap=(m1.capacidade||4)+(m2.capacidade||4);
-      // Mover reservas das duas mesas para o novo número
-      const rs1=reservations.filter(r=>r.mesa===n1&&!r.finalizado);
-      const rs2=reservations.filter(r=>r.mesa===n2&&!r.finalizado);
-      for(const r of [...rs1,...rs2]){
-        await reservasCol.doc(r.id).update({mesa:novaNum});
-      }
-      // Salvar mesa 1 com novo número
+      // Montar número combinado — pode ser "1+2+3" se já era juntada
+      const novaNum = n1+'+'+n2;
+      // Capacidade total
+      const novaCap = (m1.capacidade||4)+(m2.capacidade||4);
+      // Guardar todos os números individuais desta junção
+      const nums1 = m1.junta ? m1.junta : [n1];
+      const nums2 = m2.junta ? m2.junta : [n2];
+      const todosNums = [...nums1, ...nums2];
+      const capOrig = m1.capOrigN1 || m1.capacidade || 4;
+
+      // 1. Mover todas as reservas para o novo número
+      const rs = reservations.filter(r=>(r.mesa===n1||r.mesa===n2)&&!r.finalizado);
+      for(const r of rs) await reservasCol.doc(r.id).update({mesa:novaNum});
+
+      // 2. Atualizar mesa 1 com número combinado
+      // Garantir que junta é array válido
+      const juntaArray = todosNums.filter(Boolean);
       await mesasCol.doc(m1.id).update({
         numero:novaNum,
         capacidade:novaCap,
-        junta:[n1,n2],
-        capOrigN1:m1.capacidade||4,
-        capOrigN2:m2.capacidade||4,
-        ordemOrig:m1.ordem||parseNumMesa(n1)
+        junta:juntaArray,
+        capOrigN1:m1.capOrigN1||m1.capacidade||4,
+        capOrigN2:m2.capOrigN2||m2.capacidade||4,
+        ordemOrig:m1.ordemOrig||m1.ordem||parseNumMesa(n1)
       });
-      // Deletar mesa 2 — aguardar confirmação
-      await mesasCol.doc(m2.id).delete();
-      showToast(`Mesa ${n1}+${n2} unidas! 🔗`);
+
+      // 3. Deletar mesa 2 com retry robusto
+      for(let i=0;i<5;i++){
+        try{
+          await mesasCol.doc(m2.id).delete();
+          break;
+        }catch(err){
+          await new Promise(r=>setTimeout(r,400));
+        }
+      }
+      showToast('Mesa '+n1+'+'+n2+' unidas! 🔗');
     }catch(e){
-      console.error('Erro ao juntar mesas:',e);
-      showToast('⚠️ Erro ao juntar. Tente novamente.');
+      console.error('Erro ao juntar:',e);
+      showToast('⚠️ Erro ao juntar mesas. Tente novamente.');
     }
   },'Juntar');
 }
 
 async function separarMesa(num){
   const m=mesas.find(x=>x.numero===num);
-  if(!m||!m.junta){ showToast('Mesa não pode ser separada.'); return; }
-  const [n1,n2]=m.junta;
-  const cap1=m.capOrigN1||(Math.floor((m.capacidade||8)/2));
-  const cap2=m.capOrigN2||((m.capacidade||8)-cap1);
-  const ordemN2=parseNumMesa(n2);
-  const rs=reservations.filter(r=>r.mesa===num&&!r.finalizado);
-  const meio=Math.ceil(rs.length/2);
-  for(let i=0;i<rs.length;i++) await reservasCol.doc(rs[i].id).update({mesa:i<meio?n1:n2});
-  // Restaura mesa 1 no lugar e recria mesa 2
-  await mesasCol.doc(m.id).update({numero:n1,capacidade:cap1,junta:null,capOrigN1:null,capOrigN2:null,ordem:m.ordemOrig||parseNumMesa(n1)});
-  await mesasCol.add({numero:n2,capacidade:cap2,formato:m.formato||'quad',ordem:ordemN2});
-  showToast(`Mesas ${n1} e ${n2} separadas! ✅`);
+  if(!m){ showToast('Mesa não encontrada.'); return; }
+  // Reconstruir junta pelo número se necessário
+  if(!m.junta || m.junta.length<2){
+    if(num.includes('+')){
+      m.junta = num.split('+');
+    } else {
+      showToast('Esta mesa não está juntada.');
+      return;
+    }
+  }
+  const todosNums = m.junta; // ex: ['1','2'] ou ['1','2','3']
+  const n1 = todosNums[0];
+  const outrosNums = todosNums.slice(1);
+
+  // Capacidade individual — dividir igualmente
+  const capIndiv = Math.floor((m.capacidade||8) / todosNums.length);
+  const capN1 = m.capOrigN1 || capIndiv;
+  const ordemN1 = m.ordemOrig || parseNumMesa(n1);
+
+  // Mover todas as reservas para mesa 1
+  const rs = reservations.filter(r=>r.mesa===num&&!r.finalizado);
+  for(const r of rs) await reservasCol.doc(r.id).update({mesa:n1});
+
+  // Restaurar mesa 1
+  await mesasCol.doc(m.id).update({
+    numero:n1, capacidade:capN1,
+    junta:null, capOrigN1:null, capOrigN2:null,
+    ordemOrig:null, ordem:ordemN1
+  });
+
+  // Recriar as outras mesas com delay entre cada uma
+  for(const n of outrosNums){
+    await new Promise(r=>setTimeout(r,300));
+    await mesasCol.add({
+      numero:n,
+      capacidade:capIndiv,
+      formato:m.formato||'quad',
+      ordem:parseNumMesa(n)
+    });
+  }
+
+  const nomesStr = [n1,...outrosNums].join(', ');
+  showToast('Mesas '+nomesStr+' separadas! ✅');
 }
 
 function renderFinanceiro(){
@@ -2754,8 +2956,14 @@ window.abrirClienteDaMesa = function(id){
 window.confirmarSepararMesa = function(num){
   fecharTelaCheiaMesa();
   const m=mesas.find(x=>x.numero===num);
-  if(!m?.junta){ showToast('Esta mesa não pode ser separada.'); return; }
-  openConfirm('Separar mesas?',`Desfazer a união da mesa ${num}?`,'✂️',()=>separarMesa(num),'Separar');
+  // Verificar se é mesa juntada pelo número (contém +)
+  const eJuntada = num.includes('+') || (m && m.junta && m.junta.length>=2);
+  if(!eJuntada){ showToast('Esta mesa não está juntada.'); return; }
+  // Se junta não está salvo mas número tem +, reconstruir
+  if(m && !m.junta && num.includes('+')){
+    m.junta = num.split('+');
+  }
+  openConfirm('Separar mesas?','Desfazer a união da mesa '+num+'?','✂️',()=>separarMesa(num),'Separar');
 };
 
 window.fecharTelaCheiaMesa = function(){
@@ -3197,13 +3405,7 @@ function renderConfig(){
         </div>
         <div class="toggle-switch ${c.somenteAlmoco?'on':''}" onclick="toggleConfigKey('somenteAlmoco')"></div>
       </div>
-      <div class="config-item">
-        <div class="config-item-info">
-          <div class="config-item-label">🧭 Barra de Navegação Fixa</div>
-          <div class="config-item-desc">Barra com ícones sempre visível no rodapé</div>
-        </div>
-        <div class="toggle-switch ${c.bottomNav?'on':''}" onclick="toggleConfigKey('bottomNav')"></div>
-      </div>
+
       <div class="config-item">
         <div class="config-item-info">
           <div class="config-item-label">⏰ Alerta de Mesa Parada</div>
@@ -3249,7 +3451,7 @@ function renderConfig(){
     <div class="config-section">
       <div class="config-section-title">📊 Cards de Estatísticas</div>
       ${[
-        {key:'reservas',label:'📋 Reservas',desc:'Total de reservas ativas'},
+        {key:'reservas',label:'🪑 Mesas Ocupadas',desc:'Quantas mesas estão ocupadas agora'},
         {key:'pago',label:'✅ Pagos',desc:'Quantas estão pagas'},
         {key:'pendente',label:'⏳ Pendentes',desc:'Reservas pendentes/parciais'},
         {key:'pessoas',label:'👥 Pessoas',desc:'Total de pessoas'},
@@ -3399,9 +3601,26 @@ document.getElementById('confirm-action-btn').addEventListener('click',()=>{ if(
 // ══ UTILS ══
 function showToast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  clearTimeout(t._timeout);
-  t._timeout=setTimeout(()=>t.classList.remove('show'),3000);
+  if(!t) return;
+  clearTimeout(window._toastT1);
+  clearTimeout(window._toastT2);
+  clearTimeout(window._toastT3);
+  // Resetar
+  t.classList.remove('show','hide');
+  t.style.opacity='0';
+  window._toastT1=setTimeout(()=>{
+    t.textContent=msg;
+    t.style.opacity='';
+    t.classList.add('show');
+    window._toastT2=setTimeout(()=>{
+      t.classList.remove('show');
+      t.classList.add('hide');
+      window._toastT3=setTimeout(()=>{
+        t.classList.remove('hide');
+        t.style.opacity='0';
+      },320);
+    },2400);
+  },20);
 }
 
 // Fix para ghost fantasma — limpa a cada mudança de página
@@ -3597,31 +3816,7 @@ window.salvarTempoAlerta = async function(val){
 };
 
 // ══ CONTADOR PESSOAS NA HOME ══
-function atualizarContadorHome(){
-  const ativos = reservations.filter(r=>!r.finalizado);
-  const pax = ativos.reduce((s,r)=>s+r.pax,0);
-  const mesasOcup = new Set(ativos.filter(r=>r.mesa).map(r=>r.mesa)).size;
-  const el = document.getElementById('home-pessoas-counter');
-  if(!el) return;
-  if(pax === 0 && mesasOcup === 0){
-    el.innerHTML = '';
-    return;
-  }
-  el.innerHTML = `
-    <div class="pessoas-counter-wrap">
-      <div class="pessoas-counter-inner">
-        <div style="text-align:center;">
-          <div class="pc-num">${pax}</div>
-          <div class="pc-label">pessoas no salão</div>
-        </div>
-        <div class="pc-sep"></div>
-        <div style="text-align:center;">
-          <div class="pc-mesas-num">${mesasOcup}</div>
-          <div class="pc-label">mesa${mesasOcup!==1?'s':''} ocup.</div>
-        </div>
-      </div>
-    </div>`;
-}
+function atualizarContadorHome(){ /* removido — info agora nos cards */ }
 
 // ══ RELATÓRIO MENSAL ══
 function renderRelatorioMensal(){
@@ -3672,6 +3867,17 @@ function renderRelatorioMensal(){
 
 
 
+
+// ══ FORMATAÇÃO TELEFONE ══
+window.formatarTel = function(input){
+  let v = input.value.replace(/\D/g,'');
+  if(v.length<=2) v = v;
+  else if(v.length<=6) v = '('+v.slice(0,2)+') '+v.slice(2);
+  else if(v.length<=10) v = '('+v.slice(0,2)+') '+v.slice(2,6)+'-'+v.slice(6);
+  else v = '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7,11);
+  input.value = v;
+};
+
 // ══ SISTEMA DE FILA ══
 
 function atualizarContadorFila(){
@@ -3702,12 +3908,26 @@ function renderFila(){
   if(!container) return;
 
   if(!filaEspera.length){
-    container.innerHTML=`<div class="fila-vazia">
-      <div style="font-size:3rem;margin-bottom:12px;">🕐</div>
-      <div>Nenhuma pessoa na fila</div>
-      <div style="margin-top:8px;font-size:.8rem;">Quando o salão lotar, adicione pessoas aqui</div>
-      <button class="submit-btn" onclick="abrirAddFila()" style="margin-top:20px;max-width:200px;">+ Adicionar à fila</button>
-    </div>`;
+    // Tentar buscar do Firestore antes de mostrar vazio
+    db.collection('fila_marchesini').orderBy('entrada').get().then(snap=>{
+      if(!snap.empty){
+        filaEspera = snap.docs.map(d=>({id:d.id,...d.data()}));
+        renderFila(); // re-render com dados
+      } else {
+        container.innerHTML=`<div class="fila-vazia">
+          <div style="font-size:3rem;margin-bottom:12px;">🕐</div>
+          <div>Nenhuma pessoa na fila</div>
+          <div style="margin-top:8px;font-size:.8rem;">Quando o salão lotar, adicione pessoas aqui</div>
+          <button class="submit-btn" onclick="abrirAddFila()" style="margin-top:20px;max-width:200px;">+ Adicionar à fila</button>
+        </div>`;
+      }
+    }).catch(()=>{
+      container.innerHTML=`<div class="fila-vazia">
+        <div style="font-size:3rem;margin-bottom:12px;">🕐</div>
+        <div>Nenhuma pessoa na fila</div>
+        <button class="submit-btn" onclick="abrirAddFila()" style="margin-top:20px;max-width:200px;">+ Adicionar à fila</button>
+      </div>`;
+    });
     return;
   }
 
@@ -3716,19 +3936,23 @@ function renderFila(){
     const espera = agora - (p.entrada||agora);
     const mins = Math.floor(espera/60000);
     const tempoStr = mins<1?'agora':mins<60?`${mins}min`:`${Math.floor(mins/60)}h${mins%60?mins%60+'min':''}`;
+    const telLimpo = (p.tel||'').replace(/\D/g,'');
+    const waLink = telLimpo ? `https://wa.me/55${telLimpo}?text=${encodeURIComponent('Olá '+p.nome+'! 😊 Sua mesa está pronta no Marchesini di Roverbella. Pode vir! 🍷')}` : '';
     return `<div class="fila-item" id="fila-${p.id}">
       <div class="fila-num">${idx+1}º</div>
       <div class="fila-info">
         <div class="fila-nome">${escHtml(p.nome||'Sem nome')}</div>
         <div class="fila-meta">
           <span>👥 ${p.pax} ${p.pax===1?'pessoa':'pessoas'}</span>
+          ${p.tel?`<span>· 📱 ${p.tel}</span>`:''}
           ${p.obs?`<span>· 📝 ${escHtml(p.obs)}</span>`:''}
         </div>
       </div>
       <div style="text-align:right;">
         <div class="fila-tempo">${tempoStr}</div>
-        <div class="fila-actions" style="margin-top:6px;">
+        <div class="fila-actions" style="margin-top:6px;align-items:center;">
           <button class="fila-btn sentar" onclick="sentarFilaNaMesa('${p.id}')">🪑 Sentar</button>
+          ${waLink?`<a href="${waLink}" target="_blank" class="btn-whatsapp" title="Avisar no WhatsApp"><svg viewBox="0 0 24 24"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>`:''}
           <button class="fila-btn remover" onclick="removerDaFila('${p.id}')">✕</button>
         </div>
       </div>
@@ -3742,64 +3966,35 @@ function renderFila(){
   }, 30000);
 }
 
+// abrirAddFila — abre tela cheia (versão limpa, única)
 window.abrirAddFila = function(){
-  const ov = document.createElement('div');
-  ov.className='modal-overlay open';
-  ov.onclick=function(e){if(e.target===ov)ov.remove();};
-  ov.innerHTML=`<div class="modal-sheet" onclick="event.stopPropagation()">
-    <div class="modal-title">
-      <span>🕐 Adicionar à Fila</span>
-      <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nome / Apelido (opcional)</label>
-      <input class="form-input" id="fila-nome-input" placeholder="Ex: João, Mesa da janela...">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Quantas pessoas *</label>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        ${[1,2,3,4,5,6,7,8].map(n=>`<div class="numpad-btn" style="width:56px;height:52px;font-size:1.2rem;" onclick="selecionarPaxFila(${n},this)">${n}</div>`).join('')}
-      </div>
-      <input type="hidden" id="fila-pax-val" value="2">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Observação (opcional)</label>
-      <input class="form-input" id="fila-obs-input" placeholder="Ex: cadeirinha, alergia...">
-    </div>
-    <button class="submit-btn" onclick="confirmarAddFila(this.closest('.modal-overlay'))">Entrar na Fila →</button>
-  </div>`;
-  document.body.appendChild(ov);
-  // Selecionar 2 por padrão
-  setTimeout(()=>{
-    const btns = ov.querySelectorAll('.numpad-btn');
-    if(btns[1]) { btns[1].style.background='rgba(201,168,76,.3)'; btns[1].style.borderColor='var(--gold)'; }
-  },50);
+  const nome = document.getElementById('aff-nome');
+  const tel  = document.getElementById('aff-tel');
+  const obs  = document.getElementById('aff-obs');
+  const pax  = document.getElementById('aff-pax');
+  if(nome) nome.value='';
+  if(tel)  tel.value='';
+  if(obs)  obs.value='';
+  if(pax)  pax.value='2';
+  // Reset seleção visual
+  document.querySelectorAll('#aff-pax-selector .pax-btn').forEach(b=>b.classList.remove('ativo'));
+  const btns = document.querySelectorAll('#aff-pax-selector .pax-btn');
+  if(btns[1]) btns[1].classList.add('ativo');
+  const fs = document.getElementById('add-fila-fullscreen');
+  if(fs) fs.classList.add('open');
 };
 
-window.selecionarPaxFila = function(n, el){
-  document.getElementById('fila-pax-val').value = n;
-  el.closest('.form-group').querySelectorAll('.numpad-btn').forEach(b=>{
-    b.style.background=''; b.style.borderColor='';
-  });
-  el.style.background='rgba(201,168,76,.3)';
-  el.style.borderColor='var(--gold)';
-};
-
-window.confirmarAddFila = async function(ov){
-  const nome = document.getElementById('fila-nome-input')?.value.trim()||'';
-  const pax  = parseInt(document.getElementById('fila-pax-val')?.value)||2;
-  const obs  = document.getElementById('fila-obs-input')?.value.trim()||'';
-  await filaCol2.add({nome:nome||`${pax} pessoas`,pax,obs,entrada:Date.now()});
-  ov.remove();
-  showToast(`🕐 ${nome||pax+' pessoas'} entrou na fila!`);
-  // Navegar para a fila se não estiver lá
-  if(currentPage!=='fila') handleFlipBtn('fila',document.getElementById('fbw-fila'));
+window.avisarWhatsAppFila = function(tel, nome){
+  const num = tel.replace(/\D/g,'');
+  const numBR = num.startsWith('55') ? num : '55'+num;
+  const msg = encodeURIComponent(`Olá${nome?' '+nome:''}! 😊 Sua mesa está pronta no Marchesini di Roverbella. Pode vir! 🍷`);
+  window.open(`https://wa.me/${numBR}?text=${msg}`, '_blank');
 };
 
 window.removerDaFila = async function(id){
   const p = filaEspera.find(x=>x.id===id);
   openConfirm('Remover da fila?',`${p?.nome||'Pessoa'} vai sair da fila.`,'🕐',async()=>{
-    await filaCol2.doc(id).delete();
+    await db.collection('fila_marchesini').doc(id).delete();
     showToast('Removido da fila.');
   },'Remover');
 };
@@ -3844,7 +4039,7 @@ window.confirmarSentarFila = async function(filaId, mesaNum, ov){
     obs:p.obs||''
   };
   await reservasCol.add(nova);
-  await filaCol2.doc(filaId).delete();
+  await db.collection('fila_marchesini').doc(filaId).delete();
   ov.remove();
   showToast(`✅ ${nova.nome} → Mesa ${mesaNum}!`);
   handleFlipBtn('mesas', document.getElementById('fbw-mesas'));
@@ -3898,70 +4093,86 @@ function mostrarNotifMesaLivre(pessoa, mesa){
 
 // ══ SELEÇÃO MESA DOIS TOQUES (substituindo drag) ══
 window.startMesaDrag = function(e, num){
-  // Não ativa no botão +
   if(e.target.closest('.mesa-btn-rapido')) return;
 
+  const startX = e.clientX, startY = e.clientY;
+  let moved = false;
+
+  // Se já tem mesa selecionada e tocou em outra — juntar (toque curto)
+  // Isso é tratado no onclick via abrirMesaFullscreen override
+
   clearTimeout(mesaDragTimeout);
+
   mesaDragTimeout = setTimeout(()=>{
-    // Vibrar para confirmar long press
+    if(moved) return;
+
+    // Vibrar para confirmar
     navigator.vibrate && navigator.vibrate([40,15,40]);
 
     if(mesaSelecionadaParaJuntar === num){
-      // Toque na mesma mesa — desselecionar
+      // Tocou na mesma — desselecionar
       deselecionarMesa();
       return;
     }
-
     if(mesaSelecionadaParaJuntar){
-      // Já tem uma selecionada — juntar com esta
+      // Já tem outra selecionada — juntar
       const n1 = mesaSelecionadaParaJuntar;
       deselecionarMesa();
       confirmarJuntarMesas(n1, num);
       return;
     }
 
-    // Selecionar esta mesa
+    // SELECIONAR — e PREVENIR que o onclick abra a mesa
+    e.preventDefault && e.preventDefault();
     mesaSelecionadaParaJuntar = num;
-    const cardEl = document.getElementById('mc-'+String(num).replace(/\+/g,'_'));
+    const safeId = String(num).replace(/\+/g,'_');
+    const cardEl = document.getElementById('mc-'+safeId);
     if(cardEl){
       cardEl.classList.add('selecionada-juntar');
-      // Badge
+      // Remover badge anterior se houver
+      const old = cardEl.querySelector('.mesa-badge-selecionada');
+      if(old) old.remove();
       const badge = document.createElement('div');
-      badge.className='mesa-badge-selecionada';
-      badge.id='badge-selecionada';
-      badge.textContent='✓ SELECIONADA';
+      badge.className = 'mesa-badge-selecionada';
+      badge.textContent = '✓ Toque em outra mesa';
       cardEl.appendChild(badge);
     }
-    showToast('✓ Mesa '+num+' selecionada — toque em outra para juntar');
-
-    // Auto-cancelar em 10 segundos
+    showToast('✓ Mesa '+num+' selecionada');
     clearTimeout(window._selecaoTimer);
-    window._selecaoTimer = setTimeout(deselecionarMesa, 10000);
-  }, 500);
+    // Auto-cancelar em 15 segundos
+    window._selecaoTimer = setTimeout(deselecionarMesa, 15000);
 
-  // Cancelar se mover antes do tempo
+    // Bloquear o próximo onclick desta mesa para não abrir a fullscreen
+    window._bloqueioOnclick = num;
+    setTimeout(()=>{ window._bloqueioOnclick = null; }, 300);
+
+  }, 550);
+
   const onMove = (ev)=>{
-    if(Math.abs(ev.clientX-e.clientX)>10 || Math.abs(ev.clientY-e.clientY)>10){
+    if(Math.abs(ev.clientX-startX)>8 || Math.abs(ev.clientY-startY)>8){
+      moved = true;
       clearTimeout(mesaDragTimeout);
-      document.removeEventListener('pointermove',onMove);
     }
   };
   const onUp = ()=>{
-    clearTimeout(mesaDragTimeout);
-    document.removeEventListener('pointermove',onMove);
-    document.removeEventListener('pointerup',onUp);
+    // NÃO cancela o timeout no pointerup — deixa o long press completar
+    document.removeEventListener('pointermove', onMove);
+    document.removeEventListener('pointerup', onUp);
+    document.removeEventListener('pointercancel', onUp);
   };
-  document.addEventListener('pointermove',onMove,{passive:true});
-  document.addEventListener('pointerup',onUp);
+  document.addEventListener('pointermove', onMove, {passive:true});
+  document.addEventListener('pointerup', onUp);
+  document.addEventListener('pointercancel', ()=>{ moved=true; clearTimeout(mesaDragTimeout); });
 };
 
 function deselecionarMesa(){
   clearTimeout(window._selecaoTimer);
   if(mesaSelecionadaParaJuntar){
-    const cardEl = document.getElementById('mc-'+String(mesaSelecionadaParaJuntar).replace(/\+/g,'_'));
+    const safeId = String(mesaSelecionadaParaJuntar).replace(/\+/g,'_');
+    const cardEl = document.getElementById('mc-'+safeId);
     if(cardEl){
       cardEl.classList.remove('selecionada-juntar');
-      const badge = cardEl.querySelector('#badge-selecionada');
+      const badge = cardEl.querySelector('.mesa-badge-selecionada');
       if(badge) badge.remove();
     }
   }
@@ -3971,16 +4182,72 @@ function deselecionarMesa(){
 // Toque em mesa quando há uma selecionada — juntar
 const _origAbrirMesa = window.abrirMesaFullscreen;
 window.abrirMesaFullscreen = function(num){
+  // Bloquear se long press acabou de ativar
+  if(window._bloqueioOnclick === num) return;
+  // Se tem mesa selecionada e tocou em outra — juntar
   if(mesaSelecionadaParaJuntar && mesaSelecionadaParaJuntar !== num){
     const n1 = mesaSelecionadaParaJuntar;
     deselecionarMesa();
     confirmarJuntarMesas(n1, num);
     return;
   }
-  deselecionarMesa();
+  // Se tocou na mesa já selecionada — desselecionar
+  if(mesaSelecionadaParaJuntar === num){
+    deselecionarMesa();
+    return;
+  }
   _origAbrirMesa(num);
 };
 
+
+
+window.confirmarAddFilaFullscreen = async function(){
+  try{
+    const nomeEl = document.getElementById('aff-nome');
+    const paxEl  = document.getElementById('aff-pax');
+    const telEl  = document.getElementById('aff-tel');
+    const obsEl  = document.getElementById('aff-obs');
+    const nome = nomeEl ? nomeEl.value.trim() : '';
+    const pax  = paxEl  ? (parseInt(paxEl.value)||2) : 2;
+    const tel  = telEl  ? telEl.value.replace(/\D/g,'') : '';
+    const obs  = obsEl  ? obsEl.value.trim() : '';
+    const nomeFinal = nome || pax+' '+(pax===1?'pessoa':'pessoas');
+    showToast('⏳ Adicionando à fila...');
+    const docRef = await db.collection('fila_marchesini').add({
+      nome: nomeFinal, pax: pax, tel: tel, obs: obs,
+      entrada: Date.now()
+    });
+    console.log('Fila OK:', docRef.id);
+    fecharAddFilaFullscreen();
+    showToast('🕐 '+nomeFinal+' entrou na fila!');
+  }catch(e){
+    console.error('Erro fila:', e);
+    showToast('⚠️ Erro: '+e.message);
+  }
+};
+
+window.fecharAddFilaFullscreen = async function(){
+  const fs = document.getElementById('add-fila-fullscreen');
+  if(fs) fs.classList.remove('open');
+  // Forçar leitura imediata da fila
+  try{
+    const snap = await db.collection('fila_marchesini').orderBy('entrada').get();
+    filaEspera = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderFila();
+    atualizarContadorFila();
+  }catch(e){ console.warn('Erro leitura fila:',e); }
+  // Navegar para a página fila
+  if(currentPage !== 'fila'){
+    goToPage('fila');
+  }
+};
+
+window.selecionarPaxAddFila = function(n, el){
+  const pax = document.getElementById('aff-pax');
+  if(pax) pax.value = n;
+  document.querySelectorAll('#aff-pax-selector .pax-btn').forEach(b=>b.classList.remove('ativo'));
+  if(el) el.classList.add('ativo');
+};
 
 inicializar();
 </script>
