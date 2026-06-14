@@ -343,7 +343,30 @@ body.has-bottom-nav .page{padding-bottom:120px;}
 .mesa-alerta-badge{position:absolute;top:4px;left:4px;background:rgba(232,144,76,.9);color:#1a0a0a;font-size:.5rem;font-weight:700;padding:2px 5px;border-radius:6px;z-index:4;letter-spacing:.05em;}
 
 
-/* ══ MESA SELECIONADA (dois toques) ══ */
+
+/* ══ FEEDBACK VISUAL PROGRESSIVO ══ */
+@keyframes pulsa-hold{
+  0%{box-shadow:0 0 0 0 rgba(201,168,76,.5);}
+  100%{box-shadow:0 0 0 8px rgba(201,168,76,.0);}
+}
+.mesa-card-visual.holding{
+  border-color:rgba(201,168,76,.6)!important;
+  background:rgba(201,168,76,.06)!important;
+  animation:pulsa-hold .3s ease-out forwards;
+  transition:border-color .15s,background .15s;
+}
+.mesa-card-visual.selecionada-juntar{
+  border-color:var(--gold)!important;
+  background:rgba(201,168,76,.15)!important;
+  animation:pulsa-selecao .8s ease infinite;
+  z-index:10;
+}
+/* Mesa juntada — azul */
+.mesa-card-visual.junta-visual{
+  border-color:rgba(76,140,201,.7)!important;
+  background:rgba(76,140,201,.08)!important;
+}
+
 @keyframes pulsa-selecao{
   0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.7),0 0 20px rgba(201,168,76,.3);}
   50%{box-shadow:0 0 0 6px rgba(201,168,76,.2),0 0 30px rgba(201,168,76,.5);}
@@ -377,6 +400,11 @@ body.has-bottom-nav .page{padding-bottom:120px;}
 
 /* ══ PÁGINA FILA ══ */
 .fila-vazia{text-align:center;padding:40px 20px;color:rgba(247,241,232,.3);font-style:italic;}
+
+/* ══ DETALHE PESSOA NA FILA ══ */
+.fila-item{cursor:pointer;transition:background .15s;}
+.fila-item:active{background:rgba(201,168,76,.06)!important;}
+
 .fila-item{
   background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.18);
   border-radius:14px;padding:14px 16px;margin:0 16px 10px;
@@ -1782,7 +1810,8 @@ async function inicializar(){
   });
   mesasCol.onSnapshot( snap=>{
     mesas = snap.docs.map(d=>({id:d.id,...d.data()}));
-    if(document.getElementById('page-mesas').classList.contains('active')) renderMesas();
+    renderMesas(); // sempre renderiza — mostra na home e na página mesas
+    renderStats(); // atualiza contagem de mesas ocupadas
   });
   historicoCol.onSnapshot( snap=>{
     historico = snap.docs.map(d=>({id:d.id,...d.data()}));
@@ -1790,7 +1819,6 @@ async function inicializar(){
   });
 
   // ══ LEITURA INICIAL IMEDIATA — sem esperar onSnapshot ══
-  // Carrega todos os dados na primeira abertura sem delay
   try{
     const [snapR, snapM, snapH, snapF] = await Promise.all([
       reservasCol.get(),
@@ -1798,17 +1826,17 @@ async function inicializar(){
       historicoCol.get(),
       db.collection('fila_marchesini').orderBy('entrada').get()
     ]);
-    if(reservations.length===0)
-      reservations = snapR.docs.map(d=>({id:d.id,...d.data()}));
-    if(mesas.length===0)
-      mesas = snapM.docs.map(d=>({id:d.id,...d.data()}));
-    if(historico.length===0)
-      historico = snapH.docs.map(d=>({id:d.id,...d.data()}));
-    if(filaEspera.length===0)
-      filaEspera = snapF.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.entrada||0)-(b.entrada||0));
+    // Sempre atualiza com os dados mais recentes
+    reservations = snapR.docs.map(d=>({id:d.id,...d.data()}));
+    mesas        = snapM.docs.map(d=>({id:d.id,...d.data()}));
+    historico    = snapH.docs.map(d=>({id:d.id,...d.data()}));
+    filaEspera   = snapF.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.entrada||0)-(b.entrada||0));
+    // Renderizar tudo imediatamente
     renderAll();
+    renderMesas();
     renderFila();
     atualizarContadorFila();
+    renderHistorico();
   }catch(e){ console.warn('Leitura inicial:',e); }
 
   renderAll();
@@ -2706,7 +2734,7 @@ function renderMesas(){
         else statusGeral='pendente';
       } else { statusGeral='pago'; }
     }
-    const isJunta = num.includes('+');
+    const isJunta = num.includes('+') || (mesas.find(x=>x.numero===num)?.junta?.length>1);
     const cardClass = `mesa-card-visual ${ocupada?'ocupada':'livre'} ${isJunta?'junta':''}`;
     const nomesCurtos = reservasNaMesa.map(r=>r.nome.split(' ')[0]).join(', ');
 
@@ -3938,7 +3966,7 @@ function renderFila(){
     const tempoStr = mins<1?'agora':mins<60?`${mins}min`:`${Math.floor(mins/60)}h${mins%60?mins%60+'min':''}`;
     const telLimpo = (p.tel||'').replace(/\D/g,'');
     const waLink = telLimpo ? `https://wa.me/55${telLimpo}?text=${encodeURIComponent('Olá '+p.nome+'! 😊 Sua mesa está pronta no Marchesini di Roverbella. Pode vir! 🍷')}` : '';
-    return `<div class="fila-item" id="fila-${p.id}">
+    return `<div class="fila-item" id="fila-${p.id}" onclick="abrirDetalhesFila('${p.id}')">
       <div class="fila-num">${idx+1}º</div>
       <div class="fila-info">
         <div class="fila-nome">${escHtml(p.nome||'Sem nome')}</div>
@@ -3951,9 +3979,9 @@ function renderFila(){
       <div style="text-align:right;">
         <div class="fila-tempo">${tempoStr}</div>
         <div class="fila-actions" style="margin-top:6px;align-items:center;">
-          <button class="fila-btn sentar" onclick="sentarFilaNaMesa('${p.id}')">🪑 Sentar</button>
+          <button class="fila-btn sentar" onclick="event.stopPropagation();sentarFilaNaMesa('${p.id}')">🪑 Sentar</button>
           ${waLink?`<a href="${waLink}" target="_blank" class="btn-whatsapp" title="Avisar no WhatsApp"><svg viewBox="0 0 24 24"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>`:''}
-          <button class="fila-btn remover" onclick="removerDaFila('${p.id}')">✕</button>
+          <button class="fila-btn remover" onclick="event.stopPropagation();removerDaFila('${p.id}')">✕</button>
         </div>
       </div>
     </div>`;
@@ -4096,73 +4124,80 @@ window.startMesaDrag = function(e, num){
   if(e.target.closest('.mesa-btn-rapido')) return;
 
   const startX = e.clientX, startY = e.clientY;
+  const tInicio = Date.now();
   let moved = false;
+  const safeId = String(num).replace(/\+/g,'_');
+  const cardEl = document.getElementById('mc-'+safeId);
 
-  // Se já tem mesa selecionada e tocou em outra — juntar (toque curto)
-  // Isso é tratado no onclick via abrirMesaFullscreen override
-
-  clearTimeout(mesaDragTimeout);
-
-  mesaDragTimeout = setTimeout(()=>{
-    if(moved) return;
-
-    // Vibrar para confirmar
-    navigator.vibrate && navigator.vibrate([40,15,40]);
-
-    if(mesaSelecionadaParaJuntar === num){
-      // Tocou na mesma — desselecionar
-      deselecionarMesa();
-      return;
-    }
-    if(mesaSelecionadaParaJuntar){
-      // Já tem outra selecionada — juntar
-      const n1 = mesaSelecionadaParaJuntar;
-      deselecionarMesa();
-      confirmarJuntarMesas(n1, num);
-      return;
-    }
-
-    // SELECIONAR — e PREVENIR que o onclick abra a mesa
-    e.preventDefault && e.preventDefault();
-    mesaSelecionadaParaJuntar = num;
-    const safeId = String(num).replace(/\+/g,'_');
-    const cardEl = document.getElementById('mc-'+safeId);
-    if(cardEl){
-      cardEl.classList.add('selecionada-juntar');
-      // Remover badge anterior se houver
-      const old = cardEl.querySelector('.mesa-badge-selecionada');
-      if(old) old.remove();
-      const badge = document.createElement('div');
-      badge.className = 'mesa-badge-selecionada';
-      badge.textContent = '✓ Toque em outra mesa';
-      cardEl.appendChild(badge);
-    }
-    showToast('✓ Mesa '+num+' selecionada');
-    clearTimeout(window._selecaoTimer);
-    // Auto-cancelar em 15 segundos
-    window._selecaoTimer = setTimeout(deselecionarMesa, 15000);
-
-    // Bloquear o próximo onclick desta mesa para não abrir a fullscreen
-    window._bloqueioOnclick = num;
-    setTimeout(()=>{ window._bloqueioOnclick = null; }, 300);
-
-  }, 550);
+  // Feedback visual imediato ao pressionar (após 150ms mostra amarelo)
+  const holdTimer = setTimeout(()=>{
+    if(!moved && cardEl) cardEl.classList.add('holding');
+  }, 150);
 
   const onMove = (ev)=>{
-    if(Math.abs(ev.clientX-startX)>8 || Math.abs(ev.clientY-startY)>8){
+    if(Math.abs(ev.clientX-startX)>10 || Math.abs(ev.clientY-startY)>10){
       moved = true;
-      clearTimeout(mesaDragTimeout);
+      clearTimeout(holdTimer);
+      if(cardEl) cardEl.classList.remove('holding');
     }
   };
+
   const onUp = ()=>{
-    // NÃO cancela o timeout no pointerup — deixa o long press completar
+    clearTimeout(holdTimer);
     document.removeEventListener('pointermove', onMove);
     document.removeEventListener('pointerup', onUp);
-    document.removeEventListener('pointercancel', onUp);
+    document.removeEventListener('pointercancel', onCancel);
+    if(cardEl) cardEl.classList.remove('holding');
+
+    if(moved) return;
+
+    const duracao = Date.now() - tInicio;
+
+    if(duracao >= 280){
+      // ══ SEGUROU — SELECIONAR ══
+      navigator.vibrate && navigator.vibrate([40,15,40]);
+
+      if(mesaSelecionadaParaJuntar === num){
+        deselecionarMesa(); return;
+      }
+      if(mesaSelecionadaParaJuntar){
+        const n1 = mesaSelecionadaParaJuntar;
+        deselecionarMesa();
+        confirmarJuntarMesas(n1, num); return;
+      }
+
+      // Selecionar
+      mesaSelecionadaParaJuntar = num;
+      if(cardEl){
+        cardEl.classList.add('selecionada-juntar');
+        const old = cardEl.querySelector('.mesa-badge-selecionada');
+        if(old) old.remove();
+        const badge = document.createElement('div');
+        badge.className = 'mesa-badge-selecionada';
+        badge.textContent = '✓ Toque em outra para juntar';
+        cardEl.appendChild(badge);
+      }
+      showToast('✓ Mesa '+num+' selecionada — toque em outra para juntar');
+      clearTimeout(window._selecaoTimer);
+      window._selecaoTimer = setTimeout(deselecionarMesa, 15000);
+      // Bloquear onclick
+      window._bloqueioOnclick = num;
+      setTimeout(()=>{ window._bloqueioOnclick = null; }, 150);
+    }
+    // < 280ms = toque rápido, onclick abre a mesa
   };
+
+  const onCancel = ()=>{
+    clearTimeout(holdTimer);
+    if(cardEl) cardEl.classList.remove('holding');
+    document.removeEventListener('pointermove', onMove);
+    document.removeEventListener('pointerup', onUp);
+    document.removeEventListener('pointercancel', onCancel);
+  };
+
   document.addEventListener('pointermove', onMove, {passive:true});
   document.addEventListener('pointerup', onUp);
-  document.addEventListener('pointercancel', ()=>{ moved=true; clearTimeout(mesaDragTimeout); });
+  document.addEventListener('pointercancel', onCancel);
 };
 
 function deselecionarMesa(){
@@ -4247,6 +4282,56 @@ window.selecionarPaxAddFila = function(n, el){
   if(pax) pax.value = n;
   document.querySelectorAll('#aff-pax-selector .pax-btn').forEach(b=>b.classList.remove('ativo'));
   if(el) el.classList.add('ativo');
+};
+
+
+window.abrirDetalhesFila = function(id){
+  const p = filaEspera.find(x=>x.id===id);
+  if(!p) return;
+  const agora = Date.now();
+  const mins = Math.floor((agora-(p.entrada||agora))/60000);
+  const tempoStr = mins<1?'agora mesmo':mins+'min esperando';
+
+  const ov = document.createElement('div');
+  ov.className='modal-overlay open';
+  ov.onclick=function(e){if(e.target===ov)ov.remove();};
+  ov.innerHTML=`<div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-title">
+      <span>🕐 ${escHtml(p.nome||'Pessoa na fila')}</span>
+      <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
+    </div>
+    <div style="text-align:center;margin-bottom:16px;">
+      <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold2);">${p.pax}</div>
+      <div style="font-size:.7rem;color:rgba(247,241,232,.4);text-transform:uppercase;letter-spacing:.1em;">${p.pax===1?'pessoa':'pessoas'} · ${tempoStr}</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nome</label>
+      <input class="form-input" id="fd-nome" value="${escHtml(p.nome||'')}">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Telefone</label>
+      <input class="form-input" id="fd-tel" type="tel" value="${p.tel||''}" oninput="formatarTel(this)">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Observação</label>
+      <input class="form-input" id="fd-obs" value="${escHtml(p.obs||'')}">
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button class="submit-btn" style="flex:1;margin-top:0;" onclick="salvarDetalhesFila('${id}',this.closest('.modal-overlay'))">💾 Salvar</button>
+      <button class="submit-btn" style="flex:1;margin-top:0;background:linear-gradient(135deg,#1a3a1a,#2d5a1a);" onclick="this.closest('.modal-overlay').remove();sentarFilaNaMesa('${id}')">🪑 Sentar</button>
+    </div>
+    <button class="qa-btn" style="width:100%;margin-top:8px;color:#e85c4c;border-color:rgba(232,92,76,.3);" onclick="this.closest('.modal-overlay').remove();removerDaFila('${id}')">✕ Remover da fila</button>
+  </div>`;
+  document.body.appendChild(ov);
+};
+
+window.salvarDetalhesFila = async function(id, ov){
+  const nome = document.getElementById('fd-nome')?.value.trim()||'';
+  const tel  = document.getElementById('fd-tel')?.value.trim()||'';
+  const obs  = document.getElementById('fd-obs')?.value.trim()||'';
+  await db.collection('fila_marchesini').doc(id).update({nome,tel,obs});
+  ov.remove();
+  showToast('💾 Dados salvos!');
 };
 
 inicializar();
