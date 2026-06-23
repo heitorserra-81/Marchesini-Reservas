@@ -4404,37 +4404,43 @@ inicializar();
     }catch(e){ console.warn("sw blob",e); }
   }
 
-  /* ----- Botao Instalar (Android/Chrome) + folha iOS ----- */
-  var deferred=null;
-  var btn=document.createElement("div");
-  btn.id="mc-install-btn"; btn.textContent="Instalar Mesa Certa";
-  document.body.appendChild(btn);
-
-  window.addEventListener("beforeinstallprompt",function(e){
-    e.preventDefault(); deferred=e; btn.style.display="flex";
-  });
-  window.addEventListener("appinstalled",function(){ btn.style.display="none"; });
-
+  /* ----- Botao Instalar (dispensavel + lembra a escolha) ----- */
   function isIOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1); }
   function isStandalone(){ return (window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone===true; }
+  function instDispensado(){ try{ return localStorage.getItem("mc_install_dispensado")==="1"; }catch(e){ return false; } }
+  function dispensarInst(){ try{ localStorage.setItem("mc_install_dispensado","1"); }catch(e){} esconderBtn(); }
 
-  if(isIOS() && !isStandalone()){
-    var sheet=document.createElement("div"); sheet.id="mc-ios-sheet";
-    sheet.innerHTML='<div class="mc-ios-card">'
-      +'<div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;color:#E8C97A;margin-bottom:8px;">Instalar Mesa Certa</div>'
-      +'<div style="font-size:.92rem;color:rgba(247,241,232,.78);line-height:1.6;margin-bottom:18px;">Para instalar no iPhone ou iPad:<br>1. Toque em <b>Compartilhar</b> (&#x2191;)<br>2. Escolha <b>Adicionar a Tela de Inicio</b></div>'
-      +'<button id="mc-ios-close" style="width:100%;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(201,168,76,.3);border-radius:14px;padding:13px;font-size:.92rem;cursor:pointer;">Agora nao</button>'
-      +'</div>';
-    document.body.appendChild(sheet);
-    btn.style.display="flex";
-    btn.addEventListener("click",function(){ sheet.style.display="flex"; });
-    sheet.addEventListener("click",function(e){ if(e.target===sheet) sheet.style.display="none"; });
-    document.addEventListener("click",function(e){ if(e.target&&e.target.id==="mc-ios-close") sheet.style.display="none"; });
-  } else {
-    btn.addEventListener("click",function(){
-      if(deferred){ deferred.prompt(); deferred.userChoice.then(function(){ deferred=null; btn.style.display="none"; }); }
-    });
-  }
+  var deferred=null;
+  var btn=document.createElement("div");
+  btn.id="mc-install-btn";
+  btn.innerHTML='<span id="mc-inst-label" style="flex:1;">Instalar Mesa Certa</span>'
+    +'<span id="mc-inst-x" style="font-size:1.25rem;line-height:1;opacity:.8;padding:0 2px 0 6px;margin-left:4px;border-left:1px solid rgba(255,255,255,.25);">&times;</span>';
+  document.body.appendChild(btn);
+  function mostrarBtn(){ if(!instDispensado() && !isStandalone()) btn.style.display="flex"; }
+  function esconderBtn(){ btn.style.display="none"; }
+
+  // folha de instrucoes iOS
+  var sheet=document.createElement("div"); sheet.id="mc-ios-sheet";
+  sheet.innerHTML='<div class="mc-ios-card">'
+    +'<div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;color:#E8C97A;margin-bottom:8px;">Instalar Mesa Certa</div>'
+    +'<div style="font-size:.92rem;color:rgba(247,241,232,.78);line-height:1.6;margin-bottom:18px;">Para instalar no iPhone ou iPad:<br>1. Toque em <b>Compartilhar</b> (&#x2191;)<br>2. Escolha <b>Adicionar a Tela de Inicio</b></div>'
+    +'<button id="mc-ios-close" style="width:100%;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(201,168,76,.3);border-radius:14px;padding:13px;font-size:.92rem;cursor:pointer;">Fechar</button>'
+    +'</div>';
+  document.body.appendChild(sheet);
+  sheet.addEventListener("click",function(e){ if(e.target===sheet||(e.target&&e.target.id==="mc-ios-close")) sheet.style.display="none"; });
+
+  // clique no X = dispensa de vez; clique no texto = acao de instalar
+  btn.addEventListener("click",function(e){
+    if(e.target && e.target.id==="mc-inst-x"){ dispensarInst(); return; }
+    if(deferred){ deferred.prompt(); deferred.userChoice.then(function(){ deferred=null; esconderBtn(); }); }
+    else if(isIOS()){ sheet.style.display="flex"; }
+  });
+
+  window.addEventListener("beforeinstallprompt",function(e){ e.preventDefault(); deferred=e; mostrarBtn(); });
+  window.addEventListener("appinstalled",function(){ dispensarInst(); });
+
+  // no iOS nao existe evento de install: mostra o convite uma vez (ate dispensar)
+  if(isIOS()) mostrarBtn();
 
   /* ----- Escala proporcional para tablet ----- */
   function aplicarEscala(){
