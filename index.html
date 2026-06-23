@@ -3572,6 +3572,13 @@ function renderConfig(){
         </div>
         <span style="color:#e85c4c;font-size:1.2rem;">›</span>
       </div>
+      <div class="config-item" style="margin-top:10px;cursor:pointer;" onclick="mcInstalar()">
+        <div class="config-item-info">
+          <div class="config-item-label">📲 Instalar Mesa Certa</div>
+          <div class="config-item-desc">Adicionar o app à tela inicial deste aparelho</div>
+        </div>
+        <span style="color:var(--gold2);font-size:1.2rem;">›</span>
+      </div>
     </div>
   `;
 }
@@ -4404,22 +4411,13 @@ inicializar();
     }catch(e){ console.warn("sw blob",e); }
   }
 
-  /* ----- Botao Instalar (dispensavel + lembra a escolha) ----- */
+  /* ----- Instalar: SEM botao flutuante. Acao fica nas Configuracoes (mcInstalar) ----- */
   function isIOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1); }
   function isStandalone(){ return (window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone===true; }
-  function instDispensado(){ try{ return localStorage.getItem("mc_install_dispensado")==="1"; }catch(e){ return false; } }
-  function dispensarInst(){ try{ localStorage.setItem("mc_install_dispensado","1"); }catch(e){} esconderBtn(); }
 
   var deferred=null;
-  var btn=document.createElement("div");
-  btn.id="mc-install-btn";
-  btn.innerHTML='<span id="mc-inst-label" style="flex:1;">Instalar Mesa Certa</span>'
-    +'<span id="mc-inst-x" style="font-size:1.25rem;line-height:1;opacity:.8;padding:0 2px 0 6px;margin-left:4px;border-left:1px solid rgba(255,255,255,.25);">&times;</span>';
-  document.body.appendChild(btn);
-  function mostrarBtn(){ if(!instDispensado() && !isStandalone()) btn.style.display="flex"; }
-  function esconderBtn(){ btn.style.display="none"; }
+  window.addEventListener("beforeinstallprompt",function(e){ e.preventDefault(); deferred=e; });
 
-  // folha de instrucoes iOS
   var sheet=document.createElement("div"); sheet.id="mc-ios-sheet";
   sheet.innerHTML='<div class="mc-ios-card">'
     +'<div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;color:#E8C97A;margin-bottom:8px;">Instalar Mesa Certa</div>'
@@ -4429,18 +4427,12 @@ inicializar();
   document.body.appendChild(sheet);
   sheet.addEventListener("click",function(e){ if(e.target===sheet||(e.target&&e.target.id==="mc-ios-close")) sheet.style.display="none"; });
 
-  // clique no X = dispensa de vez; clique no texto = acao de instalar
-  btn.addEventListener("click",function(e){
-    if(e.target && e.target.id==="mc-inst-x"){ dispensarInst(); return; }
-    if(deferred){ deferred.prompt(); deferred.userChoice.then(function(){ deferred=null; esconderBtn(); }); }
-    else if(isIOS()){ sheet.style.display="flex"; }
-  });
-
-  window.addEventListener("beforeinstallprompt",function(e){ e.preventDefault(); deferred=e; mostrarBtn(); });
-  window.addEventListener("appinstalled",function(){ dispensarInst(); });
-
-  // no iOS nao existe evento de install: mostra o convite uma vez (ate dispensar)
-  if(isIOS()) mostrarBtn();
+  window.mcInstalar=function(){
+    if(isStandalone()){ if(typeof showToast==="function") showToast("App ja esta instalado"); return; }
+    if(deferred){ deferred.prompt(); deferred.userChoice.then(function(){ deferred=null; }); }
+    else { sheet.style.display="flex"; }
+  };
+  window.addEventListener("appinstalled",function(){ if(typeof showToast==="function") showToast("Mesa Certa instalado!"); });
 
   /* ----- Escala proporcional para tablet ----- */
   function aplicarEscala(){
@@ -4450,6 +4442,10 @@ inicializar();
     var m=Math.max(0,(w/z-base)/2);
     document.body.style.marginLeft=m+"px";
     document.body.style.marginRight="0px";
+    var vh=(100/z);
+    document.body.style.minHeight=vh+"vh";
+    var appEl=document.querySelector(".app");
+    if(appEl) appEl.style.minHeight=vh+"vh";
   }
   aplicarEscala();
   window.addEventListener("resize",aplicarEscala);
